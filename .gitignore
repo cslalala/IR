@@ -1,1 +1,13 @@
-.idea/
+#ignore those files
+*.iml
+# Logs and databases #
+######################
+*.log
+*.sqlite
+
+#development-tool
+/.gitignore
+/**/node_modules
+/**/target/
+/**/.idea/
+/**/webapp/static/
