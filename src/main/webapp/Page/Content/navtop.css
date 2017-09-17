@@ -1,0 +1,59 @@
+.nav-top {
+    background: none repeat scroll 0 0 #f1f1f1;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    color: rgb(102, 102, 102);
+    float: left;
+    height: 35px;
+    padding-top:10px;
+    position: fixed;
+    right: 0%;
+    width: 100%;
+    z-index: 100;
+    font-weight: bold;
+    clear: both;
+    font-family: wf_segoe-ui_normal, wf_segoe-ui_semilight, wf_segoe-ui_light, Arial, sans-serif;
+    font-size: 16px;
+}
+
+
+
+#mslogo
+{
+   display: inline-block;
+   float: left;
+   margin-top:-13px;
+   margin-left:0px;
+   padding-left:4px;
+}
+
+.nav-top a {
+    text-decoration: none;
+    color: rgb(102, 102, 102);
+}
+
+.nav-top a:hover {
+	color: rgba(51,153,255,1.00);
+}
+
+.nav-top ul {
+    width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: right;
+    padding-right: 15px;
+  
+}
+.nav-top li {
+    display: inline;
+    margin-left: 40px;
+    font-family: Arial;
+    padding-top:12px;
+  
+}
+
+
+#banner ba {
+	width: auto;
+	height: 271px;
+	background-color: #3399FF;
+}

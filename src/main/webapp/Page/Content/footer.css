@@ -1,0 +1,20 @@
+.footer {
+    clear: both;
+    display: block;
+    font-size: 80%;
+    line-height: 1;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-x: hidden;
+    padding: 30px;
+    position: relative;
+    text-align: center;
+    
+    max-width: 100%;
+    min-width:700px;
+}
+
+.footer-element {
+  padding: 5px 1em 5px 0em;
+}
+
