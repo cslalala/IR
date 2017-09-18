@@ -234,18 +234,18 @@
                             </button>
                         </div>
                     </div>
-                    <div class="form-group" style="margin-top:55px; padding-left: 20px;">
-                        <label for="datadoctagpath" style="margin-left: 15px;">Index Tag Path</label>
-                        <div class="col-xs-8" style="margin-left:0px; padding-right: 0px;">
-                            <input class="form-control" id="datadoctagpathShow" placeholder="data tag path">
-                            <input class="form-control hidden" type="file"
-                                   id="datadoctagpath" name="datadoctagpath">
-                        </div>
-                        <div class="col-xs-2 col-xs-2-change">
-                            <button class="btn btn-default" id="datadoctagpathget" type="button" style="margin-left:0px;">...</button>
-                        </div>
-                    </div>
-                </form>
+                    <%--<div class="form-group" style="margin-top:55px; padding-left: 20px;">--%>
+                    <%--<label for="datadoctagpath" style="margin-left: 15px;">Index Tag Path</label>--%>
+                    <%--<div class="col-xs-8" style="margin-left:0px; padding-right: 0px;">--%>
+                    <%--<input class="form-control" id="datadoctagpathShow" placeholder="data tag path">--%>
+                    <%--<input class="form-control hidden" type="file"--%>
+                    <%--id="datadoctagpath" name="datadoctagpath">--%>
+                    <%--</div>--%>
+                    <%--<div class="col-xs-2 col-xs-2-change">--%>
+                    <%--<button class="btn btn-default" id="datadoctagpathget" type="button" style="margin-left:0px;">...</button>--%>
+                    <%--</div>--%>
+                    <%--</div>--%>
+                    <%--</form>--%>
             </div>
             <div class="modal-footer" style="margin-top:15px; margin-bottom:10px;">
                 <button type="button" class="btn btn-primary" style="margin-left: -10px; background-color:white; color:black; border-color:#ccc;" id="Index">Index

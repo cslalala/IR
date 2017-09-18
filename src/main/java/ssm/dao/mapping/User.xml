@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ssm.entity.UserEntity">
-
-
+<!--写mybatis语法的sql-->
+<mapper namespace="ssm.dao.UserDao">
+<!--搜索-->
+<select id="findUser" parameterType="ssm.dao.entity.UserEntity"
+        resultType="ssm.dao.entity.UserEntity">
+    SELECT
+      emailAddress,
+      username,
+      password
+     FROM user_Login WHERE emailAddress = #{emailAddress}
+</select>
 </mapper>

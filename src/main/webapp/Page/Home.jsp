@@ -1,5 +1,6 @@
 
 <!DOCTYPE html>
+
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -19,6 +20,7 @@
     <link href="./Content/login_style.css", rel="stylesheet">
 
     <script src="./Scripts/jquery-1.11.2.min.js"></script>
+    <script src="./Scripts/service.js"></script>
     <script src="./Scripts/responsive-nav.js"></script>
     <script src="./Scripts/login.js"></script>
     <script src="./Scripts/layout.js"></script>
@@ -99,6 +101,16 @@
             margin-top:0px;
             margin-right:0px;
         }
+        .forget{
+            margin:3px;
+            background: rgb(0, 142, 173);
+            padding: 7px 10px;
+            border-radius: 4px;
+            border: 1px solid rgb(26, 117, 152);
+            border-image: none;
+            color: rgb(255, 255, 255);
+            font-weight: bold;
+        }
     </style>
 
 </head>
@@ -123,7 +135,7 @@
                     <div style="height: 50px; line-height: 50px; margin-top: 30px; border-top-color: rgb(231, 231, 231); border-top-width: 1px; border-top-style: solid;">
                         <p style="margin: 10px 0px 20px 0px;">
                             <span style="float: left;">
-                                <a style="color: rgb(204, 204, 204); font-size:14px;" href="#">Forget password?</a>
+                                <a style="color: rgb(204, 204, 204); font-size:14px;" id="go2forgot">Forget password?</a>
                             </span>
                             <span style="float: right;">
                                 <%--<a style="color: rgb(204, 204, 204); margin-right: 5px; font-size: 14px;"  data-toggle="#myModal_register">Register</a>--%>
@@ -174,6 +186,68 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="myModal_forgot" tabindex="-1" role="dialog" aria-labelledby="myModal_forgot" data-backdrop="static">
+    <div class="modal-dialog" style="z-index: 2000;" role="document">
+        <div class="modal-content">
+            <a class="close close-pos" data-dismiss="modal" id="dismiss-myModal_forgot" style="margin-right:-15px; margin-top:-20px;">x</a>
+            <div class="modal-header">
+                <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>--%>
+                <h4 class="modal-title" id="myModalLabel">Validation Code</h4>
+            </div>
+            <div class="modal-body" style="margin-left:30px;">
+                <form  enctype="multipart/form-data" action="/ 这里是web.xml配置接受servlet的地址" method="post">
+                    <p style="padding: 15px 0px 10px; position: relative;">
+                        <%--<span class="u_logo"></span>--%>
+                        <input name="f_email" class="ipt ipt_username" type="text" placeholder="email address " value="" id="forgot_email" style="padding-top:5px; padding-bottom: 5px;float:left;width:80%">
+                        <input type="button" class="btn btn-default" id="forget" value="Send" onclick="settime(this)" style="float: right;width:20%;height:42px;text-align:center;vertical-align:middle;" />
+                    </p>
+                    </br>
+                    <p style="margin-top:15px;padding: 15px 0px 10px; position: relative;">
+                        <%--<span class="u_logo"></span>--%>
+                        <input name="v_code" class="ipt ipt_username" type="text" placeholder="Validation Code" value="" id="input_Code" style="padding-top:5px; padding-bottom: 5px;width:100%">
+                    </p>
+
+                    <div style="margin: 0 auto">
+                        <button type="button" class="btn btn-primary" style="margin-left: 0px; width: 100%" id="Next">Next Step</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal_reset_password" tabindex="-1" role="dialog" aria-labelledby="myModal_forgot" data-backdrop="static">
+    <div class="modal-dialog" style="z-index: 2000;" role="document">
+        <div class="modal-content">
+            <a class="close close-pos" data-dismiss="modal" id="dismiss-myModal_reset_password" style="margin-right:-15px; margin-top:-20px;">x</a>
+            <div class="modal-header">
+                <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>--%>
+                <h4 class="modal-title" id="myModalLabel">Reset Password</h4>
+            </div>
+            <div class="modal-body" style="margin-left:30px;">
+                <form id="ConfirmPsw" enctype="multipart/form-data" action="/ 这里是web.xml配置接受servlet的地址" method="post">
+
+
+                    <p style="padding: 15px 0px 10px; position: relative;">
+                        <%--<span class="u_logo"></span>--%>
+                        <input name="newpassword" required="required" class="ipt ipt_username" type="password" placeholder="Input new password" value="" id="newpassword" style="padding-top:5px; padding-bottom: 5px;">
+                    </p>
+                    <p style="position: relative; margin-top:8px;">
+                        <input name="" required="required" onblur="validate()" class="ipt ipt_username" type="password" placeholder="Repeat new password" value="" id="new_password" style="padding-top:5px; padding-bottom: 5px;">
+                    </p>
+
+                    <label id="note" class="alert-danger"></label>
+
+                    <div style="margin: 0 auto">
+                        <button type="button" class="btn btn-primary" style="margin-left: 0px; width: 100%" id="confirm_newPsw">Confirm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="Hint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_hint">
     <div class="modal-dialog" style="z-index: 2000;" role="document">
         <div class="modal-content modal-content-change" style="width: 80%;">
@@ -282,9 +356,9 @@
                                     <h3>Mode One</h3>
                                     <h4>mode name</h4>
                                     <%--<p class="mode">--%>
-                                        <%--<span class="currency white">$</span>--%>
-                                        <%--<sapn class="number white">29</sapn>--%>
-                                        <%--<span class="month white">/month</span>--%>
+                                    <%--<span class="currency white">$</span>--%>
+                                    <%--<sapn class="number white">29</sapn>--%>
+                                    <%--<span class="month white">/month</span>--%>
                                     <%--</p>--%>
                                 </div>
                                 <div class="mode-bottom">
@@ -334,13 +408,13 @@
                 </div>
             </section>
             <%--<div class="homecontent4">--%>
-                <%--<h2 class="quotemurphy3">--%>
-                    <%--We provide REST APIs for serving your applications. These APIs are standard, cross-platform, and easy-to-use.--%>
-                <%--</h2>--%>
-                <%--<img class="picleft" src="./Images/api.gif"  alt="api" />--%>
-                <%--<h2 class="homeh3">--%>
-                    <%--<a class="homelink" href="/Home/Api">Get the API</a>--%>
-                <%--</h2>--%>
+            <%--<h2 class="quotemurphy3">--%>
+            <%--We provide REST APIs for serving your applications. These APIs are standard, cross-platform, and easy-to-use.--%>
+            <%--</h2>--%>
+            <%--<img class="picleft" src="./Images/api.gif"  alt="api" />--%>
+            <%--<h2 class="homeh3">--%>
+            <%--<a class="homelink" href="/Home/Api">Get the API</a>--%>
+            <%--</h2>--%>
             <%--</div>--%>
             <div class="homecontent3">
                 <h2 class="quotemurphy4">
@@ -368,20 +442,20 @@
 
         </div>
     </div>
-    </div>
+</div>
 </body>
 <script>
 
-//    $("#menu").click(function(){
-//        if($("#api-menu").css("display") == 'none')
-//            $("#api-menu").css("display", "block");
-//        else
-//            $("#api-menu").css("display", "none");
-//    });
-//下拉框
-$(document).ready(function () {
-    $('.dropdown-toggle').dropdown();
-})
+    //    $("#menu").click(function(){
+    //        if($("#api-menu").css("display") == 'none')
+    //            $("#api-menu").css("display", "block");
+    //        else
+    //            $("#api-menu").css("display", "none");
+    //    });
+    //下拉框
+    $(document).ready(function () {
+        $('.dropdown-toggle').dropdown();
+    })
     //在登录模态框中点击注册按钮
     $("#go2register").click(function () {
         $("#dismiss-modal_login").click();
@@ -392,6 +466,81 @@ $(document).ready(function () {
         $("#dismiss-modal_register").click();
         $("#myModal_login").modal({show: true});
     })
+    //在登录模态框上LOG_IN过程
+    $("#button_login").click(function () {
+        var service = new Service("/findUser");
+        var email = $("#input_login_username").val();
+        var psw = $("#input_login_password").val();
+        var para = {emailAddress: email, password:psw};
+        service.get(para, function (response) {
+            alert("ok");
+        })
+    })
+    //在登录模态框上点击“Forget Password”返回忘记密码模态框
+    $("#go2forgot").click(function () {
+        $("#dismiss-modal_login").click();
+        $("#myModal_forgot").modal({show: true});
+    })
+
+    //在输入验证码界面输入“验证码”跳转至修改密码界面
+    $("#Next").click(function () {
+        $("#dismiss-myModal_forgot").click();
+        $("#myModal_reset_password").modal({show: true});
+    })
+
+    function validate() {
+
+        // $("#confirm_newPsw").attr("disabled","disabled");
+        //验证两次输入密码是否一致
+        var pwd = $("#newpassword").val();
+        var pwd1 = $("#new_password").val();
+        //window.alert(pwd+"!"+pwd1);
+        <!-- 对比两次输入的密码 -->
+        if(pwd.length<=0 || pwd1.length<=0){
+            $("#note").html("Password cannot be empty!");
+            //$("#confirm_newPsw").attr("disabled","disabled");
+        }
+        else if(pwd == pwd1)
+        {
+            //window.alert("Pass!");
+            $("#note").html("Reset Successfully!");
+            $("#note").css("color","green");
+            $("#confirm_newPsw").removeAttr("disabled");
+            $("#confirm_newPsw").click();
+
+        }
+        else {
+            // window.alert("Twice Different!");
+            $("#note").html("The code you enter twice must be the same");
+            $("#note").css("color","red")
+            $("#new_password").val("").focus();
+            $("#confirm_newPsw").attr("disabled","disabled");
+
+        }
+    }
+
+
+    //验证码60s发送一次
+    var countdown=60;
+    function settime(obj) {
+        if (countdown == 0) {
+            $("#forgot_email").removeAttr("disabled");
+            obj.removeAttribute("disabled");
+            obj.value="Send Code";
+            countdown = 60;
+            return;
+        } else {
+            $("#forgot_email").attr("disabled","disabled");
+            obj.setAttribute("disabled", true);
+            obj.value="(" + countdown + "s...)";
+            countdown--;
+        }
+        setTimeout(function() {
+                settime(obj) }
+            ,1000)
+    }
+
+
     //在登录模态框上点击登录按钮
     $("#button_login").click(function () {
         checkInput_login();
@@ -438,10 +587,10 @@ $(document).ready(function () {
         }
     })
     var state = $("#log_state").html();
-   $("#log_state").click(function(){
-       if(state == 'Log In')
-           $("#myModal_login").modal({show:true});
-   })
+    $("#log_state").click(function(){
+        if(state == 'Log In')
+            $("#myModal_login").modal({show:true});
+    })
     $("#modeOne").click(function () {
 //        if(state == 'Log In')
 //            $("#myModal_login").modal({show:true});
@@ -472,6 +621,10 @@ $(document).ready(function () {
 //            $("#myModal_login").modal({show:true});
         window.location.href="modeTh.jsp";
     })
+
+
+
+
 </script>
 </html>
 

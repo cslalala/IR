@@ -27,7 +27,7 @@
     <%--</div>--%>
     <p style="padding: 30px 0px 10px; position: relative;">
         <%--<span class="u_logo"></span>--%>
-        <input class="ipt ipt_username" type="text" placeholder="username or email address " value="">
+        <input class="ipt ipt_username" type="text" placeholder="Email address " value="">
     </p>
     <p style="position: relative; margin-top:8px;">
         <input class="ipt ipt_password" id="password" type="password" placeholder="password" value="">
@@ -43,3 +43,6 @@
 </div>
 </body>
 </html>
+<script>
+
+</script>

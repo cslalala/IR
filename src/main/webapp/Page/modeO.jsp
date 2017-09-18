@@ -5,7 +5,6 @@
     <title>ICA Mode One Name</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
     <link rel="stylesheet" href="./Content/lesspass.min.css">
     <link href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 
@@ -217,7 +216,7 @@
                                         <div class="form-group">
                                             <div class="col-xs-8">
                                                 <select name="dataType" id="dataType" placeholder="ggGG"
-                                                        class="form-control">
+                                                        class="form-control" style="height:35px;">
                                                     <option value="disk1-2">disk1-2</option>
                                                     <option value="222">222222222</option>
                                                     <option value="3">33333</option>
@@ -228,37 +227,40 @@
                                             <div class="col-xs-4">
                                                 <select id="buildData" name="queryNo"
                                                         class="selectpicker show-tick form-control"
-                                                        multiple data-actions-box="true">
+                                                        multiple data-actions-box="true"
+                                                        style="height:35px;">
                                                 </select>
                                             </div>
                                         </div>
                                         <form class="form-horizontal" role="form">
-                                        <div class="form-group">
-                                            <div class="col-xs-8">
-                                                <select name="WeightModel" id="WeightModel" placeholder="ggGG"
-                                                        class="form-control">
-                                                    <option value="TF_IDF"> TF-IDF</option>
-                                                    <option value="1"> 2</option>
-                                                    <option value="1"> 1</option>
-                                                    <option value="1"> 1</option>
-                                                </select>
+                                            <div class="form-group">
+                                                <div class="col-xs-8">
+                                                    <select name="WeightModel" id="WeightModel" placeholder="ggGG"
+                                                            class="form-control"
+                                                            style="height:35px;">
+                                                        <option value="TF_IDF"> TF-IDF</option>
+                                                        <option value="1"> 2</option>
+                                                        <option value="1"> 1</option>
+                                                        <option value="1"> 1</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <button type="button" id="getData"
+                                                            class="btn btn-warning btn-block "
+                                                            style="height:35px;">
+                                                        <span>Retrieve</span><!---->
+                                                    </button>
+                                                </div>
                                             </div>
-                                            <div class="col-xs-4">
-                                                <button type="button" id="getData"
-                                                        class="btn btn-warning btn-block ">
-                                                    <span>Retrieve</span><!---->
-                                                </button>
+                                            <div class="form-group">
+                                                <div class="col-xs-8">
+                                                    <button type="button" id="evaluate"
+                                                            class="btn btn-warning btn-block" disabled>
+                                                        <span>Evaluate</span>
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-xs-8">
-                                                <button type="button" id="evaluate"
-                                                        class="btn btn-warning btn-block" disabled>
-                                                    <span>Evaluate</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                            </form>
+                                        </form>
                                         <!----> <!----> <!----> <!---->
                                         <div class="form-group form-tip" style="height:45px;">
                                             <div role="alert" class="alert alert-warning mb-0" style="margin-top: 20px; padding:8px;">
@@ -354,7 +356,8 @@
             style: 'btn-warning',
             title: "Select",
             selectAllText: "ALL",
-            deselectAllText: "NONE"
+            deselectAllText: "NONE",
+            size:8
         });
         var isSelectAll = false;
         $buildData.on('change.bs.select', function (e) {
@@ -425,13 +428,13 @@
             for (let i in data) {
                 var item = data[i];
                 let item_html = "<div class='result-div'>" +
-                        "<a href='/getFile?filepath=" + item.url + "' class='result-tile'>" + item.title + "</a>" +
-                        "<span class='result-description'>" + item.description + "</span>" +
-                        "</div>"
+                    "<a href='/getFile?filepath=" + item.url + "' class='result-tile'>" + item.title + "</a>" +
+                    "<span class='result-description'>" + item.description + "</span>" +
+                    "</div>"
                 array.push(item_html);
-                }
-                $("#result-data").html(array.join(""));
-                $("#result-data-title").show();
+            }
+            $("#result-data").html(array.join(""));
+            $("#result-data-title").show();
 
         }
     });

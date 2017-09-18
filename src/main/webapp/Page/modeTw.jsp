@@ -240,7 +240,7 @@
                     <div class="form-group" style="padding-left:20px; ">
                         <label for="dataSelect" style="margin-left: 15px;">Data Select</label>
                         <div class="col-xs-9" style="margin-left:15px; padding-left:0px;">
-                            <select name="dataSelection" id="dataSelect" placeholder="ggGG" class="form-control">
+                            <select name="dataSelection" id="dataSelect" placeholder="ggGG" class="form-control"style="height:35px;">
                                 <option value="disk1-2"> disk1-2</option>
                                 <option value="1"> 222222</option>
                                 <option value="1"> 333333</option>
@@ -251,7 +251,7 @@
                     <div class="form-group" style="padding-left:20px; margin-top:55px;">
                         <label for="querytagpath" style="margin-left: 15px;">Weighting Model</label>
                         <div class="col-xs-9" style="margin-left:15px; padding-left:0px;">
-                            <select name="WeightModel" id="WeightModel" placeholder="ggGG" class="form-control">
+                            <select name="WeightModel" id="WeightModel" placeholder="ggGG" class="form-control"style="height:35px;">
                                 <option value="TF_IDF"> TF-IDF</option>
                                 <option value="1"> 2</option>
                                 <option value="1"> 1</option>
@@ -272,17 +272,18 @@
                             </button>
                         </div>
                     </div>
-                    <div class="form-group" style="margin-top:55px; padding-left: 20px;">
-                        <label for="querytagpath" style="margin-left: 15px;">Query Tag Path</label>
-                        <div class="col-xs-8" style="margin-left:0px; padding-right:0px;">
-                            <input class="form-control" id="querytagpathShow" placeholder="query tag path">
-                            <input class="form-control hidden" type="file"
-                                   id="querytagpath" name="querytagpath">
-                        </div>
-                        <div class="col-xs-2 col-xs-2-change" style="margin-left:0px;">
-                            <button class="btn btn-default" id="querytagpathget" type="button">...</button>
-                        </div>
-                    </div>
+                    <%--<div class="form-group" style="margin-top:55px; padding-left: 20px;">--%>
+                    <%--<label for="querytagpath" style="margin-left: 15px;">Query Tag Path</label>--%>
+                    <%--<div class="col-xs-8" style="margin-left:0px; padding-right:0px;">--%>
+                    <%--<input class="form-control" id="querytagpathShow" placeholder="query tag path">--%>
+                    <%--<input class="form-control hidden" type="file"--%>
+                    <%--id="querytagpath" name="querytagpath">--%>
+                    <%--</div>--%>
+                    <%--<div class="col-xs-2 col-xs-2-change" style="margin-left:0px;">--%>
+                    <%--<button class="btn btn-default" id="querytagpathget" type="button">...</button>--%>
+                    <%--</div>--%>
+                    <%--</div>--%>
+
                     <%--<div class="form-group" style="margin-top:55px; padding-left: 20px;">--%>
                     <%--<label class="" for="queryresultpath" style="margin-left: 15px;">Query Result Path</label>--%>
                     <%--<div class="col-xs-10" style="margin-left:0px;">--%>
