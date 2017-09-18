@@ -3,7 +3,8 @@
 <!--写mybatis语法的sql-->
 <mapper namespace="ssm.dao.UserDao">
 <!--搜索-->
-<select id="findUser" parameterType="ssm.dao.entity.UserEntity"
+<select id="findUser"
+        parameterType="ssm.dao.entity.UserEntity"
         resultType="ssm.dao.entity.UserEntity">
     SELECT
       emailAddress,
