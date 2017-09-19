@@ -1,6 +1,7 @@
 package ssm.service.Login;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ssm.dao.UserDao;
 import ssm.dao.entity.UserEntity;
 import ssm.service.UserLogin;
@@ -13,6 +14,7 @@ import java.util.List;
  * Created by chensu on 2017/9/18.
  */
 @Service
+@Transactional
 public class User_Login implements UserLogin {
     @Resource
     private UserDao userDao;
@@ -50,9 +52,7 @@ public class User_Login implements UserLogin {
             return "User already exists".toString();
         }else{
             UserEntity userEntity = new UserEntity(emailAddress, username, password);
-            userDao.addUser(userEntity);
-            List<UserEntity> uelist_confirm = userDao.findUser(emailAddress);
-            if(uelist_confirm.size() > 0){
+            if(userDao.addUser(userEntity)){
                 return "Registration Success".toString();
             }else{
                 return "Registration Failed".toString();

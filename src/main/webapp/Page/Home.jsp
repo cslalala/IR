@@ -31,8 +31,8 @@
 
     <%--导航栏下拉框--%>
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="./Scripts/jquery.min.js"></script>
-    <script src="./Scripts/bootstrap.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="./Scripts/bootstrap-dropdown.js"></script>
     <style type="text/css">
         li.suo{

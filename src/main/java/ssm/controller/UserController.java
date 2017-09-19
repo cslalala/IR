@@ -29,6 +29,7 @@ public class UserController extends BaseController {
         return ans;
     }
    /* 用户注册*/
+   @ResponseBody
    @RequestMapping("/insertUser")
    public String insert(String emailAddress, String userName, String passWord){
        String ans = userLogin.userInsert(emailAddress, userName, passWord);

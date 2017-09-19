@@ -13,5 +13,5 @@ import java.util.List;
 public interface UserDao {
 
     public List<UserEntity> findUser (String email);
-    public void addUser(UserEntity entity);
+    public boolean addUser(UserEntity entity);
 }
