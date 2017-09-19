@@ -6,6 +6,7 @@ import ssm.dao.entity.UserEntity;
 import ssm.service.UserLogin;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 /**
@@ -21,27 +22,41 @@ public class User_Login implements UserLogin {
     }
 
     /*登录验证*/
-    public boolean findUser(String emailAddress, String password) {
+    public String findUser(String emailAddress, String password) {
         UserEntity ue = new UserEntity();
         ue.setEmailAddress(emailAddress);
         ue.setPassword(password);
-        UserEntity userEntity = userDao.findUser(ue).get(0);
-        if (userEntity.getPassword().equals(password)) {
-            return true;
-        } else {
-            return false;
+        List<UserEntity> uelist = userDao.findUser(emailAddress);
+        /*1代表用户不存在， 2代表密码错误， 成功就传用户的名字*/
+        if(uelist.size() == 0){
+            return "User does not exist";
+        }else{
+            UserEntity userEntity = userDao.findUser(emailAddress).get(0);
+            if(!userEntity.getPassword().equals(password)){
+                return "Wrong password";
+            }else{
+                return userEntity.getName();
+            }
         }
     }
 
     /*注册, 添加用户*/
-    public String userInsert(String emailAddress, String username, String password, String confirm_password) {
-        if (password.equals(confirm_password)) {
+    public String userInsert(String emailAddress, String username, String password) {
+        /*判断用户是否已经存在*/
+        UserEntity ue = new UserEntity();
+        ue.setEmailAddress(emailAddress);
+        List<UserEntity> uelist = userDao.findUser(emailAddress);
+        if(uelist.size() != 0){
+            return "User already exists".toString();
+        }else{
             UserEntity userEntity = new UserEntity(emailAddress, username, password);
-            // userDao.addUser(userEntity);
-            return "Registration Success".toString();
-        } else {
-            /*密码不一致*/
-            return "Inconsistent password".toString();
+            userDao.addUser(userEntity);
+            List<UserEntity> uelist_confirm = userDao.findUser(emailAddress);
+            if(uelist_confirm.size() > 0){
+                return "Registration Success".toString();
+            }else{
+                return "Registration Failed".toString();
+            }
         }
     }
 }

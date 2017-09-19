@@ -31,8 +31,8 @@
 
     <%--导航栏下拉框--%>
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="./Scripts/jquery.min.js"></script>
+    <script src="./Scripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="./Scripts/bootstrap-dropdown.js"></script>
     <style type="text/css">
         li.suo{
@@ -115,6 +115,23 @@
 
 </head>
 <body onload="AdjustLayout();">
+<div class="modal fade" id="Hint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_hint">
+    <div class="modal-dialog" style="z-index: 2000;" role="document">
+        <div class="modal-content modal-content-change" style="width: 80%;">
+            <a class="close close-pos" data-dismiss="modal" id="dismiss-hint">x</a>
+            <div class="modal-header" style="border: none;">
+                <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>--%>
+                <p class="modal-title" id="myModalLabel_hint">Are you sure to quit?</p>
+            </div>
+            <div class="modal-footer" style="margin-top:15px; margin-bottom:10px;">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" style="margin-left: -10px;background-color:white; color:black; border-color:#ccc;">No, still here
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" style="margin-left: 15px;" data-toggle="modal" id="quit">Yes, I'm sure
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="myModal_login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_login" data-backdrop="static">
     <div class="modal-dialog" style="z-index: 2000;" role="document">
         <div class="modal-content">
@@ -127,12 +144,13 @@
                 <form enctype="multipart/form-data" action="/ 这里是web.xml配置接受servlet的地址" method="post">
                     <p style="padding: 15px 0px 10px; position: relative;">
                         <%--<span class="u_logo"></span>--%>
-                        <input class="ipt ipt_username" type="text" placeholder="username or email address " value="" id="input_login_username" style="padding-top:5px; padding-bottom: 5px;">
+                        <input class="ipt ipt_username" type="text" placeholder="Email address " value="pp" id="input_login_username" style="padding-top:5px; padding-bottom: 5px;">
                     </p>
                     <p style="position: relative; margin-top:8px;">
-                        <input class="ipt ipt_password"  type="password" placeholder="password" value="" id="input_login_password"  style="padding-bottom: 5px; padding-top: 5px;">
+                        <input class="ipt ipt_password"  onblur="logIn_validate()" type="password" placeholder="password" value="" id="input_login_password"  style="padding-bottom: 5px; padding-top: 5px;">
                     </p>
-                    <div style="height: 50px; line-height: 50px; margin-top: 30px; border-top-color: rgb(231, 231, 231); border-top-width: 1px; border-top-style: solid;">
+                    <label id="login_note" class="alert-danger"></label>
+                    <div style="height: 50px; line-height: 50px; margin-top: 0px; border-top-color: rgb(231, 231, 231); border-top-width: 1px; border-top-style: solid;">
                         <p style="margin: 10px 0px 20px 0px;">
                             <span style="float: left;">
                                 <a style="color: rgb(204, 204, 204); font-size:14px;" id="go2forgot">Forget password?</a>
@@ -166,7 +184,7 @@
                     </p>
                     <p style="padding: 0px 0px 10px; position: relative;">
                         <label for="input_register_username" >Username</label>
-                        <input class="ipt ipt_username" id="input_register_username" type="text" placeholder="like: Lisa"  value="" style="padding-bottom: 5px; padding-top: 5px;">
+                        <input class="ipt ipt_username" id="input_register_username" type="text" placeholder="like: Lisa(length is less than 10 characters, consist of numbers or letters). "  value="" style="padding-bottom: 5px; padding-top: 5px;">
                     </p>
                     <p style="padding: 0px 0px 10px; position: relative;">
                         <label for="input_register_password_set" >Set Password</label>
@@ -178,6 +196,7 @@
                     </p>
                 </form>
             </div>
+            <label id="register_note" class="alert-danger"></label>
             <div class="modal-footer" style="margin-top:0px; margin-bottom:10px;">
                 <%--<button type="button" class="btn btn-primary"  id="back_toLogin" style="margin-left: 0px;background-color:#fefefe; border-color:#fefefe;color:#d6d6d6">Already have a account</button>--%>
                 <button type="button" class="btn btn-primary" style="font-size: 16px;" id="button_register">Create Account</button>
@@ -248,17 +267,17 @@
     </div>
 </div>
 
-<div class="modal fade" id="Hint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_hint">
+<%--<div class="modal fade" id="Hint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_hint">
     <div class="modal-dialog" style="z-index: 2000;" role="document">
         <div class="modal-content modal-content-change" style="width: 80%;">
             <a class="close close-pos" data-dismiss="modal" id="dismiss-hint">x</a>
             <div class="modal-header" style="border: none;">
-                <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>--%>
+                &lt;%&ndash;<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>&ndash;%&gt;
                 <p class="modal-title" id="myModalLabel_hint">Please Fill All the Blanks?</p>
             </div>
         </div>
     </div>
-</div>
+</div>--%>
 <div class="nav-top">
     <ul>
         <li>
@@ -445,17 +464,84 @@
 </div>
 </body>
 <script>
+    /**
+     * Created by chensu on 2017/9/19.
+     */
 
-    //    $("#menu").click(function(){
-    //        if($("#api-menu").css("display") == 'none')
-    //            $("#api-menu").css("display", "block");
-    //        else
-    //            $("#api-menu").css("display", "none");
-    //    });
-    //下拉框
+//    $("#menu").click(function(){
+//        if($("#api-menu").css("display") == 'none')
+//            $("#api-menu").css("display", "block");
+//        else
+//            $("#api-menu").css("display", "none");
+//    });
+//下拉框
     $(document).ready(function () {
         $('.dropdown-toggle').dropdown();
     })
+    //点击home界面上的Log In按钮
+    $("#log_state").click(function(){
+        if($("#log_state").html() == 'Log In'){
+            //登录界面上填的值都清空
+            logIn_reset();
+            $("#myModal_login").modal({show:true});
+        }else{
+            $("#Hint").modal({show:true});
+        }
+    })
+    $("#quit").click(function () {
+        $("#log_state").html("Log In");
+    })
+    //清空登录界面上的所有值
+    function logIn_reset() {
+        document.getElementById("input_login_username").value =""
+        document.getElementById("input_login_password" ).value = ""
+        document.getElementById("login_note").innerText=""
+        $("#login_note").css("color", "#fefefe")
+        /*$("#input_login_username")[0].value = "";
+         $("#input_login_password")[0].value = "";*/
+    }
+    //在登录模态框上LOG_IN过程
+    $("#button_login").click(function () {
+        //判断邮箱是否有效以及邮箱和密码是否为空
+        if(logIn_validate()){
+            var service = new Service("/findUser");
+            var email = $("#input_login_username")[0].value;
+            var psw = $("#input_login_password")[0].value;
+            if(email.length>0 && psw.length>0){
+                var para = {emailAddress: email, passWord:psw};
+                service.get(para, function (response) {
+                    if(response=="User does not exist" || response=="Wrong password"){
+                        $("#login_note").html(response);
+                        $("#login_note").css("color","red")
+                    }else{
+                        $("#dismiss-modal_login").click();
+                        $("#log_state").html(response)
+                    }
+                })
+            }
+        }
+    })
+    function logIn_validate() {
+        var email = $("#input_login_username")[0].value;
+        var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
+        if(email.length == 0){
+            $("#login_note").html("E-mail can not be empty");
+            $("#login_note").css("color","red")
+        }else if(regex.test(email)){
+            if($("#input_login_password")[0].value.length > 6){
+                return true;
+            }else if($("#input_login_password")[0].value.length > 0){
+                $("#login_note").html("Password less than 6");
+                $("#login_note").css("color","red")
+            }else{
+                $("#login_note").html("Password cannot be empty!");
+                $("#login_note").css("color","red")
+            }
+        }else{
+            $("#login_note").html("Invalid mailbox");
+            $("#login_note").css("color","red")
+        }
+    }
     //在登录模态框中点击注册按钮
     $("#go2register").click(function () {
         $("#dismiss-modal_login").click();
@@ -465,16 +551,6 @@
     $("#back_login").click(function () {
         $("#dismiss-modal_register").click();
         $("#myModal_login").modal({show: true});
-    })
-    //在登录模态框上LOG_IN过程
-    $("#button_login").click(function () {
-        var service = new Service("/findUser");
-        var email = $("#input_login_username").val();
-        var psw = $("#input_login_password").val();
-        var para = {emailAddress: email, password:psw};
-        service.get(para, function (response) {
-            alert("ok");
-        })
     })
     //在登录模态框上点击“Forget Password”返回忘记密码模态框
     $("#go2forgot").click(function () {
@@ -502,7 +578,7 @@
         }
         else if(pwd == pwd1)
         {
-            //window.alert("Pass!");
+            //window.alert("Pass!");0
             $("#note").html("Reset Successfully!");
             $("#note").css("color","green");
             $("#confirm_newPsw").removeAttr("disabled");
@@ -539,57 +615,68 @@
                 settime(obj) }
             ,1000)
     }
-
-
-    //在登录模态框上点击登录按钮
-    $("#button_login").click(function () {
-        checkInput_login();
-    })
-    function checkInput_login() {
-        var cont = 0;
-        if($("#input_login_username").val() != "") {
-            cont++;
-        } else {
-            document.getElementById("input_login_username").style.border = "1px solid rgba(202, 105, 105, 0.71)";
-        }
-        if($("#input_login_password").val() != "") {
-            cont++;
-        } else{
-            document.getElementById( "input_login_password" ).style.border = "1px solid rgba(202, 105, 105, 0.71)";
-        }
-        if(cont == 2){}
-    }
+    
     //在注册模态框上点击注册按钮
     $("#button_register").click(function () {
-        var cont = 0;
-        if($("#input_register_email").val() != "") {
-            cont++;
+        /*判断邮箱是不是为空或者是不是符合标准*/
+        var email = $("#input_register_email")[0].value;
+        var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
+        if(email.length == 0){
+            $("#register_note").html("E-mail can not be empty");
+            $("#register_note").css("color","red")
+        }else if(regex.test(email)){
+            var regex2 = /^[0-9a-zA-Z]*$/g; //判断用户名或者密码是不是由数字和字母组成的
+            var username = $("#input_register_username").val();
+            if(username.length==0){
+                $("#register_note").html("Username cannot be empty");
+                $("#register_note").css("color","red")
+            }else if(username.length > 10){
+                $("#register_note").html("Username cannot be more than 10 characters");
+                $("#register_note").css("color","red")
+            } else if(!regex2.test(username)){
+                $("#register_note").html("Username must consist of numbers or letters");
+                $("#register_note").css("color","red")
+            }else{
+                var pwd = $("#input_register_password_set").val();
+                var pwd1 = $("#input_register_password_confirm").val();
+                var pwd_regex = /^[0-9a-zA-Z]*$/g;
+                //window.alert(pwd+"!"+pwd1);
+                if(pwd.length<=0 || pwd1.length<=0){
+                    $("#register_note").html("Password cannot be empty!");
+                    $("#register_note").css("color","red")
+                    //$("#confirm_newPsw").attr("disabled","disabled");
+                } else if(pwd.length < 6){
+                    $("#register_note").html("Password must be at 6 digits");
+                    $("#register_note").css("color","red")
+                }else if(!pwd_regex.test(pwd)){
+                    $("#register_note").html("Password must consist of numbers or letters");
+                    $("#register_note").css("color","red")
+                } else if(pwd != pwd1) {
+                    //window.alert("Pass!");0
+                    $("#register_note").html("The code you enter twice must be the same");
+                    $("#register_note").css("color","red")
+                } else {
+                    // window.alert("Twice Different!");
+                    var service = new Service("/insertUser")
+                    var emailAddress = $("#input_register_email").val();
+                    var userName = $("#input_register_username").val();
+                    var passWord = $("#input_register_password_set").val();
+                    var para = {emailAddress: emailAddress, userName:userName, passWord:passWord}
+                    service.get(para, function (response) {
+                        if(response=="User already exists" || response=="Registration Failed"){
+                            $("#register_note").html(response);
+                            $("#register_note").css("color","red")
+                        }else{
+                            $("#register_note").html(response);
+                            $("#register_note").css("color","green");
+                        }
+                    })
+                }
+            }
         }else{
-            document.getElementById("input_register_email").style.border = "1px solid rgba(202, 105, 105, 0.71)";
+            $("#register_note").html("Invalid mailbox");
+            $("#register_note").css("color","red")
         }
-        if($("#input_register_username").val() != "") {
-            cont++;
-        }else{
-            document.getElementById("input_register_username").style.border = "1px solid rgba(202, 105, 105, 0.71)";
-        }
-        if($("#input_register_password_set").val() != "") {
-            cont++;
-        }else{
-            document.getElementById("input_register_password_set").style.border = "1px solid rgba(202, 105, 105, 0.71)";
-        }
-        if($("#input_register_password_confirm").val() != "") {
-            cont++;
-        }else{
-            document.getElementById("input_register_password_confirm").style.border = "1px solid rgba(202, 105, 105, 0.71)";
-        }
-        if(cont == 4){
-
-        }
-    })
-    var state = $("#log_state").html();
-    $("#log_state").click(function(){
-        if(state == 'Log In')
-            $("#myModal_login").modal({show:true});
     })
     $("#modeOne").click(function () {
 //        if(state == 'Log In')
@@ -621,9 +708,6 @@
 //            $("#myModal_login").modal({show:true});
         window.location.href="modeTh.jsp";
     })
-
-
-
 
 </script>
 </html>

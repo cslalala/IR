@@ -12,4 +12,8 @@
       password
      FROM user_Login WHERE emailAddress = #{emailAddress}
 </select>
+    <insert id="addUser" parameterType="ssm.dao.entity.UserEntity">
+        INSERT into user_Login
+        VALUES ({#emailAddress}, {#username}, {#password})
+    </insert>
 </mapper>

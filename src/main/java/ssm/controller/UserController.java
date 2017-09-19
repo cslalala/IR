@@ -24,14 +24,14 @@ public class UserController extends BaseController {
     /*用户登录，查询用户*/
     @ResponseBody
     @RequestMapping("/findUser")
-    public String find(String emailAddress, String password) {
-        boolean ans = userLogin.findUser(emailAddress, password);
-        if (ans) {
-            return "ok".toString();
-        } else {
-            return "not ok".toString();
-        }
+    public String find(String emailAddress, String passWord) {
+        String ans = userLogin.findUser(emailAddress, passWord);
+        return ans;
     }
    /* 用户注册*/
-
+   @RequestMapping("/insertUser")
+   public String insert(String emailAddress, String userName, String passWord){
+       String ans = userLogin.userInsert(emailAddress, userName, passWord);
+       return ans;
+   }
 }
