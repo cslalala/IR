@@ -10,4 +10,8 @@ import ssm.dao.entity.UserEntity;
 public interface UserLogin {
     public String findUser(String emailAddress, String password);
     public String userInsert(String emailAddress, String username, String password);
+    public String sendEmail(String emailAddress);
+    public String updateValidation(String emailAddress,  String validation);
+    public String confirmValidation(String emailAddress, String validation_input);
+    public String resetPassword(String emailAddress, String passWord);
 }

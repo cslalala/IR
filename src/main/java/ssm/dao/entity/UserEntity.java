@@ -8,6 +8,7 @@ public class UserEntity {
     private String emailAddress;
     private String username;
     private String password;
+    private String validation;
 
     public UserEntity() {
     }
@@ -17,6 +18,15 @@ public class UserEntity {
         this.username = username;
         this.password = password;
     }
+
+    public String getValidation() {
+        return validation;
+    }
+
+    public void setValidation(String validation) {
+        this.validation = validation;
+    }
+
     public String getEmailAddress() {
         return emailAddress;
     }

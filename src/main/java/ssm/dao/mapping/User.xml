@@ -16,4 +16,14 @@
         INSERT into user_Login
         VALUES (#{emailAddress}, #{username}, #{password})
     </insert>
+    <update id="updateValidation" parameterType="ssm.dao.entity.UserEntity">
+        UPDATE user_Login SET
+        validation = #{validation}
+        WHERE emailAddress = #{emailAddress}
+    </update>
+    <update id="resetPassword" parameterType="ssm.dao.entity.UserEntity">
+        UPDATE user_Login SET
+        password = #{password}
+        WHERE emailAddress = #{emailAddress}
+    </update>
 </mapper>

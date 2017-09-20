@@ -12,6 +12,8 @@ import java.util.List;
 @Component
 public interface UserDao {
 
-    public List<UserEntity> findUser (String email);
+    public List<UserEntity> findUser (String emailAddress);
     public boolean addUser(UserEntity entity);
+    public boolean updateValidation(String emailAddress, String validation);
+    public boolean resetPassword(String emailAddress, String password);
 }

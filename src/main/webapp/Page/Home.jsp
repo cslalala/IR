@@ -218,16 +218,16 @@
                     <p style="padding: 15px 0px 10px; position: relative;">
                         <%--<span class="u_logo"></span>--%>
                         <input name="f_email" class="ipt ipt_username" type="text" placeholder="email address " value="" id="forgot_email" style="padding-top:5px; padding-bottom: 5px;float:left;width:80%">
-                        <input type="button" class="btn btn-default" id="forget" value="Send" onclick="settime(this)" style="float: right;width:20%;height:42px;text-align:center;vertical-align:middle;" />
+                        <input type="button" class="btn btn-default" id="sendEmail" value="Send" onclick="settime(this)" style="float: right;width:20%;height:42px;text-align:center;vertical-align:middle;" />
                     </p>
                     </br>
                     <p style="margin-top:15px;padding: 15px 0px 10px; position: relative;">
                         <%--<span class="u_logo"></span>--%>
                         <input name="v_code" class="ipt ipt_username" type="text" placeholder="Validation Code" value="" id="input_Code" style="padding-top:5px; padding-bottom: 5px;width:100%">
                     </p>
-
+                    <label id="validation_note" class="alert-danger"></label>
                     <div style="margin: 0 auto">
-                        <button type="button" class="btn btn-primary" style="margin-left: 0px; width: 100%" id="Next">Next Step</button>
+                        <button type="button" class="btn btn-primary" style="margin-left: 0px; width: 100%" id="NextToPasswordreset">Next Step</button>
                     </div>
 
                 </form>
@@ -544,26 +544,108 @@
     }
     //在登录模态框中点击注册按钮
     $("#go2register").click(function () {
+        register_reset();
         $("#dismiss-modal_login").click();
         $("#myModal_register").modal({show:true});
     })
     //在注册模态框上点击“Log In”返回登录模态框
     $("#back_login").click(function () {
+        logIn_reset();
         $("#dismiss-modal_register").click();
         $("#myModal_login").modal({show: true});
     })
+    function forget_reset() {
+        $("#forgot_email")[0].value = "";
+        $("#forget").html("Send");
+        $("#input_Code")[0].value = "";
+        document.getElementById("validation_note").innerText=""
+        $("#validation_note").css("color", "#fefefe")
+    }
     //在登录模态框上点击“Forget Password”返回忘记密码模态框
     $("#go2forgot").click(function () {
+        /*forget模态框应该清空*/
+        forget_reset();
         $("#dismiss-modal_login").click();
         $("#myModal_forgot").modal({show: true});
     })
 
-    //在输入验证码界面输入“验证码”跳转至修改密码界面
-    $("#Next").click(function () {
-        $("#dismiss-myModal_forgot").click();
-        $("#myModal_reset_password").modal({show: true});
-    })
 
+    //在输入验证码界面输入“验证码”跳转至修改密码界面
+    $("#NextToPasswordreset").click(function () {
+        /*判断输入的邮箱是否符合正则表达式*/
+        resetPassword_reset();
+        var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
+        var emailAddress = $("#forget_email")[0].value;
+        if(emailAddress== 0){
+            $("#validation_note").html("E-mail can not be empty");
+            $("#validation_note").css("color","red")
+        }else{
+            var validation_input = $("#input_Code");
+            if(!regex.test(emailAddress)){
+                $("#validation_note").html("Invalid mailbox");
+                $("#validation_note").css("color","red")
+            }else if(validation_input.length == 0){
+                $("#validation_note").html("verification code must be filled");
+                $("#validation_note").css("color","red")
+            }else{
+                var service = new Service("/confirmValidation")
+                var para = {emailAddress: emailAddress, validation_input: validation_input}
+                service.get(para, function (response) {
+                    if(response == "Verification is successful"){
+                        $("#dismiss-myModal_forgot").click();
+                        $("#myModal_reset_password").modal({show: true});
+                    }else{
+                        $("#validation_note").html(response);
+                        $("#validation_note").css("color","red")
+                    }
+                })
+            }
+        }
+    })
+    function resetPassword_reset() {
+        $("#newpassword")[0].value = "";
+        $("#new_password")[0].value = "";
+        document.getElementById("note").innerText = "";
+        $("#note").css("color", "#fefefe")
+    }
+       //重置密码
+    $("#confirm_newPsw").click(function () {
+        //验证两次输入密码是否一致
+        var pwd = $("#newpassword")[0].value;
+        var pwd1 = $("#new_password")[0].value;
+        var pwd_regex = /^[0-9a-zA-Z]*$/g;
+        //window.alert(pwd+"!"+pwd1);
+        if(pwd.length<=0 || pwd1.length<=0){
+            $("#note").html("Password cannot be empty!");
+            $("#note").css("color","red")
+            //$("#confirm_newPsw").attr("disabled","disabled");
+        } else if(pwd.length < 6){
+            $("#note").html("Password must be at 6 digits");
+            $("#note").css("color","red")
+        }else if(!pwd_regex.test(pwd)){
+            $("#note").html("Password must consist of numbers or letters");
+            $("#note").css("color","red")
+        } else if(pwd != pwd1) {
+            //window.alert("Pass!");0
+            $("#note").html("The code you enter twice must be the same");
+            $("#note").css("color","red")
+        } else {
+            // window.alert("Twice Different!");
+            var service = new Service("/resetPassword")
+            var emailAddress = $("#forgot_email").val();
+            var passWord = $("#newpassword").val();
+            var para = {emailAddress: emailAddress,  passWord:passWord}
+            service.get(para, function (response) {
+                if(response == "Password reset successful"){
+                    $("#dismiss-myModal_reset_password").click();
+                    $("#myModal_login").modal({show: true})
+                }else{
+                    $("#note").html(response);
+                    $("#note").css("color","red")
+                }
+            })
+        }
+    })
     function validate() {
 
         // $("#confirm_newPsw").attr("disabled","disabled");
@@ -583,7 +665,6 @@
             $("#note").css("color","green");
             $("#confirm_newPsw").removeAttr("disabled");
             $("#confirm_newPsw").click();
-
         }
         else {
             // window.alert("Twice Different!");
@@ -591,31 +672,64 @@
             $("#note").css("color","red")
             $("#new_password").val("").focus();
             $("#confirm_newPsw").attr("disabled","disabled");
-
         }
     }
 
 
     //验证码60s发送一次
-    var countdown=60;
+    var countdown=120;
     function settime(obj) {
-        if (countdown == 0) {
-            $("#forgot_email").removeAttr("disabled");
-            obj.removeAttribute("disabled");
-            obj.value="Send Code";
-            countdown = 60;
-            return;
-        } else {
-            $("#forgot_email").attr("disabled","disabled");
-            obj.setAttribute("disabled", true);
-            obj.value="(" + countdown + "s...)";
-            countdown--;
+        /*判断输入的邮箱是否符合正则表达式*/
+        var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
+        var service = new Service("/sendEmail");
+        var emailAddress = $("#forgot_email").val();
+        if(emailAddress.length == 0){
+            $("#validation_note").html("E-mail can not be empty");
+            $("#validation_note").css("color","red")
+        }else{
+            if(!regex.test(emailAddress)){
+                $("#validation_note").html("Invalid mailbox");
+                $("#validation_note").css("color","red")
+            }else{
+                var para = {emailAddress: emailAddress}
+                service.get(para, function (response) {
+                    if(response == "Fail"){
+                        $("#validation_note").html("Please send again");
+                        $("#validation_note").css("color","red")
+                    }
+                })
+                if (countdown == 0) {
+                    $("#forgot_email").removeAttr("disabled");
+                    obj.removeAttribute("disabled");
+                    obj.value="Send";
+                    countdown = 120;
+                    //时间到了之后原来的验证码应该不能使用了，所以就再次更新验证码
+                    var service2 = new Service("/updateValidation");
+                    para = {emailAddress: emailAddress}
+                    service2.get(para, function () {
+                    })
+                    return;
+                } else {
+                    $("#forgot_email").attr("disabled","disabled");
+                    obj.setAttribute("disabled", true);
+                    obj.value="(" + countdown + "s...)";
+                    countdown--;
+                }
+            }
         }
-        setTimeout(function() {
-                settime(obj) }
-            ,1000)
     }
-    
+    function register_reset() {
+        /*document.getElementById("input_register_email").value="";
+        document.getElementById("input_register_username").value="";
+        document.getElementById("input_register_password_set").value="";
+        document.getElementById("input_register_password_confirm").value="";*/
+        $("#input_register_email")[0].value="";
+        $("#input_register_username")[0].value="";
+        $("#input_register_password_set")[0].value="";
+        $("#input_register_password_confirm")[0].value="";
+        document.getElementById("register_note").innerText=""
+        $("#register_note").css("color", "#fefefe")
+    }
     //在注册模态框上点击注册按钮
     $("#button_register").click(function () {
         /*判断邮箱是不是为空或者是不是符合标准*/
@@ -669,6 +783,8 @@
                         }else{
                             $("#register_note").html(response);
                             $("#register_note").css("color","green");
+                            $("#dismiss-modal_register").click();
+                            $("#log_state").html(userName);
                         }
                     })
                 }
