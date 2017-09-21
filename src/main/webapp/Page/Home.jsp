@@ -528,7 +528,7 @@
             $("#login_note").html("E-mail can not be empty");
             $("#login_note").css("color","red")
         }else if(regex.test(email)){
-            if($("#input_login_password")[0].value.length > 6){
+            if($("#input_login_password")[0].value.length >= 6){
                 return true;
             }else if($("#input_login_password")[0].value.length > 0){
                 $("#login_note").html("Password less than 6");

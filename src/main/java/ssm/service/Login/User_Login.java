@@ -1,8 +1,5 @@
 package ssm.service.Login;
 
-import org.apache.http.MessageConstraintException;
-import org.apache.shiro.session.Session;
-import org.apache.zookeeper.server.SessionTracker;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ssm.dao.UserDao;
@@ -10,14 +7,7 @@ import ssm.dao.entity.UserEntity;
 import ssm.service.UserLogin;
 
 import javax.annotation.Resource;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import java.util.List;
-import java.util.Properties;
-import java.util.Random;
 
 
 /**
@@ -32,7 +22,6 @@ public class User_Login implements UserLogin {
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
-
     /*登录验证*/
     public String findUser(String emailAddress, String password) {
         UserEntity ue = new UserEntity();
@@ -62,6 +51,7 @@ public class User_Login implements UserLogin {
             return "User already exists".toString();
         }else{
             UserEntity userEntity = new UserEntity(emailAddress, username, password);
+            //System.out.println(userEntity.getEmailAddress() + " " +userEntity.getName() + " " + userEntity.getPassword() + "　" + userEntity.getValidation());
             if(userDao.addUser(userEntity)){
                 return "Registration Success".toString();
             }else{
@@ -104,6 +94,7 @@ public class User_Login implements UserLogin {
             return "Verification code entered incorrectly".toString();
         }
     }
+
     /*忘记密码，发送邮件*/
     public String sendEmail(String emailAddress){
         /*判断用户是否存在*/
@@ -111,43 +102,11 @@ public class User_Login implements UserLogin {
         userEntity.setEmailAddress(emailAddress);
         List<UserEntity> ueList = userDao.findUser(emailAddress);
         if(ueList.size() == 0){
-            return "User already exists".toString();
+            return "User does not exist".toString();
         }else{
-            /*收件人邮箱*/
-            String to = emailAddress;
-        /*发件人电子邮箱*/
-            String from = "823164623@qq.com";
-        /*指定发送邮件的主机为localhost*/
-            String host = "localhost";
-        /*获取系统属性*/
-            Properties properties = System.getProperties();
-        /*设置邮件服务器*/
-            properties.setProperty("mail.smtp.host", host);
-        /*获取默认session对象*/
-            javax.mail.Session session = javax.mail.Session.getDefaultInstance(properties);
-            try{
-                //创建默认的MimeMessage对象
-                MimeMessage message = new MimeMessage(session);
-                //Set From:头部头字段
-                message.setFrom(new InternetAddress(from));
-                //Set To: 头部头字段
-                message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-                //Set Subject: 头部头字段 随机生成6位数字
-                int randomInt = new Random().nextInt(999999);
-                message.setSubject(String.valueOf(randomInt));
-                //发送消息
-                Transport.send(message);
-                //更新用户的验证码
-                String ans = updateValidation(emailAddress, String.valueOf(randomInt));
-                if(ans.equals("ok")){
-                    return "Success";
-                }else{
-                    return "Fail";
-                }
-            }catch (MessagingException mex){
-                mex.printStackTrace();
-                return "Fail";
-            }
+            MailSend ms = new MailSend();
+            ms.setAddress("m157****0661@163.com", "80818***@qq.com", "一个带附件的JavaMail邮件");
+            ms.send("smtp.163.com", "m157****0661@163.com", "gebilaowang123");
         }
     }
 }

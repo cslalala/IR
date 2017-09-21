@@ -14,7 +14,7 @@
 </select>
     <insert id="addUser" parameterType="ssm.dao.entity.UserEntity">
         INSERT into user_Login
-        VALUES (#{emailAddress}, #{username}, #{password})
+        VALUES (#{emailAddress}, #{username}, #{password}, -1)
     </insert>
     <update id="updateValidation" parameterType="ssm.dao.entity.UserEntity">
         UPDATE user_Login SET

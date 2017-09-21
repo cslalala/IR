@@ -8,7 +8,7 @@ public class UserEntity {
     private String emailAddress;
     private String username;
     private String password;
-    private String validation;
+    private String validation ="-1";
 
     public UserEntity() {
     }
