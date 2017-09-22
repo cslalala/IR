@@ -9,7 +9,8 @@
     SELECT
       emailAddress,
       username,
-      password
+      password,
+      validation
      FROM user_Login WHERE emailAddress = #{emailAddress}
 </select>
     <insert id="addUser" parameterType="ssm.dao.entity.UserEntity">

@@ -1,5 +1,6 @@
 package ssm.service.Login;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ssm.dao.UserDao;
@@ -8,6 +9,7 @@ import ssm.service.UserLogin;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Random;
 
 
 /**
@@ -65,7 +67,8 @@ public class User_Login implements UserLogin {
         UserEntity userEntity = new UserEntity();
         userEntity.setEmailAddress(emailAddress);
         if(userDao.resetPassword(emailAddress, passWord)){
-            return "Password reset successful".toString();
+            List<UserEntity> uelist = userDao.findUser(emailAddress);
+            return uelist.get(0).getName();
         }else{
             return "Password reset failed".toString();
         }
@@ -75,11 +78,8 @@ public class User_Login implements UserLogin {
     public String updateValidation(String emailAddress, String validation){
         UserEntity userEntity = new UserEntity();
         userEntity.setEmailAddress(emailAddress);
-        if(userDao.updateValidation(emailAddress, validation)){
-            return "ok".toString();
-        }else{
-            return "not ok".toString();
-        }
+        userDao.updateValidation(emailAddress, validation);
+        return "Success".toString();
     }
 
     /*验证用户输入的验证码*/
@@ -104,9 +104,14 @@ public class User_Login implements UserLogin {
         if(ueList.size() == 0){
             return "User does not exist".toString();
         }else{
+            int randomInt =(int)((Math.random()*9+1)*100000);
             MailSend ms = new MailSend();
-            ms.setAddress("m157****0661@163.com", "80818***@qq.com", "一个带附件的JavaMail邮件");
-            ms.send("smtp.163.com", "m157****0661@163.com", "gebilaowang123");
+            ms.setAddress("m18321529565_1@163.com", emailAddress, "验证码", String.valueOf(randomInt));
+            String ans = ms.send("smtp.163.com", "m18321529565_1@163.com", "cs941025");
+            if(ans.equals("Sent successfully")){
+                updateValidation(emailAddress, String.valueOf(randomInt));
+            }
+            return ans;
         }
     }
 }
