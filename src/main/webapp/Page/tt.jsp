@@ -1,12 +1,15 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <link rel="shortcut icon" href="./Images/title.png">
-    <title> ICA Information Retrieval</title>
+    <title>ICA Mode Three Name</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel="stylesheet" href="./Content/lesspass.min.css">
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="./Content/style2.css" rel="stylesheet"/>
     <link href="./Content/default.css" rel="stylesheet"/>
     <link href="./Content/navtop.css" rel="stylesheet"/>
     <link href="./Content/footer.css" rel="stylesheet"/>
@@ -14,11 +17,26 @@
     <link href="./Content/style.css" rel="stylesheet"/>
     <link href="./Content/loginDialog.css" rel="stylesheet"/>
     <link href="./Content/banner.css" rel="stylesheet"/>
-    <link href="./Content/style2.css" rel="stylesheet"/>
-    <link href="./Content/bootstrap.css" rel="stylesheet"/>
-    <link href="./Content/login_style.css", rel="stylesheet">
+
+    <link href="./Content/modeStyle.css" rel="stylesheet"/>
+
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
 
     <script src="./Scripts/jquery-1.11.2.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+
+    <!-- Latest compiled and minified Locales -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.min.js"></script>
+
     <script src="./Scripts/responsive-nav.js"></script>
     <script src="./Scripts/login.js"></script>
     <script src="./Scripts/layout.js"></script>
@@ -26,20 +44,96 @@
 
     <script src="./Scripts/jquery.validate.js"></script>
     <script src="./Scripts/jquery.validate.unobtrusive.js"></script>
-
-    <%--导航栏下拉框--%>
-    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="./Scripts/bootstrap-dropdown.js"></script>
+    <%--上传文件--%>
+    <script src="./Scripts/jquery.iframe-transport.js" type="text/javascript"></script>
+    <script src="./Scripts/jquery.ui.widget.js" type="text/javascript"></script>
+    <script src="./Scripts/jquery.fileupload.js" type="text/javascript"></script>
+    <!-- 多选框的js,css -->
+    <script src="./Scripts/service.js"></script>
+    <script src="./Scripts/bootstrap-select.min.js"></script>
+    <link rel="stylesheet" href="./Content/bootstrap-select.min.css">
     <style type="text/css">
-        li.suo{
-            margin-left: 10px;
+        .cube1, .cube2 {
+            background-color: #f0ad4e;
+            width: 30px;
+            height: 30px;
+            position: relative;
+            top: 0;
+            left: 0;
+
+            -webkit-animation: cubemove 1.8s infinite ease-in-out;
+            animation: cubemove 1.8s infinite ease-in-out;
+        }
+
+        .cube2 {
+            -webkit-animation-delay: -0.9s;
+            animation-delay: -0.9s;
+        }
+
+        .caret {
+            display: none;
+        }
+
+        @-webkit-keyframes cubemove {
+            25% {
+                -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5)
+            }
+            50% {
+                -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg)
+            }
+            75% {
+                -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5)
+            }
+            100% {
+                -webkit-transform: rotate(-360deg)
+            }
+        }
+
+        @keyframes cubemove {
+            25% {
+                transform: translateX(42px) rotate(-90deg) scale(0.5);
+                -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5);
+            }
+            50% {
+                transform: translateX(42px) translateY(42px) rotate(-179deg);
+                -webkit-transform: translateX(42px) translateY(42px) rotate(-179deg);
+            }
+            50.1% {
+                transform: translateX(42px) translateY(42px) rotate(-180deg);
+                -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg);
+            }
+            75% {
+                transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+                -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+            }
+            100% {
+                transform: rotate(-360deg);
+                -webkit-transform: rotate(-360deg);
+            }
+        }
+
+        .result-div {
+            padding: 5px;
+            border: #eee;
+            background: #fff;
+        }
+
+        .result-div:hover {
+            background: #d6e0df;
+        }
+
+        .result-tile {
+            font-size: 16px;
+        }
+
+        .result-description {
+            font-size: 12px;
+            display: block;
         }
         .modal {
             display: none; /* 默认隐藏 */
             position: fixed; /* 根据浏览器定位 */
-            /*z-index: 1; !* 放在顶部 *!*/
+            z-index: 1; /* 放在顶部 */
             left: 0;
             top: 0;
             width: 100%; /* 全宽 */
@@ -71,7 +165,18 @@
                 opacity: 1
             }
         }
-
+        .modal-content-change{
+            padding-top:0px;
+            padding-left:5px;
+            padding-right:5px;
+        }
+        .close-pos{
+            margin-top:0px;
+            margin-right:0px;
+        }
+        .col-xs-2-change{
+            padding-left:0px;
+        }
         /*模态框头部*/
         .modal-header {
             display: flex; /*采用flexbox布局*/
@@ -79,182 +184,164 @@
             align-items: center; /*内容垂直居中*/
             justify-content: space-between;
         }
-        a.hover{
-            background-color: #adadad;
+        th.color{
+            background-color: #fcf8e3;
         }
-        /*关闭X 样式*/
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 21px;
-            font-weight: bold;
-        }
-
-        .close:hover {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .close-pos{
-            margin-top:0px;
-            margin-right:0px;
-        }
-        .forget{
-            margin:3px;
-            background: rgb(0, 142, 173);
-            padding: 7px 10px;
-            border-radius: 4px;
-            border: 1px solid rgb(26, 117, 152);
-            border-image: none;
-            color: rgb(255, 255, 255);
-            font-weight: bold;
+        li.suo{
+            margin-left: 10px;
         }
     </style>
-
 </head>
-<body onload="AdjustLayout();">
-<div class="modal fade" id="myModal_login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_login" data-backdrop="static">
-    <div class="modal-dialog" style="z-index: 2000;" role="document">
-        <div class="modal-content">
-            <a class="close close-pos" data-dismiss="modal" id="dismiss-modal_login" style="margin-right:-15px; margin-top:-20px;">x</a>
-            <div class="modal-header">
-                <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>--%>
-                <h4 class="modal-title" id="myModalLabel">Log In</h4>
-            </div>
-            <div class="modal-body" style="margin-left:30px;">
-                <form enctype="multipart/form-data" action="/ 这里是web.xml配置接受servlet的地址" method="post">
-                    <p style="padding: 15px 0px 10px; position: relative;">
-                        <%--<span class="u_logo"></span>--%>
-                        <input class="ipt ipt_username" type="text" placeholder="username or email address " value="" id="input_login_username" style="padding-top:5px; padding-bottom: 5px;">
-                    </p>
-                    <p style="position: relative; margin-top:8px;">
-                        <input class="ipt ipt_password"  type="password" placeholder="password" value="" id="input_login_password"  style="padding-bottom: 5px; padding-top: 5px;">
-                    </p>
-                    <div style="height: 50px; line-height: 50px; margin-top: 30px; border-top-color: rgb(231, 231, 231); border-top-width: 1px; border-top-style: solid;">
-                        <p style="margin: 10px 0px 20px 0px;">
-                            <span style="float: left;">
-                                <a style="color: rgb(204, 204, 204); font-size:14px;" id="go2forgot">Forget password?</a>
-                            </span>
-                            <span style="float: right;">
-                                <%--<a style="color: rgb(204, 204, 204); margin-right: 5px; font-size: 14px;"  data-toggle="#myModal_register">Register</a>--%>
-                                <button type="button" class="btn btn-primary"  id="go2register" style="margin-left: 0px;background-color:#fefefe; border-color:#fefefe;color:#c54242">Register</button>
-                                 <button type="button" class="btn btn-primary" style="margin-left: 0px;" id="button_login">Log In</button>
-                                <%--<a style="background: rgb(0, 142, 173); padding: 4px 5px; border-radius: 4px; border: 1px solid rgb(26, 117, 152); border-image: none; color: rgb(255, 255, 255); font-weight: bold; text-decoration: none;" href="#">Log In</a>--%>
-                            </span>
-                        </p>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="myModal_register" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_register" data-backdrop="static">
-    <div class="modal-dialog" style="z-index: 2000;" role="document">
-        <div class="modal-content">
-            <a class="close close-pos" data-dismiss="modal" id="dismiss-modal_register" style="margin-right:-15px; margin-top:-20px;">x</a>
-            <div class="modal-header">
-                <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>--%>
-                <h4 class="modal-title" id="myModalLabel">Register</h4>
-            </div>
-            <div class="modal-body" style="margin-left:30px;">
-                <form enctype="multipart/form-data" action="/ 这里是web.xml配置接受servlet的地址" method="post">
-                    <p style="padding: 15px 0px 10px; position: relative;">
-                        <label for="input_register_email">Email Address</label>
-                        <input class="ipt ipt_username" type="text" placeholder="like 823164623@qq.com " id="input_register_email" value="" style="padding-top:5px; padding-bottom: 5px;">
-                    </p>
-                    <p style="padding: 0px 0px 10px; position: relative;">
-                        <label for="input_register_username" >Username</label>
-                        <input class="ipt ipt_username" id="input_register_username" type="text" placeholder="like: Lisa"  value="" style="padding-bottom: 5px; padding-top: 5px;">
-                    </p>
-                    <p style="padding: 0px 0px 10px; position: relative;">
-                        <label for="input_register_password_set" >Set Password</label>
-                        <input class="ipt ipt_password" id="input_register_password_set" type="password" placeholder="consist of more than 6 digits or letters"  value="" style="padding-bottom: 5px; padding-top: 5px;">
-                    </p>
-                    <p style="padding: 0px 0px 10px; position: relative;">
-                        <label for="input_register_password_confirm" >Confirm Password</label>
-                        <input class="ipt ipt_password" id="input_register_password_confirm" type="password" placeholder="enter password again"  value="" style="padding-bottom: 5px; padding-top: 5px;">
-                    </p>
-                </form>
-            </div>
-            <div class="modal-footer" style="margin-top:0px; margin-bottom:10px;">
-                <%--<button type="button" class="btn btn-primary"  id="back_toLogin" style="margin-left: 0px;background-color:#fefefe; border-color:#fefefe;color:#d6d6d6">Already have a account</button>--%>
-                <button type="button" class="btn btn-primary" style="font-size: 16px;" id="button_register">Create Account</button>
-                <button type="button" class="btn btn-primary" id="back_login" style="margin-left: 0px;background-color:#fefefe; border-color:#fefefe;color:#c54242">Log In</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="myModal_forgot" tabindex="-1" role="dialog" aria-labelledby="myModal_forgot" data-backdrop="static">
-    <div class="modal-dialog" style="z-index: 2000;" role="document">
-        <div class="modal-content">
-            <a class="close close-pos" data-dismiss="modal" id="dismiss-myModal_forgot" style="margin-right:-15px; margin-top:-20px;">x</a>
-            <div class="modal-header">
-                <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>--%>
-                <h4 class="modal-title" id="myModalLabel">Validation Code</h4>
-            </div>
-            <div class="modal-body" style="margin-left:30px;">
-                <form  enctype="multipart/form-data" action="/ 这里是web.xml配置接受servlet的地址" method="post">
-                    <p style="padding: 15px 0px 10px; position: relative;">
-                        <%--<span class="u_logo"></span>--%>
-                        <input name="f_email" class="ipt ipt_username" type="text" placeholder="email address " value="" id="forgot_email" style="padding-top:5px; padding-bottom: 5px;float:left;width:75%">
-                        <input type="button" class="btn btn-default" id="forget" value="Send" onclick="settime(this)" style="float: right;width:20%;height:40px;text-align:center;vertical-align:middle;" />
-                    </p>
-                    </br>
-                    <p style="margin-top:15px;padding: 15px 0px 10px; position: relative;">
-                        <%--<span class="u_logo"></span>--%>
-                        <input name="v_code" class="ipt ipt_username" type="text" placeholder="Validation Code" value="" id="input_Code" style="padding-top:5px; padding-bottom: 5px;width:100%">
 
-                    </p>
-
-                    <div style="margin: 0 auto">
-                        <input type="button" class="forget" id="Next" value="Next Step" style="width:100%"/>
-                    </div>
-
-
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="myModal_reset_password" tabindex="-1" role="dialog" aria-labelledby="myModal_forgot" data-backdrop="static">
-    <div class="modal-dialog" style="z-index: 2000;" role="document">
-        <div class="modal-content">
-            <a class="close close-pos" data-dismiss="modal" id="dismiss-myModal_reset_password" style="margin-right:-15px; margin-top:-20px;">x</a>
-            <div class="modal-header">
-                <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>--%>
-                <h4 class="modal-title" id="myModalLabel">Reset Password</h4>
-            </div>
-            <div class="modal-body" style="margin-left:30px;">
-                <form id="ConfirmPsw" enctype="multipart/form-data" action="/ 这里是web.xml配置接受servlet的地址" method="post">
-
-
-                    <p style="padding: 15px 0px 10px; position: relative;">
-                        <%--<span class="u_logo"></span>--%>
-                        <input name="newpassword" required="required" class="ipt ipt_username" type="password" placeholder="Input new password" value="" id="newpassword" style="padding-top:5px; padding-bottom: 5px;">
-                    </p>
-                    <p style="position: relative; margin-top:8px;">
-                        <input name="" required="required" onblur="validate()" class="ipt ipt_username" type="password" placeholder="Repeat new password" value="" id="new_password" style="padding-top:5px; padding-bottom: 5px;">
-                    </p>
-
-                    <label id="note" class="alert-danger"></label>
-
-                    <div style="margin: 0 auto">
-                        <input type="button" class="forget" id="confirm_newPsw" value="Confirm" style="width:100%"/>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
+<body onload="AdjustLayout();" style="background-color: #eceeef">
 <div class="modal fade" id="Hint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_hint">
     <div class="modal-dialog" style="z-index: 2000;" role="document">
         <div class="modal-content modal-content-change" style="width: 80%;">
             <a class="close close-pos" data-dismiss="modal" id="dismiss-hint">x</a>
             <div class="modal-header" style="border: none;">
                 <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>--%>
-                <p class="modal-title" id="myModalLabel_hint">Please Fill All the Blanks?</p>
+                <p class="modal-title" id="myModalLabel_hint">Have you ever seen the manual and know how to do it?</p>
+            </div>
+            <div class="modal-footer" style="margin-top:15px; margin-bottom:10px;">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" style="margin-left: -10px;background-color:white; color:black; border-color:#ccc;" id="link2manuel" onclick="window.open('Manuel.jsp')">No, I want
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" style="margin-left: 15px;" data-toggle="modal" data-target="#myModal_dataSet">Yes, I have
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal_dataSet" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_dataset" data-backdrop="static" style="display: none;">
+    <div class="modal-dialog" style="z-index: 2000;" role="document">
+        <div class="modal-content modal-content-change">
+            <a class="close close-pos" data-dismiss="modal" id="dismiss-modalDataSet">x</a>
+            <div class="modal-header">
+                <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>--%>
+                <h4 class="modal-title" id="myModalLabel_dataSet">Data Set</h4>
+            </div>
+            <div class="modal-body" style="margin-left:30px;">
+                <form enctype="multipart/form-data" action="/ 这里是web.xml配置接受servlet的地址" method="post">
+                    <div class="form-group" style="padding-left:20px;">
+                        <label for="datadoucumentpath" style="margin-left: 15px;">Index Document Path</label>
+                        <div class="col-xs-8" style="margin-left: 0px; padding-right:0px;">
+                            <input class="form-control" id="datadoucumentpathShow" placeholder="data document path">
+                            <input class="form-control hidden" type="file"
+                                   name="datadoucumentpath" id="datadoucumentpath">
+                        </div>
+                        <div class="col-xs-2 col-xs-2-change">
+                            <button class="btn btn-default" id="datadoucumentpathget" type="button"
+                                    style="margin-left: 0px;">...
+                            </button>
+                        </div>
+                    </div>
+                    <%--<div class="form-group" style="margin-top:55px; padding-left: 20px;">--%>
+                    <%--<label for="datadoctagpath" style="margin-left: 15px;">Index Tag Path</label>--%>
+                    <%--<div class="col-xs-8" style="margin-left:0px; padding-right: 0px;">--%>
+                    <%--<input class="form-control" id="datadoctagpathShow" placeholder="data tag path">--%>
+                    <%--<input class="form-control hidden" type="file"--%>
+                    <%--id="datadoctagpath" name="datadoctagpath">--%>
+                    <%--</div>--%>
+                    <%--<div class="col-xs-2 col-xs-2-change">--%>
+                    <%--<button class="btn btn-default" id="datadoctagpathget" type="button" style="margin-left:0px;">...</button>--%>
+                    <%--</div>--%>
+                    <%--</div>--%>
+                    <%--</form>--%>
+            </div>
+            <div class="modal-footer" style="margin-top:15px; margin-bottom:10px;">
+                <button type="button" class="btn btn-primary" style="margin-left: -10px; background-color:white; color:black; border-color:#ccc;" id="Index">Index
+                </button>
+                <button type="button" class="btn btn-primary"  style="margin-left: 15px; background-color:#d62323;border-color:#d62323"  id="stop_nextStep">Stop
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" style="z-index: 2000;" role="document">
+        <div class="modal-content modal-content-change">
+            <a class="close close-pos" data-dismiss="modal" id="dismiss-modalQuerySet">x</a>
+            <div class="modal-header">
+                <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>--%>
+                <h4 class="modal-title" id="myModalLabel">Query Set</h4>
+            </div>
+            <div class="modal-body" style="margin-left:30px;">
+                <form enctype="multipart/form-data" action="/ 这里是web.xml配置接受servlet的地址" method="post">
+                    <div class="form-group" style="padding-left:20px;">
+                        <label for="querydocumenpath" style="margin-left: 15px;">Query Document Path</label>
+                        <div class="col-xs-8" style="margin-left: 0px; padding-right:0px;">
+                            <input class="form-control" id="querydocumenpathShow" placeholder="query document path">
+                            <input class="form-control hidden" type="file"
+                                   name="querydocumenpath" id="querydocumenpath">
+                        </div>
+                        <div class="col-xs-2 col-xs-2-change">
+                            <button class="btn btn-default" id="querydocumentpathget" type="button"
+                                    style="margin-left: 0px;">...
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top:55px; padding-left: 20px;">
+                        <label for="querytagpath" style="margin-left: 15px;">Query Tag Path</label>
+                        <div class="col-xs-8" style="margin-left:0px; padding-right:0px;">
+                            <input class="form-control" id="querytagpathShow" placeholder="query tag path">
+                            <input class="form-control hidden" type="file"
+                                   id="querytagpath" name="querytagpath">
+                        </div>
+                        <div class="col-xs-2 col-xs-2-change" style="margin-left:0px;">
+                            <button class="btn btn-default" id="querytagpathget" type="button">...</button>
+                        </div>
+                    </div>
+                    <div class="form-group" style="padding-left:20px; margin-top:55px;">
+                        <label for="querytagpath" style="margin-left: 15px;">Weighting Model</label>
+                        <div class="col-xs-9" style="margin-left:15px; padding-left:0px;">
+                            <select name="WeightModel" id="WeightModel" placeholder="ggGG" class="form-control">
+                                <option value="TF_IDF"> TF-IDF</option>
+                                <option value="1"> 2</option>
+                                <option value="1"> 1</option>
+                                <option value="1"> 1</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer" style="margin-top:15px; margin-bottom:10px;">
+                <button type="button" class="btn btn-primary" style="margin-left: -10px; background-color:white; color:black; border-color:#ccc;" id="Retrieve">Retrieve
+                </button>
+                <button type="button" class="btn btn-primary"  style="margin-left: 15px; background-color:#d62323;border-color:#d62323"  id="stop_nextStepToEvaluate">Stop
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal_evaluate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_dataset" data-backdrop="static" style="display: none;">
+    <div class="modal-dialog" style="z-index: 2000;" role="document">
+        <div class="modal-content modal-content-change">
+            <a class="close close-pos" data-dismiss="modal" id="dismiss-modalEvaluate">x</a>
+            <div class="modal-header">
+                <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>--%>
+                <h4 class="modal-title" id="myModalLabel_evaluationSet">Evaluation Set</h4>
+            </div>
+            <div class="modal-body" style="margin-left:30px;">
+                <form enctype="multipart/form-data" action="/ 这里是web.xml配置接受servlet的地址" method="post">
+                    <div class="form-group" style="padding-left:20px;">
+                        <label for="evaluationdocumentpath" style="margin-left: 15px;">Evaluation Document Path</label>
+                        <div class="col-xs-8" style="margin-left: 0px; padding-right:0px;">
+                            <input class="form-control" id="evaluationdocumentpathshow" placeholder="evaluation document path">
+                            <input class="form-control hidden" type="file"
+                                   name="datadoucumentpath" id="evaluationdocumentpath">
+                        </div>
+                        <div class="col-xs-2 col-xs-2-change">
+                            <button class="btn btn-default" id="evaluationdocumentpathget" type="button"
+                                    style="margin-left: 0px;">...
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer" style="margin-top:15px; margin-bottom:10px;">
+                <button type="button" class="btn btn-primary" style="margin-left: -10px; background-color:white; color:black; border-color:#ccc;" id="Evaluate">Evaluate
+                </button>
+                <button type="button" class="btn btn-primary"  style="margin-left: 15px; background-color:#d62323;border-color:#d62323"  id="stop_Finish">Stop
+                </button>
             </div>
         </div>
     </div>
@@ -291,291 +378,66 @@
     </ul>
 </div>
 <div id="banner">
-    <div id="banner-bglayer">
+    <div id="banner-bglayer-noHome">
         <div id="concept">
-            <div id="banner-title" > &nbsp;&nbsp;&nbsp;Information Retrieval<!-- and Concept Tagging <sup class="rightcorner">Preview</sup></div>-->
-                <%--<div id="banner-title2" >For Short Text Understanding</div>--%>
+            <div id="banner-title"> &nbsp;&nbsp;&nbsp;Information Retrieval
+                <!-- and Concept Tagging <sup class="rightcorner">Preview</sup></div>-->
+                <!-- <%--<div id="banner-title2" >For Short Text Understanding</div>--%> -->
             </div>
         </div>
     </div>
-    <div >
-        <div class="homedisplay">
-
-
-            <div class="homecontent1">
-
-                <a href="#Section2">
-                    <img class="breath_light" src="./Images/arrow.png" alt="" />
-                </a>
-
-                <img class="conceptworld" src="./Images/robot1.png" width="319" height="375" alt="" />
-
-                <h2 class="quotemurphy1">
-                    Information retrieval (IR) is the activity of obtaining information resources relevant to an information need from a collection of information resources. Searches can be based on full-text or other content-based indexing.
-                </h2>
-
-                <h2 class="homeh1">
-                    <a class="homelink" href="/Home/Introduction "> See more details</a>
-                </h2>
-
+</div>
+<div class="homedisplay">
+    <div class="homecontent2" style="padding-left: 0px;">
+        <div class="tilecontainer">
+            <div class="tile toptile">
+                <div id="topimg"></div>
+                <h2>Mode Three Name</h2>
+                <p style="font-size: large">In this mode, you will need to provide dataSet which you want to indexed and choosing retrieval model,
+                    the second setting query,click "Retrieve" button,you will get the result below.
+                    Only after you get the result, and fill the "Evaluation File Path" with valid
+                    content, click "Evaluate" button,you will get the evaluation answer.</p>
             </div>
-            <a name="Section2"></a>
 
-            <div class="homecontent5">
-
-                <h2 class="quotemurphy2">
-                    In this manual, You can clearly understand the specific operation of the three modes.
-                </h2>
-                <img class="demopic" src="./Images/robot2.png" width="319" height="375" alt="demo" />
-                <h2 class="homeh4">
-                    <a class="homelink" href="/Home/Demo">See the manual</a>
-                </h2>
-            </div>
-            <section class="section-white">
-                <div class = "container">
-                    <div class = "margin-bottom-50">
-                        <div class="col-md-12 text-center">
-                            <h2 class="section-title"> Choose Your Needed Mode</h2>
-                            <div class="separator_wrapper">
-                                <i class = "icon icon-star-two red"></i>
-                            </div>
-                            <p class="section-subtitle">
-                                The following are three modes provided by the system.
-                                <br/>
-                                The three modes are described in detail in the
-                                <strong>Manual</strong>
-                                .
-                                <br/>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row" style="width:100%; margin-left:0px; margin-right:0px;">
-                        <div class="col-md-4" style="padding-right: 10px; padding-left: 10px;">
-                            <div class="modeO">
-                                <div class="mode-top">
-                                    <h3>Mode One</h3>
-                                    <h4>mode name</h4>
-                                    <%--<p class="mode">--%>
-                                    <%--<span class="currency white">$</span>--%>
-                                    <%--<sapn class="number white">29</sapn>--%>
-                                    <%--<span class="month white">/month</span>--%>
-                                    <%--</p>--%>
-                                </div>
-                                <div class="mode-bottom">
-                                    <ul>
-                                        <li>Indexed collections</li>
-                                        <li>Pre-defined quries</li>
-                                        <li>Pre-defined IR models</li>
-                                    </ul>
-                                    <p  class="btn btn-md btn-block btn-mode-green" id="modeOneButton">Try It Now</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="modeTw">
-                                <div class="mode-top">
-                                    <h3>Mode Two</h3>
-                                    <h4>mode name</h4>
-                                </div>
-                                <div class="mode-bottom">
-                                    <ul>
-                                        <li>Indexed collections</li>
-                                        <li>User-defined quries</li>
-                                        <li>Pre-defined IR models</li>
-                                    </ul>
-                                    <p  class="btn btn-md btn-block btn-mode-red" id="modeTwoButton">Try It Now</p>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="modeTh">
-                                <div class="mode-top">
-                                    <h3>Mode Three</h3>
-                                    <h4>mode name</h4>
-                                </div>
-                                <div class="mode-bottom">
-                                    <ul>
-                                        <li>User-defined collections</li>
-                                        <li>User-defined quries</li>
-                                        <li>Pre-defined IR models</li>
-                                    </ul>
-                                    <p class="btn btn-md btn-block btn-mode-blue" id="modeThreeButton">Try It Now</p>
-                                </div>
-                            </div>
-                        </div>
+            <div class="container" style="margin-left:0px;">
+                <div class="jumbotron" style="padding-left: 10px; padding-top: 30px; padding-right: 10px; padding-bottom: 10px;">
+                    <div class="row">
+                        <button type="button" class="btn btn-primary" style="background-color:#F6753F; width:150px; height:40px;border:0px none #F6753F; font-size: larger;
+                        font-size: larger;" id="start" >start</button>
                     </div>
                 </div>
-            </section>
-            <%--<div class="homecontent4">--%>
-            <%--<h2 class="quotemurphy3">--%>
-            <%--We provide REST APIs for serving your applications. These APIs are standard, cross-platform, and easy-to-use.--%>
-            <%--</h2>--%>
-            <%--<img class="picleft" src="./Images/api.gif"  alt="api" />--%>
-            <%--<h2 class="homeh3">--%>
-            <%--<a class="homelink" href="/Home/Api">Get the API</a>--%>
-            <%--</h2>--%>
-            <%--</div>--%>
-            <div class="homecontent3">
-                <h2 class="quotemurphy4">
-                    In the release, We provide downloads of all data sets and queries within the system.
-                </h2>
-                <img class="downloadpic" src="./Images/robot3.png" width="319" height="375" alt="download" />
-                <h2 class="homeh4">
-                    <a class="homelink" href="/Home/Download">Go to download</a>
-                </h2>
+
+                <div class="jumbotron" id="evaluate-result" style="margin-top: 10px;display: block;padding-bottom: 0px;padding-left: 10px;padding-right: 10px;">
+                    <p id="evaluate-result-title" style="font-size: 15px;background: #f0ad4e;margin-bottom: 0;padding-left:10px;padding-top:5px;
+                    padding-bottom: 5px;">Evaluate Result:</p>
+                    <p style="font-size: 15px;margin-top: 0;border-right: 1px solid #CEEBBE; border-left: 1px solid #CEEBBE" id="evaluate-result-data"></p>
+                    <div class="spinner" id="evaluate-result-waiting">
+                        <div class="cube1"></div>
+                        <div class="cube2"></div>
+                    </div>
+                </div>
+                <div class="jumbotron" id="result" style="margin-top: 10px; padding: 10px;">
+                    <p id="result-data-title" style="font-size: 15px;background: #f0ad4e;margin-bottom: 0;padding-left:10px;padding-top:5px;
+                    padding-bottom: 5px;">
+                        Retrieval Result:</p>
+                    <p id="result-data" style="font-size: 15px;margin-top: 0;border-right: 1px solid #CEEBBE; border-left: 1px solid #CEEBBE"></p>
+                    <div class="spinner" id="waiting">
+                        <div class="cube1"></div>
+                        <div class="cube2"></div>
+                    </div>
+                </div>
+
             </div>
-
-
-        </div>
-
-        <div class="footer">
-            <%--<a href="http://go.microsoft.com/fwlink/?LinkID=286687" class="footer-element" target="_blank">Privacy and Cookies</a>--%>
-            <%--<a href="http://go.microsoft.com/fwlink/?LinkID=386394" class="footer-element" target="_blank">Terms of use</a>--%>
-            <%--<a href="http://go.microsoft.com/fwlink/?LinkID=402117" class="footer-element" target="_blank">Code of Conduct</a>--%>
-            <%--<a href="http://go.microsoft.com/fwlink/?LinkId=506942" class="footer-element" target="_blank">Trademarks</a>--%>
-            <a class="footer-element" target="_blank">Privacy and Cookies</a>
-            <a class="footer-element" target="_blank">Terms of use</a>
-            <a class="footer-element" target="_blank">Code of Conduct</a>
-            <a class="footer-element" target="_blank">Trademarks</a>
-            <%--<l class="footer-element">漏2016 Microsoft</l>--%>
-
+            <div><i style="font-size: large;"><Strong>Notes</Strong>: If you have no idea of how to using this mode, you
+                can see details in "<strong>MANUAL</strong>". If you want to know more information about dataSet in our
+                system, you can click "<strong>DOWNLOAD</strong>", more introduction will be presented.</i></div>
         </div>
     </div>
 </div>
 </body>
 <script>
 
-    //    $("#menu").click(function(){
-    //        if($("#api-menu").css("display") == 'none')
-    //            $("#api-menu").css("display", "block");
-    //        else
-    //            $("#api-menu").css("display", "none");
-    //    });
-    //下拉框
-    $(document).ready(function () {
-        $('.dropdown-toggle').dropdown();
-    })
-    //在登录模态框中点击注册按钮
-    $("#go2register").click(function () {
-        $("#dismiss-modal_login").click();
-        $("#myModal_register").modal({show:true});
-    })
-    //在注册模态框上点击“Log In”返回登录模态框
-    $("#back_login").click(function () {
-        $("#dismiss-modal_register").click();
-        $("#myModal_login").modal({show: true});
-    })
-    //在登录模态框上点击“Forget Password”返回忘记密码模态框
-    $("#go2forgot").click(function () {
-        $("#dismiss-modal_login").click();
-        $("#myModal_forgot").modal({show: true});
-    })
-
-    //在输入验证码界面输入“验证码”跳转至修改密码界面
-    $("#Next").click(function () {
-        $("#dismiss-myModal_forgot").click();
-        $("#myModal_reset_password").modal({show: true});
-    })
-
-    function validate() {
-
-        // $("#confirm_newPsw").attr("disabled","disabled");
-        //验证两次输入密码是否一致
-        var pwd = $("#newpassword").val();
-        var pwd1 = $("#new_password").val();
-        //window.alert(pwd+"!"+pwd1);
-        <!-- 对比两次输入的密码 -->
-        if(pwd.length<=0 || pwd1.length<=0){
-            $("#note").html("Password cannot be empty!");
-            //$("#confirm_newPsw").attr("disabled","disabled");
-        }
-        else if(pwd == pwd1)
-        {
-            //window.alert("Pass!");
-            $("#note").html("Reset Successfully!");
-            $("#note").css("color","green");
-            $("#confirm_newPsw").removeAttr("disabled");
-            $("#confirm_newPsw").click();
-
-        }
-        else {
-            // window.alert("Twice Different!");
-            $("#note").html("The code you enter twice must be the same");
-            $("#note").css("color","red")
-            $("#new_password").val("").focus();
-            $("#confirm_newPsw").attr("disabled","disabled");
-
-        }
-    }
-
-
-    //验证码60s发送一次
-    var countdown=60;
-    function settime(obj) {
-        if (countdown == 0) {
-            $("#forgot_email").removeAttr("disabled");
-            obj.removeAttribute("disabled");
-            obj.value="Send Code";
-            countdown = 60;
-            return;
-        } else {
-            $("#forgot_email").attr("disabled","disabled");
-            obj.setAttribute("disabled", true);
-            obj.value="(" + countdown + "s...)";
-            countdown--;
-        }
-        setTimeout(function() {
-                settime(obj) }
-            ,1000)
-    }
-
-
-    //在登录模态框上点击登录按钮
-    $("#button_login").click(function () {
-        checkInput_login();
-    })
-    function checkInput_login() {
-        var cont = 0;
-        if($("#input_login_username").val() != "") {
-            cont++;
-        } else {
-            document.getElementById("input_login_username").style.border = "1px solid rgba(202, 105, 105, 0.71)";
-        }
-        if($("#input_login_password").val() != "") {
-            cont++;
-        } else{
-            document.getElementById( "input_login_password" ).style.border = "1px solid rgba(202, 105, 105, 0.71)";
-        }
-        if(cont == 2){}
-    }
-    //在注册模态框上点击注册按钮
-    $("#button_register").click(function () {
-        var cont = 0;
-        if($("#input_register_email").val() != "") {
-            cont++;
-        }else{
-            document.getElementById("input_register_email").style.border = "1px solid rgba(202, 105, 105, 0.71)";
-        }
-        if($("#input_register_username").val() != "") {
-            cont++;
-        }else{
-            document.getElementById("input_register_username").style.border = "1px solid rgba(202, 105, 105, 0.71)";
-        }
-        if($("#input_register_password_set").val() != "") {
-            cont++;
-        }else{
-            document.getElementById("input_register_password_set").style.border = "1px solid rgba(202, 105, 105, 0.71)";
-        }
-        if($("#input_register_password_confirm").val() != "") {
-            cont++;
-        }else{
-            document.getElementById("input_register_password_confirm").style.border = "1px solid rgba(202, 105, 105, 0.71)";
-        }
-        if(cont == 4){
-
-        }
-    })
+    ///导航栏
     var state = $("#log_state").html();
     $("#log_state").click(function(){
         if(state == 'Log In')
@@ -596,25 +458,425 @@
 //            $("#myModal_login").modal({show:true});
         window.location.href="modeTh.jsp";
     })
-    $("#modeOneButton").click(function () {
-//        if(state == 'Log In')
-//            $("#myModal_login").modal({show:true});
-        window.location.href="modeO.jsp";
+    //下拉框
+    $(document).ready(function () {
+        $('.dropdown-toggle').dropdown();
     })
-    $("#modeTwoButton").click(function () {
-//        if(state == 'Log In')
-//            $("#myModal_login").modal({show:true});
-        window.location.href="modeTw.jsp";
+    //////////index的设置
+    var $start = $("#start");
+    var $index = $("#Index"), fileUploadCounter = 0;
+    var $evaluatedocument = $("#evaluatedocumentpathget");
+    var $evaluate = $("#evaluate");
+    var $stop_nextStep = $("#stop_nextStep");
+    var $retrieve = $("#Retrieve")
+    var $stop_nextStepToEvaluate = $("#stop_nextStepToEvaluate");
+    //结果表示
+    var $result = $("#result");
+    var evaluateResult = $("#evaluate-result");
+    $("#result-data-title").hide();
+    $result.hide();
+    evaluateResult.hide();
+    $("#result-table").hide();
+
+
+    $index.prop("disabled",true);
+    $stop_nextStep.prop("disabled",true);
+    $retrieve.prop("disabled", true);
+    $stop_nextStepToEvaluate.prop("disabled", true);
+    $evaluate.prop("disabled", true);
+    $evaluatedocument.prop("disabled", true);
+    //start跳转界面,如果是start,就跳转到Hint模态框,如果是indexing...就跳转到dataset的模态框,如果是retrieving...就跳转到queryset的模态框
+    $("#start").click(function(){
+        var text = $(this).text();
+        if(text == "start"){
+            $("#Hint").modal({show:true});
+        }
+        else if(text == "Indexing..." || text =="Index Finished" ){
+            $("#myModal_dataSet").modal({show:true});
+        }
+        else if(text == "Retrieving..." || text == "Retrieve Finished"){
+            $("#myModal").modal({show:true});
+        }
+        else if(text == "All Finished"){
+            $("#myModal_evaluate").modal({show:true});
+        }
     })
-    $("#modeThreeButton").click(function () {
-//        if(state == 'Log In')
-//            $("#myModal_login").modal({show:true});
-        window.location.href="modeTh.jsp";
-    })
+    $("#stop_nextStep").click(function(e){
+        var text = $(this).text();
+        if(text == "stop"){
+            Reset();
+            $.ajax({
+                type: "GET",
+                async: true,
+                url: "/EndProgram",
+                success:function(data){
+                    if(data == "ok"){
+                        Reset();
+                    }
+                }
+            });
+        }
+        else if(text == "Next Step"){
+            $("#dismiss-modalDataSet").click();
+            $("#myModal").modal({show: true})
+        }
+    });
+    function Reset(){
+        $("#datadoucumentpathShow").val("");
+        $("#datadoctagpathShow").val("");
+        $("#Index").html("Index");
+        $index.prop("disabled", true);
+        $stop_nextStep.prop("disabled", true);
+        $start.html("Index Set");
+    }
+    //改变stop_nextStep按钮的样式
+    function changeStop_nextStep(type){
+        if(type == "nextStep"){
+            $("#stop_nextStep").css("background-color", "#337ab7");
+            $("#stop_nextStep").css("border-color", "#337ab7");
+        }
+        else if(type == "stop"){
+            $("#stop_nextStep").css("background", "#d62323");
+            $("#stop_nextStep").css("border-color", "#d62323");
+        }
+    }
+    //上传压缩文档1
+    $('#datadoucumentpath').fileupload({
+        url:"/receive",
+        dataType: 'text',
+        add:function(e, data){
+            data.formData = {tt: 1}//tt的作用是在传数据到后台经过判断之后设置路径
+            $("#datadoucumentpathShow").val(data['files'][0]['name'])
+            data.submit();
+            $("#datadoucumentpathget").html('<i class="fa fa-spinner fa-pulse"></i>');
+        },
+        done: function(e, data){
+            checkIndex();
+            $("#datadoucumentpathget").html('...');
+        }
+    });
+    //上传索引标签的文件2
+    $('#datadoctagpath').fileupload({
+        url:"/receive",
+        dataType: 'text',
+        add:function(e, data){
+            data.formData = {tt: 2}
+            $("#datadoctagpathShow").val(data['files'][0]['name'])
+            data.submit();
+            $("#datadoctagpathget").html('<i class="fa fa-spinner fa-pulse"></i>');
+        },
+        done: function(e, data){
+            checkIndex();
+            $("#datadoctagpathget").html('...');
+        }
+    });
+    $("#datadoucumentpathget").click(function () {
+        //模拟点击
+        $('#datadoucumentpath').click();
+    });
+    $("#datadoctagpathget").click(function () {
+        $('#datadoctagpath').click();
+    });
+    function checkIndex() {
+        fileUploadCounter  = 0;
+        if($("#datadoctagpathShow").val() != "") {
+            fileUploadCounter++;
+        }
+        if($("#datadoucumentpathShow").val() != "") {
+            fileUploadCounter++;
+        }
+        if(fileUploadCounter == 2){
+            $index.prop("disabled", false);
+            $("#stop_nextStep").html('stop');
+            changeStop_nextStep("stop");
+            $stop_nextStep.prop("disabled", true);
+        }
+    }
+    //
+    $("#Index").click(function (e){
+//        var service = new Service("/userProvideIndex");
+//        alert("ddd");
+//        var $this = $(e.target);
+//        service.get(function(resp){
+//            $this.html('Finished')
+//            $query_set.prop("disabled", false);
+//        });
+
+        //var WeightModel = $("#WeightModel").val();
+        //对于已经检索过的结果,再次重新建索引时,之前的结果应该消失
+        $("#result-data-title").hide();
+        $result.hide();
+        evaluateResult.hide();
+        $("#result-table").hide();
+//        //并且对于检索的界面来说,重新建完所以之后一定要重新检索一遍,所以这种情况应该是Retreive按钮可以使用,然后stop_nextStepToEvaluate按钮应该是变成stop状态并且是不可使用的
+//        changeStop_nextStepToEvaluate("stop");
+//        $("#stop_nextStepToEvaluate").prop("disabled", true);
+        /////////////////////////
+        //只要点击index,stop按钮就应该变成红色
+        $("#stop_nextStep").prop("disabled", false);
+        changeStop_nextStep("stop");
+        $("#Index").html('<i class="fa fa-spinner fa-pulse"></i>');
+        $("#Index").prop("disabled", true);
+        $("#start").html('Indexing...');
+        $.ajax({
+            type: "GET",
+            async: true,
+            url: "/userProvideIndex",
+            success: function(data) {
+                if (data == 'ok') {
+                    $("#Index").html('Index');
+                    $("#Index").prop("disabled", true);
+                    $("#start").html('Index Finished');
+                    $("#stop_nextStep").html('Next Step');
+                    changeStop_nextStep("nextStep");
+                }
+            }
+        });
+    });
+    ////retrieve的设置
+    $("#stop_nextStepToEvaluate").click(function(e){
+        var text = $(this).text();
+        if(text == "stop"){
+            Reset();
+            $.ajax({
+                type: "GET",
+                async: true,
+                url: "/EndProgram",
+                success:function(data){
+                    if(data == "ok"){
+                    }
+                }
+            });
+        }
+        else if(text == "Next Step"){
+            $("#dismiss-modalQuerySet").click();
+            $("#myModal_evaluate").modal({show: true})
+        }
+    });
+    function Reset(){
+        $("#querydocumenpathShow").val("");
+        $("#querytagpathShow").val("");
+        $("#Retrieve").html("Retrieve");
+        $retrieve.prop("disabled", true);
+        $stop_nextStepToEvaluate.prop("disabled", true);
+        $start.html("Index Finished");
+    }
+    //改变stop_nextStepToEvaluate按钮的样式
+    function changeStop_nextStepToEvaluate(type){
+        if(type == "nextStep"){
+            $("#stop_nextStepToEvaluate").css("background-color", "#337ab7");
+            $("#stop_nextStepToEvaluate").css("border-color", "#337ab7");
+            $("#stop_nextStepToEvaluate").html('Next Step');
+        }
+        else if(type == "stop"){
+            $("#stop_nextStepToEvaluate").css("background", "#d62323");
+            $("#stop_nextStepToEvaluate").css("border-color", "#d62323");
+            $("#stop_nextStepToEvaluate").html('stop');
+        }
+    }
+
+    $('#querydocumenpath').fileupload({
+        url: "/receive",
+        dataType: 'text',
+        add: function (e, data) {
+            data.formData = {tt: 3};
+            $("#querydocumenpathShow").val(data['files'][0]['name'])
+            data.submit();
+            $("#querydocumentpathget").html('<i class="fa fa-spinner fa-pulse"></i>');
+        },
+        done: function (e, data) {
+            checkRetrieval();
+            $("#querydocumentpathget").html('...');
+        }
+    });
+    $('#querytagpath').fileupload({
+        url: "/receive",
+        dataType: 'text',
+        add: function (e, data) {
+            data.formData = {tt: 4};
+            $("#querytagpathShow").val(data['files'][0]['name']);
+            data.submit();
+            $("#querytagpathget").html('<i class="fa fa-spinner fa-pulse"></i>');
+        },
+        done: function (e, data) {
+            checkRetrieval();
+            $("#querytagpathget").html('...');
+        }
+    });
+    //    $('#queryresultpath').fileupload({
+    //        url: "/receive",
+    //        dataType: 'text',
+    //        add: function (e, data) {
+    //            data.formData = {tt: 3};
+    //            $("#queryresultpathShow").val(data['files'][0]['name']);
+    //            data.submit();
+    //            $("#queryresultpathget").html('<i class="fa fa-spinner fa-pulse"></i>');
+    //        },
+    //        done: function (e, data) {
+    //            fileUploadCounter++;
+    //            checkRetrieval();
+    //            $("#queryresultpathget").html('...');
+    //        }
+    //    });
+
+    //模擬用戶點擊按鈕
+    $("#querydocumentpathget").click(function () {
+        //模拟点击
+        $('#querydocumenpath').click();
+    });
+    $("#querytagpathget").click(function () {
+        $('#querytagpath').click();
+    });
+    //    $('#queryresultpathget').click(function () {
+    //        $('#queryresultpath').click();
+    //    });
+
+    function checkRetrieval() {
+        var fileUploadCounter_retrieve = 0;
+        if($("#querydocumenpathShow").val() != ""){
+            fileUploadCounter_retrieve++;
+        }
+        if($("#querytagpathShow").val() != ""){
+            fileUploadCounter_retrieve++;
+        }
+        if (fileUploadCounter_retrieve == 2) {
+            $retrieve.prop("disabled", false);
+            changeStop_nextStepToEvaluate("stop");
+            $stop_nextStepToEvaluate.prop("disabled", true);
+        }
+    }
+    $("#Retrieve").click(function (e) {
+        //再次点击检索的时候,之前检索的结果应该消失掉
+        $("#result-data-title").hide();
+        $result.hide();
+        evaluateResult.hide();
+        $("#result-table").hide();
+        //点击完retrieve按钮后运行过程中就不能点击,成功之后可以再次点击
+        $retrieve.prop("disabled", true);
+        //点击检索之后也不能翻到前一页,检索完成之后才可以
+        //点完检索之后必须再评测一次
+
+        $("#stop_Finish").prop("disabled", true);
+        ////////////////////////////
+        changeStop_nextStepToEvaluate("stop");
+        $("#stop_nextStepToEvaluate").prop("disabled", false);
+        $("#Retrieve").html('<i class="fa fa-spinner fa-pulse"></i>');
+        $("#start").html('Retrieving...');
+        $result.show();
+        var service = new Service("/userProvideRetrieval");
+        var WeightModel = $("#WeightModel").val();
+        //这里是入参数  所有的参数在在这里构造
+        var selects = $("#WeightModel").val();
+//        selects = selects.join(",");
+        var para = {WeightModel: WeightModel};
+        service.get(para, function (response) {
+            $("#waiting").addClass("hidden");
+            //$evaluate.removeAttr("disabled");
+            //$("#result-data").html(response);
+            process(response);
+            $retrieve.prop("disabled", false);
+            $("#dismiss-modalQuerySet").click();
+            $("#Retrieve").html('Retrieve');
+            $("#start").html('Retrieve Finished');
+            $("#stop_nextStepToEvaluate").html('Next Step');
+            changeStop_nextStepToEvaluate("nextStep");
+            // $evaluatedocument.prop("disabled", false);
+        });
+
+
+        function process(response) {
+            var array = [];
+            var data = JSON.parse(response);
+            for (var i in data) {
+                var item = data[i];
+                var item_html = "<div class='result-div'>" +
+                    "<a href='/getFile?filepath=" + item.url + "' class='result-tile'>" + item.title + "</a>" +
+                    "<span class='result-description'>" + item.description + "</span>" +
+                    "</div>"
+                array.push(item_html);
+            }
+            $("#result-data").html(array.join(""));
+            $("#result-data-title").show();
+
+        }
+    });
 
 
 
 
+    //第一个按钮的事件  发送数据到后台     然后后台如果成功则 则可以点击第二个按钮
+    //     $("#buildData").click(function (e) {
+    //         var $this = $(e.target);
+    //         $this.html('<i class="fa fa-spinner fa-pulse"></i>');
+    //         var service = new Service("/build");
+    //         var dataType = $("#dataType").val();
+    //         service.get({dataType: dataType}, function (resp) {
+    //             $this.html('Finished');
+    //         });
+    //     });
+    ////////evaluate
+    $("#stop_Finish").click(function(e){
+        var text = $(this).text();
+        if(text == "stop"){
+            Reset();
+            $.ajax({
+                type: "GET",
+                async: true,
+                url: "/EndProgram",
+                success:function(data){
+                    if(data == "ok"){
+                    }
+                }
+            });
+        }
+        else if(text == "Finished"){
+            $("#dismiss-modalEvaluate").click();
+        }
+    });
+    function changeStop_Finish(type){
+        if(type == "Finished"){
+            $("#stop_Finish").css("background-color", "#337ab7");
+            $("#stop_Finish").css("border-color", "#337ab7");
+            $("#stop_Finish").html("Finished");
+            $("#stop_Finish").prop("disabled", false);
+        }
+        else if(type == "stop"){
+            $("#stop_Finish").css("background", "#d62323");
+            $("#stop_Finish").css("border-color", "#d62323");
+            $("#stop_Finish").html('stop');
+            $("#stop_Finish").prop("disabled", false);
+        }
+    }
+    $evaluate = $("#Evaluate");
+    $("#evaluationdocumentpathget").click(function(){
+        $("#evaluationdocumentpath").click();
+        $evaluate.prop("disabled", true);
+    });
+    $('#evaluationdocumentpath').fileupload({
+        url: "/receive",
+        dataType: 'text',
+        add: function(e, data){
+            data.formData = {tt: 5};
+            $("#evaluationdocumentpathshow").val(data['files'][0]['name']);
+            data.submit();
+            $("#evaluationdocumentpathget").html('<i class="fa fa-spinner fa-pulse"></i>');
+        },
+        done:function(e,data){
+            $("#evaluationdocumentpathget").html('...');
+            $evaluate.prop("disabled", false);
+        }
+    });
+    $("#Evaluate").click(function () {
+        changeStop_Finish("stop");
+        evaluateResult.show();
+        var service = new Service("/evaluate");
+        service.get({data: ""}, function (resp) {
+            $("#evaluate-result-waiting").hide();
+            $("#evaluate-result-data").html(resp);
+            $("#dismiss-modalEvaluate").click();
+            changeStop_Finish("Finished");
+            $start.html('All Finished');
+        });
+    });
 </script>
 </html>
-

@@ -65,4 +65,9 @@ public class UserController extends BaseController {
         String ans =userLogin.resetPassword(emailAddress, passWord);
         return ans;
     }
+
+    /*模式三， 上传数据集*/
+    /*@ResponseBody
+    @RequestMapping("/uploadDataSet")
+    public String*/
 }

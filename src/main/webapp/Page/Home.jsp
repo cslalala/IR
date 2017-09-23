@@ -218,7 +218,7 @@
                     <p style="padding: 15px 0px 10px; position: relative;">
                         <%--<span class="u_logo"></span>--%>
                         <input name="f_email" class="ipt ipt_username" type="text" placeholder="email address " value="" id="forgot_email" style="padding-top:5px; padding-bottom: 5px;float:left;width:80%">
-                        <input type="button" class="btn btn-default" id="sendEmail" value="Send"  style="float: right;width:20%;height:42px;text-align:center;vertical-align:middle;" />
+                        <input type="button" class="btn btn-default" id="sendEmail" value="Send"  onclick="settime(this)" style="float: right;width:20%;height:42px;text-align:center;vertical-align:middle;" />
                     </p>
                     </br>
                     <p style="margin-top:15px;padding: 15px 0px 10px; position: relative;">
@@ -566,6 +566,7 @@
     $("#go2forgot").click(function () {
         /*forget模态框应该清空*/
         forget_reset();
+        send_reset();
         $("#dismiss-modal_login").click();
         $("#myModal_forgot").modal({show: true});
     })
@@ -591,7 +592,10 @@
             }else if(validation_input.length == 0){
                 $("#validation_note").html("verification code must be filled");
                 $("#validation_note").css("color","red")
-            }else{
+            }else if(validation_input.length < 6){
+                $("#validation_note").html("verification code is incorrect");
+                $("#validation_note").css("color","red")
+            } else{
                 var service = new Service("/confirmValidation")
                 var para = {emailAddress: emailAddress, validation_input: validation_input}
                 service.get(para, function (response) {
@@ -679,83 +683,52 @@
         }
     }
 
-    //重置邮件发送按钮
-    function send_reset() {
-        $("#forgot_email").removeAttr("disabled");
-        $("#sendEmail").removeAttribute("disabled");
-        $("#sendEmail").value="Send";
-        countdown = 120;
-    }
-    $("#stop_nextStep").click(function(e){
-        var text = $(this).text();
-        if(text == "stop"){
-            Reset();
-            $.ajax({
-                type: "GET",
-                async: true,
-                url: "/EndProgram",
-                success:function(data){
-                    if(data == "ok"){
-                        Reset();
-                    }
-                }
-            });
-        }
-        else if(text == "Next Step"){
-            $("#dismiss-modalDataSet").click();
-            $("#myModal").modal({show: true})
-        }
-    });
-    //验证码60s发送一次
-    var countdown=120;
-    $("#sendEmail").click(function () {
+    function send() {
         /*判断输入的邮箱是否符合正则表达式*/
         var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
+        var service = new Service("/sendEmail");
         var emailAddress = $("#forgot_email").val();
-        if(emailAddress.length == 0){
+            if(emailAddress.length == 0){
             $("#validation_note").html("E-mail can not be empty");
             $("#validation_note").css("color","red")
-        }else {
-            if (!regex.test(emailAddress)) {
+        }else{
+            if(!regex.test(emailAddress)){
                 $("#validation_note").html("Invalid mailbox");
-                $("#validation_note").css("color", "red")
-            } else {
-                //var para = {emailAddress: emailAddress}
-                $.ajax({
-                    type: "GET",
-                    async: true,
-                    url: "/sendEmail",
-                    data: {emailAddress: emailAddress},
-                    success: function (data) {
-                        if (data == "Failed to send") {
-                            $("#validation_note").html("Please send again");
-                            $("#validation_note").css("color", "red")
-                        } else {
-                            $("#validation_note").html(response);
-                            $("#validation_note").css("color", "green")
-                        }
+                $("#validation_note").css("color","red")
+            }else{
+                var para = {emailAddress: emailAddress}
+                service.get(para, function (response) {
+                    if(response == "Failed to send"){
+                        $("#validation_note").html("Please send again");
+                        $("#validation_note").css("color","red")
+                    }else{
+                        $("#validation_note").html(response);
+                        $("#validation_note").css("color","green")
                     }
                 })
             }
         }
-        var seconds = 60;
-        var fun = setInterval(function(){
-                     seconds -= 1;
-                        $('#sendEmail').html(seconds);
-                        if(seconds == 0){
-                            clearInterval(fun);
-                              $('.count').hide();
-                              $('#sendEmail').html(120);
-                               seconds = 120;
-                        }
-                      },1000);
+    }
 
-    })
-    /*function settime(obj) {
-        /!*判断输入的邮箱是否符合正则表达式*!/
-        var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
-       // var service = new Service("/sendEmail");
+    //重置邮件发送按钮
+    function send_reset() {
+        $("#forgot_email").removeAttr("disabled");
+        $("#sendEmail").removeAttr("disabled");
+        $("#sendEmail")[0].value = "Send";
+        countdown = 60;
+    }
+    //验证码60s发送一次
+    var countdown=60;
+    var cnt = 0
+    function settime(obj) {
+        /*判断输入的邮箱是否符合正则表达式*/
+        /*var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
+        var service = new Service("/sendEmail");*/
         var emailAddress = $("#forgot_email").val();
+        if (cnt == 0) {
+            send()
+            cnt += 1
+        }
         if (countdown == 0) {
             send_reset();
             //时间到了之后原来的验证码应该不能使用了，所以就再次更新验证码
@@ -767,49 +740,15 @@
         } else {
             $("#forgot_email").attr("disabled","disabled");
             obj.setAttribute("disabled", true);
-            obj.value=countdown;
+            obj.value=countdown+"...";
             countdown--;
         }
         setTimeout(function() {
             settime(obj)
         },1000)
 
-        if(emailAddress.length == 0){
-            $("#validation_note").html("E-mail can not be empty");
-            $("#validation_note").css("color","red")
-        }else{
-            if(!regex.test(emailAddress)){
-                $("#validation_note").html("Invalid mailbox");
-                $("#validation_note").css("color","red")
-            }else{
-                //var para = {emailAddress: emailAddress}
-                $.ajax({
-                    type: "GET",
-                    async: true,
-                    url: "/sendEmail",
-                    data: {emailAddress: emailAddress},
-                    success:function (data) {
-                        if(data == "Failed to send"){
-                            $("#validation_note").html("Please send again");
-                            $("#validation_note").css("color","red")
-                        }else{
-                            $("#validation_note").html(response);
-                            $("#validation_note").css("color","green")
-                        }
-                    }
-                })
-               /!* service.get(para, function (response) {
-                    if(response == "Failed to send"){
-                        $("#validation_note").html("Please send again");
-                        $("#validation_note").css("color","red")
-                    }else{
-                        $("#validation_note").html(response);
-                        $("#validation_note").css("color","green")
-                    }
-                })*!/
-            }
-        }
-    }*/
+
+    }
     function register_reset() {
         /*document.getElementById("input_register_email").value="";
         document.getElementById("input_register_username").value="";
