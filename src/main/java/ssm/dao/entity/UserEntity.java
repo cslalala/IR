@@ -1,5 +1,8 @@
 package ssm.dao.entity;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Created by chensu on 2017/9/18.
  */

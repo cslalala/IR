@@ -33,7 +33,7 @@ public class User_Login implements UserLogin {
         /*1代表用户不存在， 2代表密码错误， 成功就传用户的名字*/
         if(uelist.size() == 0){
             return "User does not exist";
-        }else{
+        } else{
             UserEntity userEntity = userDao.findUser(emailAddress).get(0);
             if(!userEntity.getPassword().equals(password)){
                 return "Wrong password";

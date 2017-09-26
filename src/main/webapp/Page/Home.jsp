@@ -208,7 +208,7 @@
 <div class="modal fade" id="myModal_forgot" tabindex="-1" role="dialog" aria-labelledby="myModal_forgot" data-backdrop="static">
     <div class="modal-dialog" style="z-index: 2000;" role="document">
         <div class="modal-content">
-            <a class="close close-pos" data-dismiss="modal" id="dismiss-myModal_forgot" style="margin-right:-15px; margin-top:-20px;">x</a>
+            <a class="close close-pos" data-dismiss="modal" id="dismiss-myModal_forgot" onclick="this.isclick=1"  style="margin-right:-15px; margin-top:-20px;">x</a>
             <div class="modal-header">
                 <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>--%>
                 <h4 class="modal-title" id="myModalLabel">Validation Code</h4>
@@ -217,8 +217,8 @@
                 <form  enctype="multipart/form-data" action="/ 这里是web.xml配置接受servlet的地址" method="post">
                     <p style="padding: 15px 0px 10px; position: relative;">
                         <%--<span class="u_logo"></span>--%>
-                        <input name="f_email" class="ipt ipt_username" type="text" placeholder="email address " value="" id="forgot_email" style="padding-top:5px; padding-bottom: 5px;float:left;width:80%">
-                        <input type="button" class="btn btn-default" id="sendEmail" value="Send"  onclick="settime(this)" style="float: right;width:20%;height:42px;text-align:center;vertical-align:middle;" />
+                        <input name="f_email" class="ipt ipt_username" type="text" placeholder="Email Address " value="" id="forgot_email" style="padding-top:5px; padding-bottom: 5px;float:left;width:80%">
+                        <input type="button" class="btn btn-default" id="sendEmail" value="Send"  onclick="settime(this)" style="float: right;width:52px;height:42px;text-align:center;vertical-align:middle;" />
                     </p>
                     </br>
                     <p style="margin-top:15px;padding: 15px 0px 10px; position: relative;">
@@ -306,6 +306,9 @@
         <li>
             <button type="button" class="btn btn-default" id="log_state" style="padding-top:2px;font-size:16px; line-height:1.1; font-weight:500;border:none;background-color:#f1f1f1; ">Log In</button>
             <%--<a href="login.jsp" id="log_state">Log In</a>--%>
+        </li>
+        <li>
+            <label  id="userID" style = "color: #f1f1f1">UserID</label>
         </li>
     </ul>
 </div>
@@ -516,6 +519,7 @@
                     }else{
                         $("#dismiss-modal_login").click();
                         $("#log_state").html(response)
+                        $("#userID").html(email);
                     }
                 })
             }
@@ -557,6 +561,7 @@
     function forget_reset() {
         //send_reset设置的是发送按钮
         //send_reset();
+        document.getElementById("dismiss-myModal_forgot").isclick=0;
         $("#forgot_email")[0].value = "";
         $("#input_Code")[0].value = "";
         document.getElementById("validation_note").innerText=""
@@ -647,6 +652,7 @@
                 if(response != "Password reset failed"){
                     $("#dismiss-myModal_reset_password").click();
                     $("#log_state").html(response);
+                    $("#userID").html(emailAddress);
                 }else{
                     $("#note").html(response);
                     $("#note").css("color","red")
@@ -688,19 +694,22 @@
         var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
         var service = new Service("/sendEmail");
         var emailAddress = $("#forgot_email").val();
-            if(emailAddress.length == 0){
+        if(emailAddress.length == 0){
             $("#validation_note").html("E-mail can not be empty");
-            $("#validation_note").css("color","red")
+            $("#validation_note").css("color","red");
+            return 1; //代表send按钮要重置
         }else{
             if(!regex.test(emailAddress)){
                 $("#validation_note").html("Invalid mailbox");
                 $("#validation_note").css("color","red")
+                return 1;
             }else{
                 var para = {emailAddress: emailAddress}
                 service.get(para, function (response) {
                     if(response == "Failed to send"){
                         $("#validation_note").html("Please send again");
                         $("#validation_note").css("color","red")
+                        return 1;
                     }else{
                         $("#validation_note").html(response);
                         $("#validation_note").css("color","green")
@@ -726,8 +735,15 @@
         var service = new Service("/sendEmail");*/
         var emailAddress = $("#forgot_email").val();
         if (cnt == 0) {
-            send()
+            if(send() == 1){
+                send_reset();
+                return ;
+            }
             cnt += 1
+        }
+        if(document.getElementById("dismiss-myModal_forgot").isclick == 1) {
+            cnt = 0;
+            return;
         }
         if (countdown == 0) {
             send_reset();
@@ -816,6 +832,7 @@
                             $("#register_note").css("color","green");
                             $("#dismiss-modal_register").click();
                             $("#log_state").html(userName);
+                            $("#userID").html(emailAddress);
                         }
                     })
                 }

@@ -375,6 +375,9 @@
             <button type="button" class="btn btn-default" id="log_state" style="padding-top:2px;font-size:16px; line-height:1.1; font-weight:500;border:none;background-color:#f1f1f1; ">Log In</button>
             <%--<a href="login.jsp" id="log_state">Log In</a>--%>
         </li>
+        <li>
+            <label  id="userID" style = "color: #f1f1f1">UserID</label>
+        </li>
     </ul>
 </div>
 <div id="banner">
@@ -541,20 +544,21 @@
         }
     }
     //上传压缩文档1
-    $('#datadoucumentpath').fileupload({
-        url:"/receive",
-        dataType: 'text',
-        add:function(e, data){
-            data.formData = {tt: 1}//tt的作用是在传数据到后台经过判断之后设置路径
-            $("#datadoucumentpathShow").val(data['files'][0]['name'])
-            data.submit();
-            $("#datadoucumentpathget").html('<i class="fa fa-spinner fa-pulse"></i>');
-        },
-        done: function(e, data){
-            checkIndex();
-            $("#datadoucumentpathget").html('...');
-        }
-    });
+    $('#datadoucumentpath').click(function () {
+        $("#datadoucumentpathShow").val(data['files'][0]['name']);
+        $("#datadoucumentpathget").html('<i class="fa fa-spinner fa-pulse"></i>');
+        $.ajax({
+            type: "POST",
+            url: "/Upload",
+            dataType: "json",
+            async: false,
+            data:{tt:1, userID:$("#userID").val()},
+            success:function(data){
+                checkIndex();
+                $("#datadoucumentpathget").html('...');
+            }
+        })
+    })
     //上传索引标签的文件2
     $('#datadoctagpath').fileupload({
         url:"/receive",
