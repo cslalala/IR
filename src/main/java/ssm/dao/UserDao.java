@@ -17,5 +17,4 @@ public interface UserDao {
     boolean addUser(UserEntity entity);
     void updateValidation(@Param("emailAddress") String emailAddress, @Param("validation") String validation);
     boolean resetPassword(@Param("emailAddress") String emailAddress, @Param("password") String password);
-    boolean updataIndexDataSetZIPPath(@Param("emailAddress") String emailAddress, @Param("path") String path);
 }

@@ -18,6 +18,9 @@ public class User_IndexEntity {
     private String indexProcessTag; //需要建索引的标签
     private String indexResultPath;                  //索引结果存放地址
 
+    public User_IndexEntity(){
+
+    }
     public String getDataName() {
         return dataName;
     }
