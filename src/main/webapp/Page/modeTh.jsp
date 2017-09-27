@@ -226,7 +226,7 @@
                         <div class="col-xs-8" style="margin-left: 0px; padding-right:0px;">
                             <input class="form-control" id="datadoucumentpathShow" placeholder="data document path">
                             <input class="form-control hidden" type="file"
-                                   name="datadoucumentpath" id="datadoucumentpath">
+                                   name="uploadFile" id="datadoucumentpath">
                         </div>
                         <div class="col-xs-2 col-xs-2-change">
                             <button class="btn btn-default" id="datadoucumentpathget" type="button"

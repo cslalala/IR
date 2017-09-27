@@ -105,13 +105,13 @@ public class User_Login implements UserLogin {
             return "User does not exist".toString();
         }else{
             int randomInt =(int)((Math.random()*9+1)*100000);
-            MailSend ms = new MailSend();
-            ms.setAddress("m18321529565_1@163.com", emailAddress, "验证码", String.valueOf(randomInt));
-            String ans = ms.send("smtp.163.com", "m18321529565_1@163.com", "cs941025");
-            if(ans.equals("Sent successfully")){
-                updateValidation(emailAddress, String.valueOf(randomInt));
-            }
-            return ans;
+//            MailSend ms = new MailSend();
+//            ms.setAddress("m18321529565_1@163.com", emailAddress, "验证码", String.valueOf(randomInt));
+//            String ans = ms.send("smtp.163.com", "m18321529565_1@163.com", "cs941025");
+//            if(ans.equals("Sent successfully")){
+//                updateValidation(emailAddress, String.valueOf(randomInt));
+//            }
+            return "";
         }
     }
 }
