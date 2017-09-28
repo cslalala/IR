@@ -2,11 +2,5 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--写mybatis语法的sql-->
 <mapper namespace="ssm.dao.User_IndexDao">
-<insert id="addUser_Index"
-    parameterType="ssm.dao.entity.User_IndexEntity">
-    INSERT INTO user_Index
-    VALUES (#{userID}, #{dataName}, #{indexDataSetZIPPath}, #{indexDataSetPath}, #{indexDataSetDivPath}, #{indexResultPath}
-    , #{indexDocInfPath}, #{indexDocTag}, #{indexIDTag}, #{indexProcessTag})
-</insert>
 
 </mapper>

@@ -81,10 +81,8 @@ public class UserController extends BaseController {
     @ResponseBody
     @RequestMapping("/Upload")
     public void uploadData(UploadParam param,MultipartFile uploadFile) throws IOException {
-
-
-        System.out.println(param);
-        System.out.println(uploadFile);
+        if(param.getTt().equals("1")){
+        }
         //这个字节数组就是文件
         byte[] bytes = uploadFile.getBytes();
 
