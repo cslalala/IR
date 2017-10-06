@@ -4,12 +4,12 @@ package ssm.dao.entity;
  * Created by chensu on 2017/9/28.
  */
 public class queryDataInf {
-    String queryID;
-    String indexID;
-    String queryName;
-    String queryPath;
-    String queryDocTag;
-    String queryIDTag;
+    String queryID;         //每次上传的query都有一个ID
+    String indexID;         //query对不同的index的检索,索引需要indexID
+    String queryName;      //上传的query都有一个名称（也是显示给用户看的时候的名字）
+    String queryPath;       //上传query的保存地址
+    String queryDocTag;     //上传query的DOC标签
+    String queryIDTag;      //上传查询的唯一标识
 
     public String getQueryID() {
         return queryID;

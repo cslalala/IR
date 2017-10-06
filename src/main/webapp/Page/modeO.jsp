@@ -403,7 +403,7 @@
     $ee.prop("disabled", true);
     $("#getData").click(function (e) {
         $result.show();
-        var service = new Service("/classify");
+        var service = new Service("/modeOne_retrieve");
         var WeightModel = $("#WeightModel").val();
         //这里是入参数  所有的参数在在这里构造
 
@@ -411,7 +411,8 @@
 
         var selects = $("#buildData").selectpicker('val');
         selects = selects.join(",");
-        var para = {WeightModel: WeightModel, queryNo: selects, dataType: dataType};
+        var para = {dataName: dataType, queryNo: selects, retrieveModel:WeightModel}
+        //var para = {WeightModel: WeightModel, queryNo: selects, dataType: dataType};
         service.get(para, function (response) {
             $("#waiting").addClass("hidden");
 
@@ -428,9 +429,9 @@
             for (let i in data) {
                 var item = data[i];
                 let item_html = "<div class='result-div'>" +
-                    "<a href='/getFile?filepath=" + item.url + "' class='result-tile'>" + item.title + "</a>" +
-                    "<span class='result-description'>" + item.description + "</span>" +
-                    "</div>"
+                        "<a href='/getFile?filepath=" + item.url + "' class='result-tile'>" + item.title + "</a>" +
+                        "<span class='result-description'>" + item.description + "</span>" +
+                        "</div>"
                 array.push(item_html);
             }
             $("#result-data").html(array.join(""));

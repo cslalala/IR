@@ -697,22 +697,27 @@
         if(emailAddress.length == 0){
             $("#validation_note").html("E-mail can not be empty");
             $("#validation_note").css("color","red");
-            return 1; //代表send按钮要重置
+            return false; //代表send按钮要重置
         }else{
             if(!regex.test(emailAddress)){
                 $("#validation_note").html("Invalid mailbox");
                 $("#validation_note").css("color","red")
-                return 1;
+                return false;
             }else{
                 var para = {emailAddress: emailAddress}
                 service.get(para, function (response) {
                     if(response == "Failed to send"){
                         $("#validation_note").html("Please send again");
                         $("#validation_note").css("color","red")
-                        return 1;
+                        return false;
+                    }else if(response == "User does not exist"){
+                        $("#validation_note").html(response);
+                        $("#validation_note").css("color","red")
+                        return false;
                     }else{
                         $("#validation_note").html(response);
                         $("#validation_note").css("color","green")
+                        return true;
                     }
                 })
             }
@@ -735,7 +740,7 @@
         var service = new Service("/sendEmail");*/
         var emailAddress = $("#forgot_email").val();
         if (cnt == 0) {
-            if(send() == 1){
+            if(!send()){
                 send_reset();
                 return ;
             }

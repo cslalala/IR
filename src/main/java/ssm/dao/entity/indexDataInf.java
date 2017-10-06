@@ -4,13 +4,13 @@ package ssm.dao.entity;
  * Created by chensu on 2017/9/28.
  */
 public class indexDataInf {
-    String dataID;
-    String dataName;
-    String indexDataSetZIPPath;
-    String indexDataSetPath;
-    String indexDataSetDivPath;
-    String indexDocTag;
-    String indexIDTag;
+    String dataID;                           //每上传一次数据集,都会给数据集一个ID
+    String dataName;                       //每次上传的数据集都会有一个数据集名称（显示给用户时的名称）
+    String indexDataSetZIPPath;      //上传数据集的压缩文件地址
+    String indexDataSetPath;            //数据集解压之后的地址
+    String indexDataSetDivPath;       //数据集预处理之后的地址
+    String indexDocTag;                   //数据集DOC的标志
+    String indexIDTag;                    //数据集每一篇唯一的标识
 
     public String getDataID() {
         return dataID;

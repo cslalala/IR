@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--写mybatis语法的sql-->
+<mapper namespace="ssm.dao.User_RetrieveDao">
+<select id="find"
+        parameterType="ssm.dao.entity.systemDataInf"
+        resultType="ssm.dao.entity.systemDataInf">
+    SELECT
+    dataName,
+    indexResultPath,
+    indexDocPath,
+    queryPath
+    FROM systemDataInf WHERE dataName=#{dataName}
+</select>
+</mapper>

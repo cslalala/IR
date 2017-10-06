@@ -4,6 +4,9 @@ package ssm.dao.entity;
  * Created by chensu on 2017/9/28.
  */
 public class user_index {
+
+    /*一个用户可能会上传不同的数据集*/
+
     String id;
     String userID;
     String dataID;

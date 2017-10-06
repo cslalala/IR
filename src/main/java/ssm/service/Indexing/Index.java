@@ -15,11 +15,11 @@ import javax.annotation.Resource;
 public class Index implements I_Index {
     @Resource
     private User_IndexDao userIndexDao;
-    public void setPath(String UserID, String fileName, String path, int type) {
+    public void setindexDataInf(String UserID, String fileName, String path, String dataZipPath) {
+        String indexDataSetPath = path + UserID + "_" + "DataSet";
+        String indexDataSetDivPath = path + UserID + "_" + "DataSetDiv";
+        /*userIndexDao*/
         //设置query存放的路径
-        if (type == 1) {
-            System.out.println("********************************************");
-        }
        /* //设置要进行检索的标签
         else if (type == 2) {
             ur.setIndexTagPath(savePathStr);

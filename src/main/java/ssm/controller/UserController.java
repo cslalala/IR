@@ -6,8 +6,10 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ssm.dao.entity.systemDataInf;
 import ssm.entity.UploadParam;
 import ssm.service.I_Index;
+import ssm.service.I_Retrieve;
 import ssm.service.UserLogin;
 
 import javax.annotation.Resource;
@@ -28,6 +30,7 @@ public class UserController extends BaseController {
     @Resource
     private UserLogin userLogin;
     private I_Index i_index;
+    private I_Retrieve i_retrieve;
     public void setUserLogin(UserLogin userLogin) {
         this.userLogin = userLogin;
     }
@@ -77,15 +80,41 @@ public class UserController extends BaseController {
         return ans;
     }
 
+    /*模式一 检索*/
+    @ResponseBody
+    @RequestMapping("/modeOne_retrieve")
+    public String modeOne_retrieve(String dataName, String queryNo, String retrieveModel){
+        systemDataInf systemdatainf = i_retrieve.modeOne_Retrieve(dataName, queryNo, retrieveModel);
+        return "1";
+    }
+
     /*模式三， 上传数据集*/
     @ResponseBody
     @RequestMapping("/Upload")
-    public void uploadData(UploadParam param,MultipartFile uploadFile) throws IOException {
-        if(param.getTt().equals("1")){
-        }
-        //这个字节数组就是文件
-        byte[] bytes = uploadFile.getBytes();
-
+    public void uploadData(UploadParam param,MultipartFile uploadFile, HttpServletRequest request) throws IOException {
+       /* try{
+            String fileName = uploadFile.getOriginalFilename();
+            fileName = fileName.substring(fileName.lastIndexOf(File.separator) + 1);
+            //得到上传文件的保存目录，将上传的文件存放于WEB-INF目录下，不允许外界直接访问，保证上传文件的安全
+           // String newFileName = UUID.randomUUID().toString() + "_" + fileName;
+            String save = request.getServletContext().getRealPath("/WEB-INF/upload");
+            String pp = UUID.randomUUID().toString();
+            String savePath = save + pp +"_" + fileName;
+            FileOutputStream fileOutputStream = new FileOutputStream(savePath);
+            fileOutputStream.write(uploadFile.getBytes());
+            fileOutputStream.close();
+            System.out.println("文件保存保存路径为:" + savePath);
+            if(param.getTt().equals("1")){
+                i_index.setindexDataInf(pp, fileName, save, savePath);
+            }
+       *//* if(param.getTt().equals("1")){
+            i_index.setPath( UUID.randomUUID().toString(), );
+        }*//*
+            //这个字节数组就是文件
+            byte[] bytes = uploadFile.getBytes();
+        }catch (Exception e){
+            e.printStackTrace();
+        }*/
 
 //        //这是一个临时变量 一个请求结束了文件夹就没了呀  doGet函数完了就没了
 //        String message = "";

@@ -4,13 +4,13 @@ package ssm.dao.entity;
  * Created by chensu on 2017/9/28.
  */
 public class queryInf {
-    String retrieveResultID;
-    String indexID;
-    String queryID;
-    String queryProcessTag;
-    String queryModel;
-    String resultLength;
-    String resultPath;
+    String retrieveResultID;    //每次检索结果都有一个ID
+    String indexID;                 //对于哪一个索引的检索结果
+    String queryID;                 //对于哪一个query的检索结果
+    String queryProcessTag;     //进行检索的标签
+    String queryModel;              //检索的模型
+    String resultLength;            //返回结果的条数
+    String resultPath;              //结果保存的地址
 
     public String getRetrieveResultID() {
         return retrieveResultID;
