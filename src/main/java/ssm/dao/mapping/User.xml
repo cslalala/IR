@@ -7,6 +7,7 @@
         parameterType="ssm.dao.entity.UserEntity"
         resultType="ssm.dao.entity.UserEntity">
     SELECT
+      userID,
       emailAddress,
       username,
       password,
@@ -15,7 +16,7 @@
 </select>
     <insert id="addUser" parameterType="ssm.dao.entity.UserEntity">
         INSERT into user_Login
-        VALUES (#{emailAddress}, #{username}, #{password}, -1)
+        VALUES (#{userID}, #{emailAddress}, #{username}, #{password}, -1)
     </insert>
     <update id="updateValidation" parameterType="ssm.dao.entity.UserEntity">
         UPDATE user_Login SET

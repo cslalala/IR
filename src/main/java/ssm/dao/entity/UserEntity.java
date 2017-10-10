@@ -8,6 +8,7 @@ import java.util.List;
  */
 /*接受数据库传来的数据*/
 public class UserEntity {
+    private String userID;
     private String emailAddress;
     private String username;
     private String password;
@@ -16,10 +17,28 @@ public class UserEntity {
     public UserEntity() {
     }
 
-    public UserEntity(String emailAddress, String username, String password){
+
+    public UserEntity(String userID, String emailAddress, String username, String password){
+        this.userID = userID;
         this.emailAddress = emailAddress;
         this.username = username;
         this.password = password;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getValidation() {

@@ -10,6 +10,7 @@ import ssm.service.UserLogin;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 
 /**
@@ -52,7 +53,8 @@ public class User_Login implements UserLogin {
         if(uelist.size() != 0){
             return "User already exists".toString();
         }else{
-            UserEntity userEntity = new UserEntity(emailAddress, username, password);
+            String userID = UUID.randomUUID().toString();
+            UserEntity userEntity = new UserEntity(userID, emailAddress, username, password);
             //System.out.println(userEntity.getEmailAddress() + " " +userEntity.getName() + " " + userEntity.getPassword() + "　" + userEntity.getValidation());
             if(userDao.addUser(userEntity)){
                 return "Registration Success".toString();
@@ -100,6 +102,8 @@ public class User_Login implements UserLogin {
         /*判断用户是否存在*/
         UserEntity userEntity = new UserEntity();
         userEntity.setEmailAddress(emailAddress);
+        System.out.println("**************************");
+        System.out.println(emailAddress);
         List<UserEntity> ueList = userDao.findUser(emailAddress);
         if(ueList.size() == 0){
             return "User does not exist".toString();

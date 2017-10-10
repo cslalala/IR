@@ -84,7 +84,8 @@ public class UserController extends BaseController {
     @ResponseBody
     @RequestMapping("/modeOne_retrieve")
     public String modeOne_retrieve(String dataName, String queryNo, String retrieveModel){
-        systemDataInf systemdatainf = i_retrieve.modeOne_Retrieve(dataName, queryNo, retrieveModel);
+        systemDataInf systemdatainf = i_retrieve.modeOne_Find(dataName, queryNo, retrieveModel);
+        String ans = i_retrieve.modeOne_Retrieve(systemdatainf);
         return "1";
     }
 
