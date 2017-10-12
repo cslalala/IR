@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <html>
@@ -153,7 +152,7 @@
                     <div style="height: 50px; line-height: 50px; margin-top: 0px; border-top-color: rgb(231, 231, 231); border-top-width: 1px; border-top-style: solid;">
                         <p style="margin: 10px 0px 20px 0px;">
                             <span style="float: left;">
-                                <a style="color: rgb(204, 204, 204); font-size:14px;" id="go2forgot">Forget password?</a>
+                                <a style="color: rgb(204, 204, 204); font-size:14px;cursor: pointer;" id="go2forgot">Forget password?</a>
                             </span>
                             <span style="float: right;">
                                 <%--<a style="color: rgb(204, 204, 204); margin-right: 5px; font-size: 14px;"  data-toggle="#myModal_register">Register</a>--%>
@@ -217,17 +216,20 @@
                 <form  enctype="multipart/form-data" action="/ 这里是web.xml配置接受servlet的地址" method="post">
                     <p style="padding: 15px 0px 10px; position: relative;">
                         <%--<span class="u_logo"></span>--%>
-                        <input name="f_email" class="ipt ipt_username" type="text" placeholder="Email Address " value="" id="forgot_email" style="padding-top:5px; padding-bottom: 5px;float:left;width:80%">
-                        <input type="button" class="btn btn-default" id="sendEmail" value="Send"  onclick="settime(this)" style="float: right;width:52px;height:42px;text-align:center;vertical-align:middle;" />
+                        <input name="f_email" class="ipt ipt_username" type="text" placeholder="Email Address " value="" id="forgot_email" style="padding-top:5px; padding-bottom: 5px;float:left;width:200px">
+                        <input type="button" class="btn btn-default" id="sendEmail" value="Send Code"  onclick="settime(this)" style="margin-left:0px;float: right;width:100px;height:40px;text-align:center;vertical-align:middle;" />
                     </p>
                     </br>
                     <p style="margin-top:15px;padding: 15px 0px 10px; position: relative;">
                         <%--<span class="u_logo"></span>--%>
                         <input name="v_code" class="ipt ipt_username" type="text" placeholder="Validation Code" value="" id="input_Code" style="padding-top:5px; padding-bottom: 5px;width:100%">
+
                     </p>
                     <label id="validation_note" class="alert-danger"></label>
                     <div style="margin: 0 auto">
-                        <button type="button" class="btn btn-primary" style="margin-left: 0px; width: 100%" id="NextToPasswordreset">Next Step</button>
+
+                        <input type="button" class="forget" id="Next" value="Next Step" style="width:100%"/>
+
                     </div>
 
                 </form>
@@ -236,7 +238,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="myModal_reset_password" tabindex="-1" role="dialog" aria-labelledby="myModal_forgot" data-backdrop="static">
+<div class="modal fade" id="myModal_reset_password" tabindex="-1" role="dialog" aria-labelledby="myModal_reset_password" data-backdrop="static">
     <div class="modal-dialog" style="z-index: 2000;" role="document">
         <div class="modal-content">
             <a class="close close-pos" data-dismiss="modal" id="dismiss-myModal_reset_password" style="margin-right:-15px; margin-top:-20px;">x</a>
@@ -569,11 +571,11 @@
     }
     //在登录模态框上点击“Forget Password”返回忘记密码模态框
     $("#go2forgot").click(function () {
+        $("#dismiss-modal_login").click();
+        $("#myModal_forgot").modal({show: true});
         /*forget模态框应该清空*/
         forget_reset();
         send_reset();
-        $("#dismiss-modal_login").click();
-        $("#myModal_forgot").modal({show: true});
     })
 
 
@@ -621,7 +623,7 @@
         document.getElementById("note").innerText = "";
         $("#note").css("color", "#fefefe")
     }
-       //重置密码
+    //重置密码
     $("#confirm_newPsw").click(function () {
         //验证两次输入密码是否一致
         var pwd = $("#newpassword")[0].value;
@@ -689,62 +691,62 @@
         }
     }
 
-    function send() {
-        /*判断输入的邮箱是否符合正则表达式*/
-        var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
-        var service = new Service("/sendEmail");
-        var emailAddress = $("#forgot_email").val();
-        if(emailAddress.length == 0){
-            $("#validation_note").html("E-mail can not be empty");
-            $("#validation_note").css("color","red");
-            return true; //代表send按钮要重置
-        }else{
-            if(!regex.test(emailAddress)){
-                $("#validation_note").html("Invalid mailbox");
-                $("#validation_note").css("color","red")
-                return true;
-            }else{
-                var para = {emailAddress: emailAddress}
-                service.get(para, function (response) {
-                    if(response == "Failed to send"){
-                        $("#validation_note").html("Please send again");
-                        $("#validation_note").css("color","red")
-                        return true;
-                    }else if(response == "User does not exist"){
-                        $("#validation_note").html(response);
-                        $("#validation_note").css("color","red")
-                        return true;
-                    }else{
-                        $("#validation_note").html(response);
-                        $("#validation_note").css("color","green")
-                        return false;
-                    }
-                })
-            }
-        }
-    }
-
     //重置邮件发送按钮
     function send_reset() {
         $("#forgot_email").removeAttr("disabled");
         $("#sendEmail").removeAttr("disabled");
-        $("#sendEmail")[0].value = "Send";
+        $("#sendEmail")[0].value = "Send Code";
         countdown = 60;
     }
     //验证码60s发送一次
     var countdown=60;
     var cnt = 0
+    var flag = 0;
     function settime(obj) {
         /*判断输入的邮箱是否符合正则表达式*/
         /*var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
-        var service = new Service("/sendEmail");*/
+         var service = new Service("/sendEmail");*/
         var emailAddress = $("#forgot_email").val();
         if (cnt == 0) {
-            if(send()){
-                send_reset();
-                return ;
+            /*判断输入的邮箱是否符合正则表达式*/
+            var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
+            var service = new Service("/sendEmail");
+            var emailAddress = $("#forgot_email").val();
+            if(emailAddress.length == 0){
+                $("#validation_note").html("E-mail can not be empty");
+                $("#validation_note").css("color","red");
+               flag = 1;//代表send按钮要重置
+            }else{
+                if(!regex.test(emailAddress)){
+                    $("#validation_note").html("Invalid mailbox");
+                    $("#validation_note").css("color","red");
+                   // $("#forgot_email").val("").focus();
+                    flag = 1;
+                }else{
+                    var para = {emailAddress: emailAddress}
+                    service.get(para, function (response) {
+                        if(response == "Failed to send"){
+                            $("#validation_note").html("Please send again");
+                            $("#validation_note").css("color","red")
+                            flag = 1;
+                        }else if(response == "User does not exist"){
+                            $("#validation_note").html(response);
+                            $("#validation_note").css("color","red");
+                           // $("#forgot_email").val("").focus();
+                            flag = 1;
+                        }else{
+                            $("#validation_note").html(response);
+                            $("#validation_note").css("color","green");
+                            flag = 0;
+                        }
+                    })
+                }
             }
             cnt += 1
+        }
+        if(flag==1){
+           send_reset();
+            return ;
         }
         if(document.getElementById("dismiss-myModal_forgot").isclick == 1) {
             cnt = 0;
@@ -772,9 +774,9 @@
     }
     function register_reset() {
         /*document.getElementById("input_register_email").value="";
-        document.getElementById("input_register_username").value="";
-        document.getElementById("input_register_password_set").value="";
-        document.getElementById("input_register_password_confirm").value="";*/
+         document.getElementById("input_register_username").value="";
+         document.getElementById("input_register_password_set").value="";
+         document.getElementById("input_register_password_confirm").value="";*/
         $("#input_register_email")[0].value="";
         $("#input_register_username")[0].value="";
         $("#input_register_password_set")[0].value="";
