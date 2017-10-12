@@ -753,6 +753,8 @@
             return;
         }
         if (countdown == 0) {
+            //取消定时任务
+            window.clearTimeout(window.timer);
             send_reset();
             //时间到了之后原来的验证码应该不能使用了，所以就再次更新验证码
             var service2 = new Service("/updateValidation");
@@ -766,11 +768,10 @@
             obj.value=countdown+"...";
             countdown--;
         }
-        setTimeout(function() {
+        //拿到定时器句柄
+        window.timer = setTimeout(function() {
             settime(obj)
         },1000)
-
-
     }
     function register_reset() {
         /*document.getElementById("input_register_email").value="";
