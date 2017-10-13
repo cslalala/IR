@@ -703,7 +703,7 @@
         $("#forgot_email").removeAttr("disabled");
         $("#sendEmail").removeAttr("disabled");
         $("#sendEmail")[0].value = "Send Code";
-        countdown = 3;
+        countdown = 60;
     }
     //验证码60s发送一次
     var countdown=60;
@@ -722,6 +722,22 @@
         /*var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
          var service = new Service("/sendEmail");*/
         var emailAddress = $("#forgot_email").val();
+        if (countdown == 0) {
+            //取消定时任务
+            alert("*************");
+            window.clearInterval(window.timer);
+            send_reset();
+            //时间到了之后原来的验证码应该不能使用了，所以就再次更新验证码
+            var service2 = new Service("/updateValidation");
+            var para = {emailAddress: emailAddress}
+            service2.get(para, function () {
+            })
+        } else{
+            $("#forgot_email").attr("disabled","disabled");
+            obj.setAttribute("disabled", true);
+            obj.value=countdown+"...";
+            countdown--;
+        }
         if (cnt == 0) {
             /*判断输入的邮箱是否符合正则表达式*/
             var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
@@ -765,22 +781,6 @@
         if(document.getElementById("dismiss-myModal_forgot").isclick == 1) {
             cnt = 0;
             window.clearInterval(window.timer);
-        }
-        if (countdown == 0) {
-            //取消定时任务
-            alert("*************");
-            window.clearInterval(window.timer);
-            send_reset();
-            //时间到了之后原来的验证码应该不能使用了，所以就再次更新验证码
-            var service2 = new Service("/updateValidation");
-            var para = {emailAddress: emailAddress}
-            service2.get(para, function () {
-            })
-        } else{
-            $("#forgot_email").attr("disabled","disabled");
-            obj.setAttribute("disabled", true);
-            obj.value=countdown+"...";
-            countdown--;
         }
     }
 
