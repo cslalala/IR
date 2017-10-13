@@ -1,6 +1,5 @@
 package ssm.dao.entity;
 
-import org.terrier.utility.ApplicationSetup;
 
 /**
  * Created by chensu on 2017/9/28.
