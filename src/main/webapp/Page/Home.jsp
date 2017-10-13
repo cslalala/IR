@@ -217,7 +217,7 @@
                     <p style="padding: 15px 0px 10px; position: relative;">
                         <%--<span class="u_logo"></span>--%>
                         <input name="f_email" class="ipt ipt_username" type="text" placeholder="Email Address " value="" id="forgot_email" style="padding-top:5px; padding-bottom: 5px;float:left;width:200px">
-                        <input type="button" class="btn btn-default" id="sendEmail" value="Send Code"  onclick="settime(this)" style="margin-left:0px;float: right;width:100px;height:40px;text-align:center;vertical-align:middle;" />
+                        <input type="button" class="btn btn-default" id="sendEmail" value="Send Code"  onclick="startTimer(this)" style="margin-left:0px;float: right;width:100px;height:40px;text-align:center;vertical-align:middle;" />
                     </p>
                     </br>
                     <p style="margin-top:15px;padding: 15px 0px 10px; position: relative;">
@@ -703,12 +703,20 @@
         $("#forgot_email").removeAttr("disabled");
         $("#sendEmail").removeAttr("disabled");
         $("#sendEmail")[0].value = "Send Code";
-        countdown = 60;
+        countdown = 3;
     }
     //验证码60s发送一次
     var countdown=60;
     var cnt = 0;
     var flag = 0;
+
+    function startTimer(obj){
+        //拿到定时器句柄
+        window.timer = setInterval(function(){
+            settime(obj);
+        }, 1000)
+    }
+
     function settime(obj) {
         /*判断输入的邮箱是否符合正则表达式*/
         /*var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
@@ -723,14 +731,14 @@
                 $("#validation_note").html("E-mail can not be empty");
                 $("#validation_note").css("color","red");
                 send_reset();
-                window.clearTimeout(window.timer);//代表send按钮要重置
+                window.clearInterval(window.timer);//代表send按钮要重置
             }else{
                 if(!regex.test(emailAddress)){
                     $("#validation_note").html("Invalid mailbox");
                     $("#validation_note").css("color","red");
                    // $("#forgot_email").val("").focus();
                     send_reset();
-                    window.clearTimeout(window.timer);
+                    window.clearInterval(window.timer);
                 }else{
                     var para = {emailAddress: emailAddress}
                     service.get(para, function (response) {
@@ -738,13 +746,13 @@
                             $("#validation_note").html("Please send again");
                             $("#validation_note").css("color","red")
                             send_reset();
-                            window.clearTimeout(window.timer);
+                            window.clearInterval(window.timer);
                         }else if(response == "User does not exist"){
                             $("#validation_note").html(response);
                             $("#validation_note").css("color","red");
                            // $("#forgot_email").val("").focus();
                             send_reset();
-                            window.clearTimeout(window.timer);
+                            window.clearInterval(window.timer);
                         }else{
                             $("#validation_note").html(response);
                             $("#validation_note").css("color","green");
@@ -756,12 +764,12 @@
         }
         if(document.getElementById("dismiss-myModal_forgot").isclick == 1) {
             cnt = 0;
-            window.clearTimeout(window.timer);
+            window.clearInterval(window.timer);
         }
         if (countdown == 0) {
             //取消定时任务
             alert("*************");
-            window.clearTimeout(window.timer);
+            window.clearInterval(window.timer);
             send_reset();
             //时间到了之后原来的验证码应该不能使用了，所以就再次更新验证码
             var service2 = new Service("/updateValidation");
@@ -774,10 +782,6 @@
             obj.value=countdown+"...";
             countdown--;
         }
-        //拿到定时器句柄
-       window.timer = setTimeout(function(){
-           settime(obj);
-       }, 1000)
     }
 
     function register_reset() {
