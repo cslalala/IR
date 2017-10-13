@@ -711,17 +711,59 @@
     var flag = 0;
 
     function startTimer(obj){
-        //拿到定时器句柄
-        window.timer = setInterval(function(){
-            settime(obj);
-        }, 1000)
+        if(settime(obj)){
+            sendEmail();
+            //拿到定时器句柄
+            window.timer = setInterval(function(){
+                settime(obj);
+            }, 1000)
+        }
     }
 
+    function  sendEmail(){
+        var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
+        var service = new Service("/sendEmail");
+        var emailAddress = $("#forgot_email").val();
+        if(emailAddress.length == 0){
+            $("#validation_note").html("E-mail can not be empty");
+            $("#validation_note").css("color","red");
+            send_reset();
+            window.clearInterval(window.timer);//代表send按钮要重置
+        }else{
+            if(!regex.test(emailAddress)){
+                $("#validation_note").html("Invalid mailbox");
+                $("#validation_note").css("color","red");
+                send_reset();
+                window.clearInterval(window.timer);
+            }else{
+                var para = {emailAddress: emailAddress}
+                service.get(para, function (response) {
+                    if(response == "Failed to send"){
+                        $("#validation_note").html("Please send again");
+                        $("#validation_note").css("color","red")
+                        send_reset();
+                    }else if(response == "User does not exist"){
+                        $("#validation_note").html(response);
+                        $("#validation_note").css("color","red");
+                        // $("#forgot_email").val("").focus();
+                        send_reset();
+                    }else{
+                        $("#validation_note").html(response);
+                        $("#validation_note").css("color","green");
+                    }
+                })
+            }
+        }
+    }
     function settime(obj) {
         /*判断输入的邮箱是否符合正则表达式*/
         /*var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
          var service = new Service("/sendEmail");*/
         var emailAddress = $("#forgot_email").val();
+        if(document.getElementById("dismiss-myModal_forgot").isclick == 1) {
+            cnt = 0;
+            window.clearInterval(window.timer);
+        }
         if (countdown == 0) {
             //取消定时任务
             alert("*************");
@@ -737,50 +779,7 @@
             obj.setAttribute("disabled", true);
             obj.value=countdown+"...";
             countdown--;
-        }
-        if (cnt == 0) {
-            /*判断输入的邮箱是否符合正则表达式*/
-            var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
-            var service = new Service("/sendEmail");
-            var emailAddress = $("#forgot_email").val();
-            if(emailAddress.length == 0){
-                $("#validation_note").html("E-mail can not be empty");
-                $("#validation_note").css("color","red");
-                send_reset();
-                window.clearInterval(window.timer);//代表send按钮要重置
-            }else{
-                if(!regex.test(emailAddress)){
-                    $("#validation_note").html("Invalid mailbox");
-                    $("#validation_note").css("color","red");
-                   // $("#forgot_email").val("").focus();
-                    send_reset();
-                    window.clearInterval(window.timer);
-                }else{
-                    var para = {emailAddress: emailAddress}
-                    service.get(para, function (response) {
-                        if(response == "Failed to send"){
-                            $("#validation_note").html("Please send again");
-                            $("#validation_note").css("color","red")
-                            send_reset();
-                            window.clearInterval(window.timer);
-                        }else if(response == "User does not exist"){
-                            $("#validation_note").html(response);
-                            $("#validation_note").css("color","red");
-                           // $("#forgot_email").val("").focus();
-                            send_reset();
-                            window.clearInterval(window.timer);
-                        }else{
-                            $("#validation_note").html(response);
-                            $("#validation_note").css("color","green");
-                            cnt += 1;
-                        }
-                    })
-                }
-            }
-        }
-        if(document.getElementById("dismiss-myModal_forgot").isclick == 1) {
-            cnt = 0;
-            window.clearInterval(window.timer);
+            return true;
         }
     }
 
