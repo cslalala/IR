@@ -228,7 +228,7 @@
                     <label id="validation_note" class="alert-danger"></label>
                     <div style="margin: 0 auto">
 
-                        <input type="button" class="forget" id="Next" value="Next Step" style="width:100%"/>
+                        <input type="button" class="forget" id="NextToPasswordreset" value="Next Step" style="width:100%"/>
 
                     </div>
 
@@ -499,7 +499,9 @@
     //清空登录界面上的所有值
     function logIn_reset() {
         document.getElementById("input_login_username").value =""
+        $("#input_login_username").css("background-color", "#fefefe");
         document.getElementById("input_login_password" ).value = ""
+        $("#input_login_password").css("background-color", "#fefefe");
         document.getElementById("login_note").innerText=""
         $("#login_note").css("color", "#fefefe")
         /*$("#input_login_username")[0].value = "";
@@ -565,7 +567,10 @@
         //send_reset();
         document.getElementById("dismiss-myModal_forgot").isclick=0;
         $("#forgot_email")[0].value = "";
+        //$("#forgot_email").css("background-color", "#fefefe");
+        document.getElementById("forgot_email").style.backgroundColor = "#fefefe";
         $("#input_Code")[0].value = "";
+        $("#input_Code").css("background-color", "#fefefe");
         document.getElementById("validation_note").innerText=""
         $("#validation_note").css("color", "#fefefe")
     }
@@ -619,7 +624,9 @@
     })
     function resetPassword_reset() {
         $("#newpassword")[0].value = "";
+        $("#newpassword").css("background-color", "#fefefe");
         $("#new_password")[0].value = "";
+        $("#new_password").css("background-color", "#fefefe");
         document.getElementById("note").innerText = "";
         $("#note").css("color", "#fefefe")
     }
@@ -700,7 +707,7 @@
     }
     //验证码60s发送一次
     var countdown=60;
-    var cnt = 0
+    var cnt = 0;
     var flag = 0;
     function settime(obj) {
         /*判断输入的邮箱是否符合正则表达式*/
@@ -715,45 +722,45 @@
             if(emailAddress.length == 0){
                 $("#validation_note").html("E-mail can not be empty");
                 $("#validation_note").css("color","red");
-               flag = 1;//代表send按钮要重置
+                send_reset();
+                window.clearTimeout(window.timer);//代表send按钮要重置
             }else{
                 if(!regex.test(emailAddress)){
                     $("#validation_note").html("Invalid mailbox");
                     $("#validation_note").css("color","red");
                    // $("#forgot_email").val("").focus();
-                    flag = 1;
+                    send_reset();
+                    window.clearTimeout(window.timer);
                 }else{
                     var para = {emailAddress: emailAddress}
                     service.get(para, function (response) {
                         if(response == "Failed to send"){
                             $("#validation_note").html("Please send again");
                             $("#validation_note").css("color","red")
-                            flag = 1;
+                            send_reset();
+                            window.clearTimeout(window.timer);
                         }else if(response == "User does not exist"){
                             $("#validation_note").html(response);
                             $("#validation_note").css("color","red");
                            // $("#forgot_email").val("").focus();
-                            flag = 1;
+                            send_reset();
+                            window.clearTimeout(window.timer);
                         }else{
                             $("#validation_note").html(response);
                             $("#validation_note").css("color","green");
-                            flag = 0;
+                            cnt += 1;
                         }
                     })
                 }
             }
-            cnt += 1
-        }
-        if(flag==1){
-           send_reset();
-            return ;
         }
         if(document.getElementById("dismiss-myModal_forgot").isclick == 1) {
             cnt = 0;
-            return;
+            window.clearTimeout(window.timer);
         }
         if (countdown == 0) {
             //取消定时任务
+            alert("*************");
             window.clearTimeout(window.timer);
             send_reset();
             //时间到了之后原来的验证码应该不能使用了，所以就再次更新验证码
@@ -761,27 +768,31 @@
             var para = {emailAddress: emailAddress}
             service2.get(para, function () {
             })
-            return;
-        } else {
+        } else{
             $("#forgot_email").attr("disabled","disabled");
             obj.setAttribute("disabled", true);
             obj.value=countdown+"...";
             countdown--;
         }
         //拿到定时器句柄
-        window.timer = setTimeout(function() {
-            settime(obj)
-        },1000)
+       window.timer = setTimeout(function(){
+           settime(obj);
+       }, 1000)
     }
+
     function register_reset() {
         /*document.getElementById("input_register_email").value="";
          document.getElementById("input_register_username").value="";
          document.getElementById("input_register_password_set").value="";
          document.getElementById("input_register_password_confirm").value="";*/
         $("#input_register_email")[0].value="";
+        $("#input_register_email").css("background-color", "#fefefe");
         $("#input_register_username")[0].value="";
+        $("#input_register_username").css("background-color", "#fefefe");
         $("#input_register_password_set")[0].value="";
+        $("#input_register_password_set").css("background-color", "#fefefe");
         $("#input_register_password_confirm")[0].value="";
+        $("#input_register_password_confirm").css("background-color", "#fefefe");
         document.getElementById("register_note").innerText=""
         $("#register_note").css("color", "#fefefe")
     }
