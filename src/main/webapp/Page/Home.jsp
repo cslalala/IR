@@ -729,12 +729,14 @@
             $("#validation_note").css("color","red");
             send_reset();
             window.clearInterval(window.timer);//代表send按钮要重置
+            return false;
         }else{
             if(!regex.test(emailAddress)){
                 $("#validation_note").html("Invalid mailbox");
                 $("#validation_note").css("color","red");
                 send_reset();
                 window.clearInterval(window.timer);
+                return false;
             }else{
                 var para = {emailAddress: emailAddress}
                 service.get(para, function (response) {
@@ -742,14 +744,19 @@
                         $("#validation_note").html("Please send again");
                         $("#validation_note").css("color","red")
                         send_reset();
+                        window.clearInterval(window.timer);
+                        return false;
                     }else if(response == "User does not exist"){
                         $("#validation_note").html(response);
                         $("#validation_note").css("color","red");
                         // $("#forgot_email").val("").focus();
                         send_reset();
+                        window.clearInterval(window.timer);
+                        return false;
                     }else{
                         $("#validation_note").html(response);
                         $("#validation_note").css("color","green");
+                        return true;
                     }
                 })
             }
