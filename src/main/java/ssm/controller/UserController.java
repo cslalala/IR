@@ -1,8 +1,5 @@
 package ssm.controller;
 
-import org.apache.commons.fileupload.*;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,17 +7,13 @@ import ssm.dao.entity.systemDataInf;
 import ssm.entity.UploadParam;
 import ssm.service.I_Index;
 import ssm.service.I_Retrieve;
-import ssm.service.Indexing.unZip;
 import ssm.service.UserLogin;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
 import java.util.UUID;
 
 /**
