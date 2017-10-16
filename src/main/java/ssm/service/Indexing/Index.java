@@ -3,6 +3,8 @@ package ssm.service.Indexing;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ssm.dao.User_IndexDao;
+import ssm.dao.entity.indexDataInf;
+import ssm.dao.entity.indexInf;
 import ssm.service.I_Index;
 
 import javax.annotation.Resource;
@@ -11,6 +13,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Enumeration;
+import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -66,5 +69,22 @@ public class Index implements I_Index {
             e.printStackTrace();
         }
         return "unzip failed";
+    }
+
+    public void addUser_IndexEntity(String userID, String indexID){
+        String id = UUID.randomUUID().toString();
+        userIndexDao.addUser_Index(id, userID, indexID);
+    }
+
+    public void addIndexDataInfEntity(indexDataInf indexdatainf){
+        userIndexDao.addIndexDataInf(indexdatainf);
+    }
+
+    public void addIndexDocInfEntity(indexInf indexinf){
+        userIndexDao.addIndexInf(indexinf);
+    }
+
+    public void process(String dataSetPath, String docTag, String idTag, String processTag, String indexResultPath, String indexDocInfPath){
+
     }
 }

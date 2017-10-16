@@ -3,6 +3,8 @@ package ssm.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ssm.dao.entity.indexDataInf;
+import ssm.dao.entity.indexInf;
 import ssm.dao.entity.systemDataInf;
 import ssm.entity.UploadParam;
 import ssm.service.I_Index;
@@ -115,6 +117,22 @@ public class UserController extends BaseController {
     public String indexing(String username, String dataZipPath, String docTag, String idTag, String processTag){
         String dataSetPath = i_index.UnZip(dataZipPath);
         //更新user_index表
+        String indexID = UUID.randomUUID().toString();
+        i_index.addUser_IndexEntity(username, indexID);
+
+        //更新indexDataInf表
+        String dataID = UUID.randomUUID().toString();
+        String dataName = dataZipPath.substring(dataZipPath.lastIndexOf("_")+1);
+        indexDataInf indexdatainf = new indexDataInf(dataID, dataName, dataZipPath, dataSetPath, docTag, idTag);
+        i_index.addIndexDataInfEntity(indexdatainf);
+
+        //更新indexInf表
+        String indexResultPath = dataSetPath + "_" + "indexResult";
+        String indexDocInfPath = dataSetPath + "_" + "indexDocInf";
+        indexInf indexinf = new indexInf(indexID, dataID, processTag, indexResultPath, indexDocInfPath);
+        i_index.addIndexDocInfEntity(indexinf);
+
+        i_index.process(dataSetPath, docTag, idTag, processTag, indexResultPath, indexDocInfPath);
         return "";
     }
 }

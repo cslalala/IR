@@ -14,6 +14,14 @@ public class indexInf {
     String indexResultPath; //索引结果保存的地址
     String indexDocInfPath;//索引结果中的文档信息
 
+    public indexInf(String indexID, String dataID, String indexProcessTag, String indexResultPath, String indexDocInfPath) {
+        this.indexID = indexID;
+        this.dataID = dataID;
+        this.indexProcessTag = indexProcessTag;
+        this.indexResultPath = indexResultPath;
+        this.indexDocInfPath = indexDocInfPath;
+    }
+
     public String getIndexID() {
         return indexID;
     }
