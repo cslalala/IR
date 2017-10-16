@@ -773,7 +773,6 @@
         }
         if (countdown == 0) {
             //取消定时任务
-            alert("*************");
             window.clearInterval(window.timer);
             send_reset();
             //时间到了之后原来的验证码应该不能使用了，所以就再次更新验证码

@@ -11,4 +11,5 @@ public class UploadParam {
     public void setTt(String tt) {
         this.tt = tt;
     }
+
 }

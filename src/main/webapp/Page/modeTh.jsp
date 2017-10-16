@@ -234,6 +234,25 @@
                             </button>
                         </div>
                     </div>
+                    <div class="form-group" style="padding-left:20px;">
+                        <label for="IndexDocTag" style="margin-left:15px;margin-top: 25px; float:left;">DocTag</label>
+                        <div class="col-xs-3" style="margin-left: -11px; margin-top:20px; padding-right:0px;">
+                            <input class="form-control" id="IndexDocTag" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group" style="padding-left:20px;">
+                        <label for="IndexIDTag" style="margin-left:12px;margin-top: 25px;float:left;">IDTag</label>
+                        <div class="col-xs-3" style="margin-left: -11px; margin-top:20px; padding-right:0px;">
+                            <input class="form-control" id="IndexIDTag" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group" style="padding-left:20px;">
+                        <label for="IndexProcessTag" style="margin-left:15px;margin-top: 25px; float:left;">IndexProcessTag</label>
+                        <div class="col-xs-5" style="margin-left: -10px; margin-top:20px; padding-right:0px;">
+                            <input class="form-control" id="IndexProcessTag" placeholder="Process Tag">
+                        </div>
+                    </div>
+                </form>
                     <%--<div class="form-group" style="margin-top:55px; padding-left: 20px;">--%>
                     <%--<label for="datadoctagpath" style="margin-left: 15px;">Index Tag Path</label>--%>
                     <%--<div class="col-xs-8" style="margin-left:0px; padding-right: 0px;">--%>
@@ -247,12 +266,14 @@
                     <%--</div>--%>
                     <%--</form>--%>
             </div>
-            <div class="modal-footer" style="margin-top:15px; margin-bottom:10px;">
+            <label id="index_note" class="alert-danger"></label>
+            <div class="modal-footer" style="margin-top:12px; margin-bottom:10px;">
                 <button type="button" class="btn btn-primary" style="margin-left: -10px; background-color:white; color:black; border-color:#ccc;" id="Index">Index
                 </button>
                 <button type="button" class="btn btn-primary"  style="margin-left: 15px; background-color:#d62323;border-color:#d62323"  id="stop_nextStep">Stop
                 </button>
             </div>
+            <label id="dataZipPath" style="visibility: hidden; height: 0px;"></label>
         </div>
     </div>
 </div>
@@ -467,7 +488,7 @@
     })
     //////////index的设置
     var $start = $("#start");
-    var $index = $("#Index"), fileUploadCounter = 0;
+    var $index = $("#Index")
     var $evaluatedocument = $("#evaluatedocumentpathget");
     var $evaluate = $("#evaluate");
     var $stop_nextStep = $("#stop_nextStep");
@@ -526,7 +547,6 @@
     });
     function Reset(){
         $("#datadoucumentpathShow").val("");
-        $("#datadoctagpathShow").val("");
         $("#Index").html("Index");
         $index.prop("disabled", true);
         $stop_nextStep.prop("disabled", true);
@@ -554,13 +574,22 @@
             $("#datadoucumentpathget").html('<i class="fa fa-spinner fa-pulse"></i>');
         },
         done: function(e, data){
-            checkIndex();
+            $("#Index").prop("disabled", false);
             $("#datadoucumentpathget").html('...');
+            //console.log(data);
+            if(data.result != "fail"){
+                $("#dataZipPath").html(data.result);
+                $("#index_note").css("color", "#fefefe");
+            }else{
+                $("#index_note").html("Upload failed, please try again");
+                $("#index_note").css("color","red");
+            }
+            //alert($("#dataZipPath").innerText);
         }
     });
-    //上传索引标签的文件2
+   /* //上传索引标签的文件2
     $('#datadoctagpath').fileupload({
-        url:"/receive",
+        url:"/upload",
         dataType: 'text',
         add:function(e, data){
             data.formData = {tt: 2}
@@ -572,29 +601,24 @@
             checkIndex();
             $("#datadoctagpathget").html('...');
         }
-    });
+    });*/
     $("#datadoucumentpathget").click(function () {
         //模拟点击
         $('#datadoucumentpath').click();
     });
-    $("#datadoctagpathget").click(function () {
+   /* $("#datadoctagpathget").click(function () {
         $('#datadoctagpath').click();
-    });
-    function checkIndex() {
-        fileUploadCounter  = 0;
+    });*/
+    /*function checkIndex() {
         if($("#datadoctagpathShow").val() != "") {
-            fileUploadCounter++;
+            if($("#IndexDocTag").val() != "" && $("#IndexIDTag").val()!="" && $("#IndexProcessTag").val()!=""){
+                $index.prop("disabled", false);
+                $("#stop_nextStep").html('stop');
+                changeStop_nextStep("stop");
+                $stop_nextStep.prop("disabled", true);
+            }
         }
-        if($("#datadoucumentpathShow").val() != "") {
-            fileUploadCounter++;
-        }
-        if(fileUploadCounter == 2){
-            $index.prop("disabled", false);
-            $("#stop_nextStep").html('stop');
-            changeStop_nextStep("stop");
-            $stop_nextStep.prop("disabled", true);
-        }
-    }
+    }*/
     //
     $("#Index").click(function (e){
 //        var service = new Service("/userProvideIndex");
@@ -615,26 +639,36 @@
 //        changeStop_nextStepToEvaluate("stop");
 //        $("#stop_nextStepToEvaluate").prop("disabled", true);
         /////////////////////////
-        //只要点击index,stop按钮就应该变成红色
-        $("#stop_nextStep").prop("disabled", false);
-        changeStop_nextStep("stop");
-        $("#Index").html('<i class="fa fa-spinner fa-pulse"></i>');
-        $("#Index").prop("disabled", true);
-        $("#start").html('Indexing...');
-        $.ajax({
-            type: "GET",
-            async: true,
-            url: "/userProvideIndex",
-            success: function(data) {
-                if (data == 'ok') {
+        //点击index按钮之后，需要判断所有空是不是都填满了，没有填满的需要告诉用户
+        if($("#IndexDocTag").val() == ""){
+            $("#index_note").html("DocTag can not be empty!");
+            $("#index_note").css("color","red");
+        }else if($("#IndexIDTag").val() == ""){
+            $("#index_note").html("IDTag can not be empty!");
+            $("#index_note").css("color","red");
+        }else if($("#IndexProcessTag").val() == ""){
+            $("#index_note").html("ProcessTag can not be empty!");
+            $("#index_note").css("color","red");
+        }else{
+            $("#index_note").css("color", "#fefefe")
+            //只要点击index,stop按钮就应该变成红色
+            $("#stop_nextStep").prop("disabled", false);
+            changeStop_nextStep("stop");
+            $("#Index").html('<i class="fa fa-spinner fa-pulse"></i>');
+            $("#Index").prop("disabled", true);
+            $("#start").html('Indexing...');
+            var service = new Service("/Indexing");
+            var para = {username: $("#log_state"), dataZipPath: $("#dataZipPath").val(), docTag: $("#IndexDocTag").val(), idTag:$("#IndexIDTag"), processTag:$("#IndexProcessTag")}
+            service.get(para, function (response) {
+                if (response == 'ok') {
                     $("#Index").html('Index');
                     $("#Index").prop("disabled", true);
                     $("#start").html('Index Finished');
                     $("#stop_nextStep").html('Next Step');
                     changeStop_nextStep("nextStep");
                 }
-            }
-        });
+            })
+        }
     });
     ////retrieve的设置
     $("#stop_nextStepToEvaluate").click(function(e){
