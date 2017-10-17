@@ -85,6 +85,9 @@ public class Index implements I_Index {
     }
 
     public void process(String dataSetPath, String docTag, String idTag, String processTag, String indexResultPath, String indexDocInfPath){
-
+        //处理需要检索的标签的索引
+        IndexGeneration indexgeneration = new IndexGeneration();
+        indexgeneration.StopWords();
+        indexgeneration.generateIndex(dataSetPath, docTag, idTag, processTag, indexResultPath, indexDocInfPath);
     }
 }
