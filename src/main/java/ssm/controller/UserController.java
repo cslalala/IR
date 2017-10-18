@@ -135,4 +135,10 @@ public class UserController extends BaseController {
         i_index.process(dataSetPath, docTag, idTag, processTag, indexResultPath, indexDocInfPath);
         return "";
     }
+
+
+    /*模式三, 检索*/
+    /*@ResponseBody
+    @RequestMapping("/modeTh_retrieval")
+    public String modeTh_retrieval*/
 }

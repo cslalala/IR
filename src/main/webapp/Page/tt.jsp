@@ -226,7 +226,7 @@
                         <div class="col-xs-8" style="margin-left: 0px; padding-right:0px;">
                             <input class="form-control" id="datadoucumentpathShow" placeholder="data document path">
                             <input class="form-control hidden" type="file"
-                                   name="datadoucumentpath" id="datadoucumentpath">
+                                   name="uploadFile" id="datadoucumentpath">
                         </div>
                         <div class="col-xs-2 col-xs-2-change">
                             <button class="btn btn-default" id="datadoucumentpathget" type="button"
@@ -234,25 +234,46 @@
                             </button>
                         </div>
                     </div>
-                    <%--<div class="form-group" style="margin-top:55px; padding-left: 20px;">--%>
-                    <%--<label for="datadoctagpath" style="margin-left: 15px;">Index Tag Path</label>--%>
-                    <%--<div class="col-xs-8" style="margin-left:0px; padding-right: 0px;">--%>
-                    <%--<input class="form-control" id="datadoctagpathShow" placeholder="data tag path">--%>
-                    <%--<input class="form-control hidden" type="file"--%>
-                    <%--id="datadoctagpath" name="datadoctagpath">--%>
-                    <%--</div>--%>
-                    <%--<div class="col-xs-2 col-xs-2-change">--%>
-                    <%--<button class="btn btn-default" id="datadoctagpathget" type="button" style="margin-left:0px;">...</button>--%>
-                    <%--</div>--%>
-                    <%--</div>--%>
-                    <%--</form>--%>
+                    <div class="form-group" style="padding-left:20px;">
+                        <label for="IndexDocTag" style="margin-left:15px;margin-top: 25px; float:left;">DocTag</label>
+                        <div class="col-xs-3" style="margin-left: -11px; margin-top:20px; padding-right:0px;">
+                            <input class="form-control" id="IndexDocTag" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group" style="padding-left:20px;">
+                        <label for="IndexIDTag" style="margin-left:12px;margin-top: 25px;float:left;">IDTag</label>
+                        <div class="col-xs-3" style="margin-left: -11px; margin-top:20px; padding-right:0px;">
+                            <input class="form-control" id="IndexIDTag" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group" style="padding-left:20px;">
+                        <label for="IndexProcessTag" style="margin-left:15px;margin-top: 25px; float:left;">IndexProcessTag</label>
+                        <div class="col-xs-5" style="margin-left: -10px; margin-top:20px; padding-right:0px;">
+                            <input class="form-control" id="IndexProcessTag" placeholder="Process Tag">
+                        </div>
+                    </div>
+                </form>
+                <%--<div class="form-group" style="margin-top:55px; padding-left: 20px;">--%>
+                <%--<label for="datadoctagpath" style="margin-left: 15px;">Index Tag Path</label>--%>
+                <%--<div class="col-xs-8" style="margin-left:0px; padding-right: 0px;">--%>
+                <%--<input class="form-control" id="datadoctagpathShow" placeholder="data tag path">--%>
+                <%--<input class="form-control hidden" type="file"--%>
+                <%--id="datadoctagpath" name="datadoctagpath">--%>
+                <%--</div>--%>
+                <%--<div class="col-xs-2 col-xs-2-change">--%>
+                <%--<button class="btn btn-default" id="datadoctagpathget" type="button" style="margin-left:0px;">...</button>--%>
+                <%--</div>--%>
+                <%--</div>--%>
+                <%--</form>--%>
             </div>
-            <div class="modal-footer" style="margin-top:15px; margin-bottom:10px;">
+            <label id="index_note" class="alert-danger"></label>
+            <div class="modal-footer" style="margin-top:12px; margin-bottom:10px;">
                 <button type="button" class="btn btn-primary" style="margin-left: -10px; background-color:white; color:black; border-color:#ccc;" id="Index">Index
                 </button>
-                <button type="button" class="btn btn-primary"  style="margin-left: 15px; background-color:#d62323;border-color:#d62323"  id="stop_nextStep">Stop
+                <button type="button" class="btn btn-primary"  style="margin-left: 15px; background-color:#d62323;border-color:#d62323"  id="stop_nextStep">Next Step
                 </button>
             </div>
+            <label id="dataZipPath" style="visibility: hidden; height: 0px;"></label>
         </div>
     </div>
 </div>
@@ -279,20 +300,9 @@
                             </button>
                         </div>
                     </div>
-                    <div class="form-group" style="margin-top:55px; padding-left: 20px;">
-                        <label for="querytagpath" style="margin-left: 15px;">Query Tag Path</label>
-                        <div class="col-xs-8" style="margin-left:0px; padding-right:0px;">
-                            <input class="form-control" id="querytagpathShow" placeholder="query tag path">
-                            <input class="form-control hidden" type="file"
-                                   id="querytagpath" name="querytagpath">
-                        </div>
-                        <div class="col-xs-2 col-xs-2-change" style="margin-left:0px;">
-                            <button class="btn btn-default" id="querytagpathget" type="button">...</button>
-                        </div>
-                    </div>
                     <div class="form-group" style="padding-left:20px; margin-top:55px;">
-                        <label for="querytagpath" style="margin-left: 15px;">Weighting Model</label>
-                        <div class="col-xs-9" style="margin-left:15px; padding-left:0px;">
+                        <label style="margin-left: 15px;">Weighting Model</label>
+                        <div class="col-xs-10" style="margin-left:15px; padding-left:0px; width:78%;">
                             <select name="WeightModel" id="WeightModel" placeholder="ggGG" class="form-control">
                                 <option value="TF_IDF"> TF-IDF</option>
                                 <option value="1"> 2</option>
@@ -301,14 +311,40 @@
                             </select>
                         </div>
                     </div>
+                    <div class="form-group" style="padding-left:20px;">
+                        <label for="queryDocTag" style="margin-left:15px;margin-top: 25px; float:left;">DocTag</label>
+                        <div class="col-xs-3" style="margin-left: -11px; margin-top:20px; padding-right:0px;">
+                            <input class="form-control" id="queryDocTag" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group" style="padding-left:20px;">
+                        <label for="queryIDTag" style="margin-left:12px;margin-top: 25px;float:left;">IDTag</label>
+                        <div class="col-xs-3" style="margin-left: -11px; margin-top:20px; padding-right:0px;">
+                            <input class="form-control" id="queryIDTag" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group" style="padding-left:20px;">
+                        <label for="queryProcessTag" style="margin-left:15px;margin-top: 25px; float:left;">QueryProcessTag</label>
+                        <div class="col-xs-5" style="margin-left: -10px; margin-top:20px; padding-right:0px;">
+                            <input class="form-control" id="queryProcessTag" placeholder="Process Tag">
+                        </div>
+                    </div>
+                    <div class="form-group" style="padding-left:20px;">
+                        <label for="IndexProcessTag" style="margin-left:15px;margin-top: 25px; float:left;">Number of results returned:</label>
+                        <div class="col-xs-3" style="margin-left: -10px; margin-top:20px; padding-right:0px; width:21.5%;">
+                            <input class="form-control" id="queryResultNumber" placeholder="">
+                        </div>
+                    </div>
                 </form>
             </div>
+            <label id="retrieval_note" class="alert-danger"></label>
             <div class="modal-footer" style="margin-top:15px; margin-bottom:10px;">
                 <button type="button" class="btn btn-primary" style="margin-left: -10px; background-color:white; color:black; border-color:#ccc;" id="Retrieve">Retrieve
                 </button>
                 <button type="button" class="btn btn-primary"  style="margin-left: 15px; background-color:#d62323;border-color:#d62323"  id="stop_nextStepToEvaluate">Stop
                 </button>
             </div>
+            <label id="queryDataPath" style="visibility: hidden; height: 0px;"></label>
         </div>
     </div>
 </div>
@@ -374,6 +410,9 @@
         <li>
             <button type="button" class="btn btn-default" id="log_state" style="padding-top:2px;font-size:16px; line-height:1.1; font-weight:500;border:none;background-color:#f1f1f1; ">Log In</button>
             <%--<a href="login.jsp" id="log_state">Log In</a>--%>
+        </li>
+        <li>
+            <label  id="userID" style = "color: #f1f1f1">UserID</label>
         </li>
     </ul>
 </div>
@@ -464,7 +503,7 @@
     })
     //////////index的设置
     var $start = $("#start");
-    var $index = $("#Index"), fileUploadCounter = 0;
+    var $index = $("#Index")
     var $evaluatedocument = $("#evaluatedocumentpathget");
     var $evaluate = $("#evaluate");
     var $stop_nextStep = $("#stop_nextStep");
@@ -480,7 +519,7 @@
 
 
     $index.prop("disabled",true);
-    $stop_nextStep.prop("disabled",true);
+    //$stop_nextStep.prop("disabled",true);
     $retrieve.prop("disabled", true);
     $stop_nextStepToEvaluate.prop("disabled", true);
     $evaluate.prop("disabled", true);
@@ -503,6 +542,7 @@
     })
     $("#stop_nextStep").click(function(e){
         var text = $(this).text();
+        alert(text);
         if(text == "stop"){
             Reset();
             $.ajax({
@@ -515,15 +555,14 @@
                     }
                 }
             });
-        }
-        else if(text == "Next Step"){
+        } else if(text.trim() == "Next Step"){
+            alert("*****");
             $("#dismiss-modalDataSet").click();
             $("#myModal").modal({show: true})
         }
     });
     function Reset(){
         $("#datadoucumentpathShow").val("");
-        $("#datadoctagpathShow").val("");
         $("#Index").html("Index");
         $index.prop("disabled", true);
         $stop_nextStep.prop("disabled", true);
@@ -542,7 +581,7 @@
     }
     //上传压缩文档1
     $('#datadoucumentpath').fileupload({
-        url:"/receive",
+        url:"/Upload",
         dataType: 'text',
         add:function(e, data){
             data.formData = {tt: 1}//tt的作用是在传数据到后台经过判断之后设置路径
@@ -551,47 +590,51 @@
             $("#datadoucumentpathget").html('<i class="fa fa-spinner fa-pulse"></i>');
         },
         done: function(e, data){
-            checkIndex();
+            $("#Index").prop("disabled", false);
             $("#datadoucumentpathget").html('...');
+            //console.log(data);
+            if(data.result != "fail"){
+                $("#dataZipPath").html(data.result);
+                $("#index_note").css("color", "#fefefe");
+            }else{
+                $("#index_note").html("Upload failed, please try again");
+                $("#index_note").css("color","red");
+            }
+            //alert($("#dataZipPath").innerText);
         }
     });
-    //上传索引标签的文件2
-    $('#datadoctagpath').fileupload({
-        url:"/receive",
-        dataType: 'text',
-        add:function(e, data){
-            data.formData = {tt: 2}
-            $("#datadoctagpathShow").val(data['files'][0]['name'])
-            data.submit();
-            $("#datadoctagpathget").html('<i class="fa fa-spinner fa-pulse"></i>');
-        },
-        done: function(e, data){
-            checkIndex();
-            $("#datadoctagpathget").html('...');
-        }
-    });
+    /* //上传索引标签的文件2
+     $('#datadoctagpath').fileupload({
+     url:"/upload",
+     dataType: 'text',
+     add:function(e, data){
+     data.formData = {tt: 2}
+     $("#datadoctagpathShow").val(data['files'][0]['name'])
+     data.submit();
+     $("#datadoctagpathget").html('<i class="fa fa-spinner fa-pulse"></i>');
+     },
+     done: function(e, data){
+     checkIndex();
+     $("#datadoctagpathget").html('...');
+     }
+     });*/
     $("#datadoucumentpathget").click(function () {
         //模拟点击
         $('#datadoucumentpath').click();
     });
-    $("#datadoctagpathget").click(function () {
-        $('#datadoctagpath').click();
-    });
-    function checkIndex() {
-        fileUploadCounter  = 0;
-        if($("#datadoctagpathShow").val() != "") {
-            fileUploadCounter++;
-        }
-        if($("#datadoucumentpathShow").val() != "") {
-            fileUploadCounter++;
-        }
-        if(fileUploadCounter == 2){
-            $index.prop("disabled", false);
-            $("#stop_nextStep").html('stop');
-            changeStop_nextStep("stop");
-            $stop_nextStep.prop("disabled", true);
-        }
-    }
+    /* $("#datadoctagpathget").click(function () {
+     $('#datadoctagpath').click();
+     });*/
+    /*function checkIndex() {
+     if($("#datadoctagpathShow").val() != "") {
+     if($("#IndexDocTag").val() != "" && $("#IndexIDTag").val()!="" && $("#IndexProcessTag").val()!=""){
+     $index.prop("disabled", false);
+     $("#stop_nextStep").html('stop');
+     changeStop_nextStep("stop");
+     $stop_nextStep.prop("disabled", true);
+     }
+     }
+     }*/
     //
     $("#Index").click(function (e){
 //        var service = new Service("/userProvideIndex");
@@ -612,26 +655,36 @@
 //        changeStop_nextStepToEvaluate("stop");
 //        $("#stop_nextStepToEvaluate").prop("disabled", true);
         /////////////////////////
-        //只要点击index,stop按钮就应该变成红色
-        $("#stop_nextStep").prop("disabled", false);
-        changeStop_nextStep("stop");
-        $("#Index").html('<i class="fa fa-spinner fa-pulse"></i>');
-        $("#Index").prop("disabled", true);
-        $("#start").html('Indexing...');
-        $.ajax({
-            type: "GET",
-            async: true,
-            url: "/userProvideIndex",
-            success: function(data) {
-                if (data == 'ok') {
+        //点击index按钮之后，需要判断所有空是不是都填满了，没有填满的需要告诉用户
+        if($("#IndexDocTag").val() == ""){
+            $("#index_note").html("DocTag can not be empty!");
+            $("#index_note").css("color","red");
+        }else if($("#IndexIDTag").val() == ""){
+            $("#index_note").html("IDTag can not be empty!");
+            $("#index_note").css("color","red");
+        }else if($("#IndexProcessTag").val() == ""){
+            $("#index_note").html("ProcessTag can not be empty!");
+            $("#index_note").css("color","red");
+        }else{
+            $("#index_note").css("color", "#fefefe")
+            //只要点击index,stop按钮就应该变成红色
+            $("#stop_nextStep").prop("disabled", false);
+            changeStop_nextStep("stop");
+            $("#Index").html('<i class="fa fa-spinner fa-pulse"></i>');
+            $("#Index").prop("disabled", true);
+            $("#start").html('Indexing...');
+            var service = new Service("/Indexing");
+            var para = {username: $("#log_state"), dataZipPath: $("#dataZipPath").val(), docTag: $("#IndexDocTag").val(), idTag:$("#IndexIDTag"), processTag:$("#IndexProcessTag")}
+            service.get(para, function (response) {
+                if (response == 'ok') {
                     $("#Index").html('Index');
                     $("#Index").prop("disabled", true);
                     $("#start").html('Index Finished');
                     $("#stop_nextStep").html('Next Step');
                     changeStop_nextStep("nextStep");
                 }
-            }
-        });
+            })
+        }
     });
     ////retrieve的设置
     $("#stop_nextStepToEvaluate").click(function(e){
@@ -676,20 +729,20 @@
     }
 
     $('#querydocumenpath').fileupload({
-        url: "/receive",
+        url: "/Upload",
         dataType: 'text',
         add: function (e, data) {
-            data.formData = {tt: 3};
+            data.formData = {tt: 2};
             $("#querydocumenpathShow").val(data['files'][0]['name'])
             data.submit();
             $("#querydocumentpathget").html('<i class="fa fa-spinner fa-pulse"></i>');
         },
         done: function (e, data) {
-            checkRetrieval();
+            $("#Retrieve").prop("disabled", false);
             $("#querydocumentpathget").html('...');
         }
     });
-    $('#querytagpath').fileupload({
+   /* $('#querytagpath').fileupload({
         url: "/receive",
         dataType: 'text',
         add: function (e, data) {
@@ -702,7 +755,7 @@
             checkRetrieval();
             $("#querytagpathget").html('...');
         }
-    });
+    });*/
     //    $('#queryresultpath').fileupload({
     //        url: "/receive",
     //        dataType: 'text',
@@ -724,9 +777,6 @@
         //模拟点击
         $('#querydocumenpath').click();
     });
-    $("#querytagpathget").click(function () {
-        $('#querytagpath').click();
-    });
     //    $('#queryresultpathget').click(function () {
     //        $('#queryresultpath').click();
     //    });
@@ -747,57 +797,71 @@
     }
     $("#Retrieve").click(function (e) {
         //再次点击检索的时候,之前检索的结果应该消失掉
-        $("#result-data-title").hide();
-        $result.hide();
-        evaluateResult.hide();
-        $("#result-table").hide();
-        //点击完retrieve按钮后运行过程中就不能点击,成功之后可以再次点击
-        $retrieve.prop("disabled", true);
-        //点击检索之后也不能翻到前一页,检索完成之后才可以
-        //点完检索之后必须再评测一次
+        if($("#queryDocTag").val() == ""){
+            $("#retrieval_note").html("DocTag can not be empty!");
+            $("#retrieval_note").css("color","red");
+        }else if($("#queryIDTag").val() == ""){
+            $("#retrieval_note").html("IDTag can not be empty!");
+            $("#retrieval_note").css("color","red");
+        }else if($("#queryProcessTag").val() == ""){
+            $("#retrieval_note").html("ProcessTag can not be empty!");
+            $("#retrieval_note").css("color","red");
+        }else if($("#queryResultNumber").val() == ""){
+            $("#retrieval_note").html("Query result number can not be empty!");
+            $("#retrieval_note").css("color","red");
+        }else{
+            $("#result-data-title").hide();
+            $result.hide();
+            evaluateResult.hide();
+            $("#result-table").hide();
+            //点击完retrieve按钮后运行过程中就不能点击,成功之后可以再次点击
+            $retrieve.prop("disabled", true);
+            //点击检索之后也不能翻到前一页,检索完成之后才可以
+            //点完检索之后必须再评测一次
 
-        $("#stop_Finish").prop("disabled", true);
-        ////////////////////////////
-        changeStop_nextStepToEvaluate("stop");
-        $("#stop_nextStepToEvaluate").prop("disabled", false);
-        $("#Retrieve").html('<i class="fa fa-spinner fa-pulse"></i>');
-        $("#start").html('Retrieving...');
-        $result.show();
-        var service = new Service("/userProvideRetrieval");
-        var WeightModel = $("#WeightModel").val();
-        //这里是入参数  所有的参数在在这里构造
-        var selects = $("#WeightModel").val();
+            $("#stop_Finish").prop("disabled", true);
+            ////////////////////////////
+            changeStop_nextStepToEvaluate("stop");
+            $("#stop_nextStepToEvaluate").prop("disabled", false);
+            $("#Retrieve").html('<i class="fa fa-spinner fa-pulse"></i>');
+            $("#start").html('Retrieving...');
+            $result.show();
+            var service = new Service("/userProvideRetrieval");
+            var WeightModel = $("#WeightModel").val();
+            //这里是入参数  所有的参数在在这里构造
+            var selects = $("#WeightModel").val();
 //        selects = selects.join(",");
-        var para = {WeightModel: WeightModel};
-        service.get(para, function (response) {
-            $("#waiting").addClass("hidden");
-            //$evaluate.removeAttr("disabled");
-            //$("#result-data").html(response);
-            process(response);
-            $retrieve.prop("disabled", false);
-            $("#dismiss-modalQuerySet").click();
-            $("#Retrieve").html('Retrieve');
-            $("#start").html('Retrieve Finished');
-            $("#stop_nextStepToEvaluate").html('Next Step');
-            changeStop_nextStepToEvaluate("nextStep");
-            // $evaluatedocument.prop("disabled", false);
-        });
+            var para = {WeightModel: WeightModel};
+            service.get(para, function (response) {
+                $("#waiting").addClass("hidden");
+                //$evaluate.removeAttr("disabled");
+                //$("#result-data").html(response);
+                process(response);
+                $retrieve.prop("disabled", false);
+                $("#dismiss-modalQuerySet").click();
+                $("#Retrieve").html('Retrieve');
+                $("#start").html('Retrieve Finished');
+                $("#stop_nextStepToEvaluate").html('Next Step');
+                changeStop_nextStepToEvaluate("nextStep");
+                // $evaluatedocument.prop("disabled", false);
+            });
 
 
-        function process(response) {
-            var array = [];
-            var data = JSON.parse(response);
-            for (var i in data) {
-                var item = data[i];
-                var item_html = "<div class='result-div'>" +
-                    "<a href='/getFile?filepath=" + item.url + "' class='result-tile'>" + item.title + "</a>" +
-                    "<span class='result-description'>" + item.description + "</span>" +
-                    "</div>"
-                array.push(item_html);
+            function process(response) {
+                var array = [];
+                var data = JSON.parse(response);
+                for (var i in data) {
+                    var item = data[i];
+                    var item_html = "<div class='result-div'>" +
+                            "<a href='/getFile?filepath=" + item.url + "' class='result-tile'>" + item.title + "</a>" +
+                            "<span class='result-description'>" + item.description + "</span>" +
+                            "</div>"
+                    array.push(item_html);
+                }
+                $("#result-data").html(array.join(""));
+                $("#result-data-title").show();
+
             }
-            $("#result-data").html(array.join(""));
-            $("#result-data-title").show();
-
         }
     });
 
