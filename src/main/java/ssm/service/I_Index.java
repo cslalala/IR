@@ -11,6 +11,6 @@ public interface I_Index {
     void addUser_IndexEntity(String useID, String indexID);
     /*i_index.addIndexDataInfEntity(dataID, dataName, dataZipPath, dataSetPath, docTag, idTag);*/
     void addIndexDataInfEntity(indexDataInf indexdatainf);
-    void addIndexDocInfEntity(indexInf indexinf);
+    void addIndexInfEntity(indexInf indexinf);
     void process(String dataSetPath, String docTag, String idTag, String processTag, String indexResultPath, String indexDocInfPath);
 }

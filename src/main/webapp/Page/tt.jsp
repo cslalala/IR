@@ -408,7 +408,7 @@
             <a href="https://concept.research.microsoft.com/Home/Download" style="text-decoration: none;">DOWNLOAD</a>
         </li>
         <li>
-            <button type="button" class="btn btn-default" id="log_state" style="padding-top:2px;font-size:16px; line-height:1.1; font-weight:500;border:none;background-color:#f1f1f1; ">Log In</button>
+            <button type="button" class="btn btn-default" id="log_state" style="padding-top:2px;font-size:16px; line-height:1.1; font-weight:500;border:none;background-color:#f1f1f1; " value="Chensu"></button>
             <%--<a href="login.jsp" id="log_state">Log In</a>--%>
         </li>
         <li>
@@ -591,6 +591,7 @@
         },
         done: function(e, data){
             $("#Index").prop("disabled", false);
+            $("#Index").html("Index");
             $("#datadoucumentpathget").html('...');
             //console.log(data);
             if(data.result != "fail"){
@@ -674,7 +675,8 @@
             $("#Index").prop("disabled", true);
             $("#start").html('Indexing...');
             var service = new Service("/Indexing");
-            var para = {username: $("#log_state"), dataZipPath: $("#dataZipPath").val(), docTag: $("#IndexDocTag").val(), idTag:$("#IndexIDTag"), processTag:$("#IndexProcessTag")}
+            //alert($("#log_state").val()+" "+$("#dataZipPath").val()+" "+$("#IndexDocTag").val()+" "+$("#IndexIDTag").val()+ " "+$("#IndexProcessTag").val())
+            var para = {username: $("#log_state").val(), dataZipPath: $("#dataZipPath").text(), docTag: $("#IndexDocTag").val(), idTag:$("#IndexIDTag").val(), processTag:$("#IndexProcessTag").val()}
             service.get(para, function (response) {
                 if (response == 'ok') {
                     $("#Index").html('Index');

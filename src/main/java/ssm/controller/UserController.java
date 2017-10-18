@@ -25,7 +25,9 @@ import java.util.UUID;
 public class UserController extends BaseController {
     @Resource
     private UserLogin userLogin;
+    @Resource
     private I_Index i_index;
+    @Resource
     private I_Retrieve i_retrieve;
     public void setUserLogin(UserLogin userLogin) {
         this.userLogin = userLogin;
@@ -113,8 +115,9 @@ public class UserController extends BaseController {
     /*模式三， 建索引*/
     @ResponseBody
     @RequestMapping("/Indexing")
-    /*dataZipPath: $("#dataZipPath").val(), docTag: $("#IndexDocTag").val(), idTag:$("#IndexIDTag"), processTag:$("#IndexProcessTag")*/
+    /*username: $("#log_state").val(), dataZipPath: $("#dataZipPath").val(), docTag: $("#IndexDocTag").val(), idTag:$("#IndexIDTag"), processTag:$("#IndexProcessTag")*/
     public String indexing(String username, String dataZipPath, String docTag, String idTag, String processTag){
+        System.out.println("dataZipPath: "+dataZipPath);
         String dataSetPath = i_index.UnZip(dataZipPath);
         //更新user_index表
         String indexID = UUID.randomUUID().toString();
@@ -124,16 +127,17 @@ public class UserController extends BaseController {
         String dataID = UUID.randomUUID().toString();
         String dataName = dataZipPath.substring(dataZipPath.lastIndexOf("_")+1);
         indexDataInf indexdatainf = new indexDataInf(dataID, dataName, dataZipPath, dataSetPath, docTag, idTag);
+        System.out.println("***************" + indexdatainf.getDataID()+" " + indexdatainf.getDataName());
         i_index.addIndexDataInfEntity(indexdatainf);
 
         //更新indexInf表
         String indexResultPath = dataSetPath + "_" + "indexResult";
         String indexDocInfPath = dataSetPath + "_" + "indexDocInf";
         indexInf indexinf = new indexInf(indexID, dataID, processTag, indexResultPath, indexDocInfPath);
-        i_index.addIndexDocInfEntity(indexinf);
+        i_index.addIndexInfEntity(indexinf);
 
         i_index.process(dataSetPath, docTag, idTag, processTag, indexResultPath, indexDocInfPath);
-        return "";
+        return "ok";
     }
 
 

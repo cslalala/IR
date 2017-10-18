@@ -77,10 +77,12 @@ public class Index implements I_Index {
     }
 
     public void addIndexDataInfEntity(indexDataInf indexdatainf){
+        System.out.println("******************" + indexdatainf.getDataName() +" " + indexdatainf.getDataID());
         userIndexDao.addIndexDataInf(indexdatainf);
     }
 
-    public void addIndexDocInfEntity(indexInf indexinf){
+    public void addIndexInfEntity(indexInf indexinf){
+        System.out.println("********************"+ indexinf.getDataID()+" " + indexinf.getIndexDocInfPath());
         userIndexDao.addIndexInf(indexinf);
     }
 

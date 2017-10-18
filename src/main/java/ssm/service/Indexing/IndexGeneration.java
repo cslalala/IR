@@ -1,5 +1,6 @@
 package ssm.service.Indexing;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -27,6 +28,7 @@ public class IndexGeneration {
     Map<String, docInf> docInfMap = new HashMap<String, docInf>();
     StringBuilder fileContent = new StringBuilder();
     String id = new String(); // file的idtag的值
+    int indexResultFileCount = 0;
     public void StopWords(){
         stopWordsList  = stopwordsread.readStopWords();
     }
@@ -79,20 +81,23 @@ public class IndexGeneration {
         int word_cont = 0; //记录文档中有多少的单词
         String word = new String();
         for(int i = 0; i < docWord.length; i++){
-            word = docWord[i].trim();
+            word = docWord[i].trim().toLowerCase();
             if(word.length() <= 2) continue;
             if(stopWordsList.contains(word)) continue;
             PorterStemming ps = new PorterStemming();
             for(int t = 0; t < word.length(); t++){
                 ps.add(word.charAt(t));
             }
+            //System.out.print(word);
             word = ps.stem();
+            //System.out.println(" " + word);
             word_cont += 1;
             if(!wordInfMap.containsKey(word)){
                 word_doc wd = new word_doc();
                 List<Integer> ll = new ArrayList<Integer>();
                 ll.add(i);
                 wd.word_docMap.put(id, ll);
+                wordInfMap.put(word, wd);
             }else{
                 word_doc wd = wordInfMap.get(word);
                 //如果单词里面已经包含了某个文章ID
@@ -105,6 +110,7 @@ public class IndexGeneration {
                     ll.add(i);
                     wd.word_docMap.put(id, ll);
                 }
+                wordInfMap.put(word, wd);
             }
         }
         //
@@ -115,6 +121,7 @@ public class IndexGeneration {
     }
     public void processFile(String path, String docTag, String idTag, String processTag){
         try{
+            fileContent.setLength(0);
             SAXReader saxReader = new SAXReader();
             //saxReader.setValidation(false);
             File file = new File(path);
@@ -123,6 +130,7 @@ public class IndexGeneration {
             Element root = document.getRootElement();
             if(root.getName().toString().trim().equals(docTag)){
                 listNodes(root, idTag, 0);//flag的作用是，如果flag为1的话，说明当前标签以下的所有标签内容都需要，否则就不用
+               // System.out.println(fileContent.toString());
                 indexing(path);
             }else{
                 System.out.println(path + "docTag is wrong");
@@ -138,11 +146,54 @@ public class IndexGeneration {
             processTagList.add(processTags[i].trim());
         }
     }
+
+    public void writeTofile(String indexResultPath, String indexDocInf){
+        try {
+            indexResultFileCount += 1;
+            OutputStreamWriter pw = new OutputStreamWriter(new FileOutputStream(indexResultPath + "\\" + indexResultFileCount), "GBK");
+            Set<String> set = wordInfMap.keySet();
+            System.out.println("*********************" +wordInfMap.size());
+            Iterator<String> it = set.iterator();
+            StringBuilder sb = new StringBuilder();
+            while(it.hasNext()){
+                String word = (String) it.next();
+                word_doc wd = wordInfMap.get(word);
+                Set<String> set2 = wd.word_docMap.keySet();
+                Iterator<String> it2 = set2.iterator();
+                while(it2.hasNext()){
+                    String docid = (String)it2.next();
+                    List<Integer> ll = wd.word_docMap.get(docid);
+                    sb.append(word+" " + docid + " " + ll.size());
+                    for(int j = 0; j < ll.size(); j++){
+                        sb.append(" "+ll.get(j));
+                    }
+                    sb.append("\r\n");
+                }
+            }
+
+            pw.write(sb.toString());
+            pw.close();
+            OutputStreamWriter pw2 = new OutputStreamWriter(new FileOutputStream(indexDocInf + "\\" + indexResultFileCount), "GBK");
+            Set<String> set3 = docInfMap.keySet();
+            Iterator it3 = set3.iterator();
+            StringBuilder sb2 = new StringBuilder();
+            while(it3.hasNext()){
+                String docid = (String)it3.next();
+                docInf docinf = docInfMap.get(docid);
+                sb2.append(docid + " " + docinf.numberCont + " " + docinf.savePath + "\r\n");
+            }
+            pw2.write(sb2.toString());
+            pw2.close();
+            docInfMap.clear();
+            wordInfMap.clear();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
     public void generateIndex(String dataPath, String docTag, String idTag, String processTag, String indexResultPath, String indexDocInf){
         readDocPath(dataPath);
         processTag_process(processTag);
         int cont = 0;
-        int indexResultFileCount = 0;
         try{
             File file = new File(indexResultPath);
             if(!file.exists()){
@@ -159,40 +210,12 @@ public class IndexGeneration {
                 processFile(docPathList.get(i), docTag, idTag, processTag);
                 cont ++;
                 if(cont == 3000){
-                    indexResultFileCount += 1;
-                    OutputStreamWriter pw = new OutputStreamWriter(new FileOutputStream(indexResultPath + "\\" + indexResultFileCount), "GBK");
-                    Set<String> set = wordInfMap.keySet();
-                    Iterator<String> it = set.iterator();
-                    StringBuilder sb = new StringBuilder();
-                    while(it.hasNext()){
-                        String word = (String) it.next();
-                        word_doc wd = wordInfMap.get(word);
-                        Set<String> set2 = wd.word_docMap.keySet();
-                        Iterator<String> it2 = set2.iterator();
-                        while(it2.hasNext()){
-                            String docid = (String)it2.next();
-                            List<Integer> ll = wd.word_docMap.get(docid);
-                            sb.append(word+" " + docid + " " + ll.size());
-                            for(int j = 0; j < ll.size(); j++){
-                                sb.append(" "+ll.get(j));
-                            }
-                            sb.append("\r\n");
-                        }
-                    }
-                    pw.write(sb.toString());
-                    pw.close();
-                    OutputStreamWriter pw2 = new OutputStreamWriter(new FileOutputStream(indexDocInf + "\\" + indexResultFileCount), "GBK");
-                    Set<String> set3 = docInfMap.keySet();
-                    Iterator it3 = set3.iterator();
-                    StringBuilder sb2 = new StringBuilder();
-                    while(it3.hasNext()){
-                        String docid = (String)it3.next();
-                        docInf docinf = docInfMap.get(docid);
-                        sb2.append(docid + " " + docinf.numberCont + " " + docinf.savePath + "\r\n");
-                    }
-                    pw2.write(sb2.toString());
-                    pw2.close();
+                    writeTofile(indexResultPath, indexDocInf);
+                    cont = 0;
                 }
+            }
+            if(cont > 0){
+                writeTofile(indexResultPath, indexDocInf);
             }
         }catch (Exception e){
             e.printStackTrace();
