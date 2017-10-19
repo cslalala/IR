@@ -3,6 +3,7 @@ package ssm.service.Retrieving;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ssm.dao.User_RetrieveDao;
+import ssm.dao.entity.queryDataInf;
 import ssm.dao.entity.systemDataInf;
 import ssm.service.I_Retrieve;
 
@@ -13,7 +14,7 @@ import javax.annotation.Resource;
  */
 @Service
 @Transactional
-public class User_retrieving implements I_Retrieve{
+public class Retrieval implements I_Retrieve{
     @Resource
     private User_RetrieveDao user_retrieveDao;
     public systemDataInf modeOne_Find(String dataName, String queryNo, String retrieveModel){
@@ -25,5 +26,9 @@ public class User_retrieving implements I_Retrieve{
         String indexDocPath = systemdatainf.getIndexDocPath();
         String queryPath = systemdatainf.getQueryPath();
         return "";
+    }
+
+    public void addqueryDataInfEntity(queryDataInf querydatainf){
+        user_retrieveDao.addqueryDataInf(querydatainf);
     }
 }

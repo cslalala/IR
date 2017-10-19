@@ -345,6 +345,7 @@
                 </button>
             </div>
             <label id="queryDataPath" style="visibility: hidden; height: 0px;"></label>
+            <label id="indexDataID" style="visibility: hidden; height: 0px;"></label>
         </div>
     </div>
 </div>
@@ -542,7 +543,6 @@
     })
     $("#stop_nextStep").click(function(e){
         var text = $(this).text();
-        alert(text);
         if(text == "stop"){
             Reset();
             $.ajax({
@@ -556,7 +556,6 @@
                 }
             });
         } else if(text.trim() == "Next Step"){
-            alert("*****");
             $("#dismiss-modalDataSet").click();
             $("#myModal").modal({show: true})
         }
@@ -678,11 +677,12 @@
             //alert($("#log_state").val()+" "+$("#dataZipPath").val()+" "+$("#IndexDocTag").val()+" "+$("#IndexIDTag").val()+ " "+$("#IndexProcessTag").val())
             var para = {username: $("#log_state").val(), dataZipPath: $("#dataZipPath").text(), docTag: $("#IndexDocTag").val(), idTag:$("#IndexIDTag").val(), processTag:$("#IndexProcessTag").val()}
             service.get(para, function (response) {
-                if (response == 'ok') {
+                if (response != "Fail") {
                     $("#Index").html('Index');
                     $("#Index").prop("disabled", true);
                     $("#start").html('Index Finished');
                     $("#stop_nextStep").html('Next Step');
+                    $("#indexDataID").html(response);
                     changeStop_nextStep("nextStep");
                 }
             })
@@ -740,6 +740,7 @@
             $("#querydocumentpathget").html('<i class="fa fa-spinner fa-pulse"></i>');
         },
         done: function (e, data) {
+            $("#queryDataPath").html(data.result);
             $("#Retrieve").prop("disabled", false);
             $("#querydocumentpathget").html('...');
         }
@@ -783,20 +784,6 @@
     //        $('#queryresultpath').click();
     //    });
 
-    function checkRetrieval() {
-        var fileUploadCounter_retrieve = 0;
-        if($("#querydocumenpathShow").val() != ""){
-            fileUploadCounter_retrieve++;
-        }
-        if($("#querytagpathShow").val() != ""){
-            fileUploadCounter_retrieve++;
-        }
-        if (fileUploadCounter_retrieve == 2) {
-            $retrieve.prop("disabled", false);
-            changeStop_nextStepToEvaluate("stop");
-            $stop_nextStepToEvaluate.prop("disabled", true);
-        }
-    }
     $("#Retrieve").click(function (e) {
         //再次点击检索的时候,之前检索的结果应该消失掉
         if($("#queryDocTag").val() == ""){
@@ -828,12 +815,14 @@
             $("#Retrieve").html('<i class="fa fa-spinner fa-pulse"></i>');
             $("#start").html('Retrieving...');
             $result.show();
-            var service = new Service("/userProvideRetrieval");
+            var service = new Service("/modeTh_retrieval");
             var WeightModel = $("#WeightModel").val();
             //这里是入参数  所有的参数在在这里构造
             var selects = $("#WeightModel").val();
 //        selects = selects.join(",");
-            var para = {WeightModel: WeightModel};
+            /*String username, String queryDataPath, String weightModel, String docTag, String idTag, String processTag, int retuernCount*/
+            var para = {indexDataID:$("#indexDataID").text(),  queryDataPath: $("#queryDataPath").text(),  weightModel: WeightModel, docTag:$("#queryDocTag").val()
+            , idTag:$("#queryIDTag").val(), processTag:$("#queryProcessTag").val(), retuernCount:$("#queryResultNumber").val()};
             service.get(para, function (response) {
                 $("#waiting").addClass("hidden");
                 //$evaluate.removeAttr("disabled");

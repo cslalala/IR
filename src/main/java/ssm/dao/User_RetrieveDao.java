@@ -1,6 +1,7 @@
 package ssm.dao;
 
 import org.springframework.stereotype.Component;
+import ssm.dao.entity.queryDataInf;
 import ssm.dao.entity.systemDataInf;
 
 /**
@@ -9,4 +10,6 @@ import ssm.dao.entity.systemDataInf;
 @Component
 public interface User_RetrieveDao {
     systemDataInf find(String dataName);
+
+    void addqueryDataInf(queryDataInf querydatainf);
 }

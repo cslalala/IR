@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ssm.dao.entity.indexDataInf;
 import ssm.dao.entity.indexInf;
+import ssm.dao.entity.queryDataInf;
 import ssm.dao.entity.systemDataInf;
 import ssm.entity.UploadParam;
 import ssm.service.I_Index;
@@ -137,12 +138,25 @@ public class UserController extends BaseController {
         i_index.addIndexInfEntity(indexinf);
 
         i_index.process(dataSetPath, docTag, idTag, processTag, indexResultPath, indexDocInfPath);
-        return "ok";
+        return dataID;
     }
 
 
     /*模式三, 检索*/
-    /*@ResponseBody
+    @ResponseBody
     @RequestMapping("/modeTh_retrieval")
-    public String modeTh_retrieval*/
+    public String modeTh_retrieval(String indexDataID, String queryDataPath, String weightModel, String docTag, String idTag, String processTag, int retuernCount){
+        //更新queryDataInf表
+       /* String queryID;         //每次上传的query都有一个ID
+        String indexID;         //query对不同的index的检索,索引需要indexID
+        String queryName;      //上传的query都有一个名称（也是显示给用户看的时候的名字）
+        String queryPath;       //上传query的保存地址
+        String queryDocTag;     //上传query的DOC标签
+        String queryIDTag;      //上传查询的唯一标识*/
+        String queryID = UUID.randomUUID().toString();
+        String queryName = queryDataPath.substring(queryDataPath.lastIndexOf("_")+1);
+        queryDataInf querydatainf = new queryDataInf(queryID, indexDataID, queryName, queryDataPath, docTag, idTag);
+        i_retrieve.addqueryDataInfEntity(querydatainf);
+        return "";
+    }
 }

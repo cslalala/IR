@@ -12,4 +12,8 @@
     queryPath
     FROM systemDataInf WHERE dataName=#{dataName}
 </select>
+    <insert id="addqueryDataInf" parameterType="ssm.dao.entity.queryDataInf">
+        INSERT INTO queryDataInf
+        VALUES (#{queryID}, #{indexID}, #{queryName}, #{queryPath}, #{queryDocTag}, #{queryIDTag})
+    </insert>
 </mapper>

@@ -11,6 +11,15 @@ public class queryDataInf {
     String queryDocTag;     //上传query的DOC标签
     String queryIDTag;      //上传查询的唯一标识
 
+    public queryDataInf(String queryID, String indexID, String queryName, String queryPath, String queryDocTag, String queryIDTag) {
+        this.queryID = queryID;
+        this.indexID = indexID;
+        this.queryName = queryName;
+        this.queryPath = queryPath;
+        this.queryDocTag = queryDocTag;
+        this.queryIDTag = queryIDTag;
+    }
+
     public String getQueryID() {
         return queryID;
     }

@@ -1,5 +1,6 @@
 package ssm.service;
 
+import ssm.dao.entity.queryDataInf;
 import ssm.dao.entity.systemDataInf;
 
 /**
@@ -8,4 +9,5 @@ import ssm.dao.entity.systemDataInf;
 public interface I_Retrieve {
     systemDataInf modeOne_Find(String dataName, String queryNo, String retrieveModel);
     String modeOne_Retrieve(systemDataInf systemdatainf);
+    void addqueryDataInfEntity(queryDataInf querydatainf);
 }
