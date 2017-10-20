@@ -9,8 +9,18 @@ public class queryInf {
     String queryID;                 //对于哪一个query的检索结果
     String queryProcessTag;     //进行检索的标签
     String queryModel;              //检索的模型
-    String resultLength;            //返回结果的条数
+    int resultLength;            //返回结果的条数
     String resultPath;              //结果保存的地址
+
+    public queryInf(String retrieveResultID, String indexID, String queryID, String queryProcessTag, String queryModel, int resultLength, String resultPath) {
+        this.retrieveResultID = retrieveResultID;
+        this.indexID = indexID;
+        this.queryID = queryID;
+        this.queryProcessTag = queryProcessTag;
+        this.queryModel = queryModel;
+        this.resultLength = resultLength;
+        this.resultPath = resultPath;
+    }
 
     public String getRetrieveResultID() {
         return retrieveResultID;
@@ -52,11 +62,11 @@ public class queryInf {
         this.queryModel = queryModel;
     }
 
-    public String getResultLength() {
+    public int getResultLength() {
         return resultLength;
     }
 
-    public void setResultLength(String resultLength) {
+    public void setResultLength(int resultLength) {
         this.resultLength = resultLength;
     }
 

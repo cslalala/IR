@@ -12,8 +12,24 @@
     queryPath
     FROM systemDataInf WHERE dataName=#{dataName}
 </select>
+
     <insert id="addqueryDataInf" parameterType="ssm.dao.entity.queryDataInf">
         INSERT INTO queryDataInf
         VALUES (#{queryID}, #{indexID}, #{queryName}, #{queryPath}, #{queryDocTag}, #{queryIDTag})
     </insert>
+
+    <insert id="addqueryInf" parameterType="ssm.dao.entity.queryInf">
+        INSERT INTO queryInf
+        VALUES (#{retrieveResultID}, #{indexID},#{queryID},#{queryProcessTag},#{queryModel},#{resultLength},#{resultPath})
+    </insert>
+
+    <select id="findindexInf" parameterType="ssm.dao.entity.indexInf">
+        SELECT
+        indexID,
+        dataID,
+        indexProcess,
+        indexResultPath,
+        indexDocInfPath
+        FROM indexInf WHERE indexID = #{indexID}
+    </select>
 </mapper>

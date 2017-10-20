@@ -3,10 +3,7 @@ package ssm.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ssm.dao.entity.indexDataInf;
-import ssm.dao.entity.indexInf;
-import ssm.dao.entity.queryDataInf;
-import ssm.dao.entity.systemDataInf;
+import ssm.dao.entity.*;
 import ssm.entity.UploadParam;
 import ssm.service.I_Index;
 import ssm.service.I_Retrieve;
@@ -138,7 +135,7 @@ public class UserController extends BaseController {
         i_index.addIndexInfEntity(indexinf);
 
         i_index.process(dataSetPath, docTag, idTag, processTag, indexResultPath, indexDocInfPath);
-        return dataID;
+        return indexID;
     }
 
 
@@ -157,6 +154,21 @@ public class UserController extends BaseController {
         String queryName = queryDataPath.substring(queryDataPath.lastIndexOf("_")+1);
         queryDataInf querydatainf = new queryDataInf(queryID, indexDataID, queryName, queryDataPath, docTag, idTag);
         i_retrieve.addqueryDataInfEntity(querydatainf);
+
+        //更新queryInf表
+        /*String retrieveResultID;    //每次检索结果都有一个ID
+    String indexID;                 //对于哪一个索引的检索结果
+    String queryID;                 //对于哪一个query的检索结果
+    String queryProcessTag;     //进行检索的标签
+    String queryModel;              //检索的模型
+    String resultLength;            //返回结果的条数
+    String resultPath;              //结果保存的地址*/
+        String retrieveResultID = UUID.randomUUID().toString();
+        String resultPath = queryDataPath.substring(0, queryDataPath.lastIndexOf(".")) + UUID.randomUUID().toString() + "_resultPath";
+        queryInf queryinf = new queryInf(retrieveResultID, indexDataID, queryID, processTag, weightModel, retuernCount, resultPath);
+        i_retrieve.addqueryInfEntity(queryinf);
+
+        i_retrieve.retrieving(indexDataID, queryDataPath, docTag, idTag, processTag, weightModel, retuernCount, resultPath);
         return "";
     }
 }
