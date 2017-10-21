@@ -18,6 +18,7 @@ public class retrievalProcess {
     public Map<String, docInf> docInfMap = new HashMap<String, docInf>();
     public Map<String, Map<String, docInf>> ansMap = new HashMap<String, Map<String, docInf>>();
     public Map<String, String>queryMap = new HashMap<String, String>();
+    public Map<String, Integer>wordCount = new HashMap<String, Integer>();
     List<String> stopWordsList = new ArrayList<String>();
     stopWordsRead stopwordsread = new stopWordsRead();
     public void StopWords(){
@@ -59,7 +60,18 @@ public class retrievalProcess {
             for(int i = 0; i < queryWords.length; i++){
                 if(wordInfMap.containsKey(queryWords[i])){
                     word_doc wd = wordInfMap.get(queryWords[i]);
-                    wd.word_docMap
+                    Set<String> set2 = wd.word_docMap.keySet();
+                    Iterator<String> it2 = set2.iterator();
+                    while(it2.hasNext()){
+                        String docID = it2.next();
+                        docInf docinf = docInfMap.get(docID);
+                        docinf.tf += wd.word_docMap.get(docID).size();
+                        if(wordCount.containsKey(queryWords[i])){
+                            wordCount.put(queryWords[i], wordCount.get(queryWords[i])+1);
+                        }else{
+                            wordCount.put(queryWords[i], 1);
+                        }
+                    }
                 }
             }
         }
