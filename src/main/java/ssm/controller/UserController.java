@@ -131,10 +131,11 @@ public class UserController extends BaseController {
         //更新indexInf表
         String indexResultPath = dataSetPath + "_" + "indexResult";
         String indexDocInfPath = dataSetPath + "_" + "indexDocInf";
-        indexInf indexinf = new indexInf(indexID, dataID, processTag, indexResultPath, indexDocInfPath);
+        String indexIntegrationPath = dataSetPath + "_" + "indexIntegration";
+        indexInf indexinf = new indexInf(indexID, dataID, processTag, indexResultPath, indexDocInfPath, indexIntegrationPath);
         i_index.addIndexInfEntity(indexinf);
 
-        i_index.process(dataSetPath, docTag, idTag, processTag, indexResultPath, indexDocInfPath);
+        i_index.process(dataSetPath, docTag, idTag, processTag, indexResultPath, indexDocInfPath, indexIntegrationPath);
         return indexID;
     }
 

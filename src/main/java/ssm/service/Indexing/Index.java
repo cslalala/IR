@@ -86,10 +86,10 @@ public class Index implements I_Index {
         userIndexDao.addIndexInf(indexinf);
     }
 
-    public void process(String dataSetPath, String docTag, String idTag, String processTag, String indexResultPath, String indexDocInfPath){
+    public void process(String dataSetPath, String docTag, String idTag, String processTag, String indexResultPath, String indexDocInfPath, String indexIntegrationPath){
         //处理需要检索的标签的索引
         IndexGeneration indexgeneration = new IndexGeneration();
         indexgeneration.StopWords();
-        indexgeneration.generateIndex(dataSetPath, docTag, idTag, processTag, indexResultPath, indexDocInfPath);
+        indexgeneration.generateIndex(dataSetPath, docTag, idTag, processTag, indexResultPath, indexDocInfPath, indexIntegrationPath);
     }
 }

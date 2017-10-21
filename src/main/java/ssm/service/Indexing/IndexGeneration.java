@@ -9,10 +9,7 @@ import ssm.service.Indexing.Entity.docInf;
 import ssm.service.Indexing.Entity.word_doc;
 import ssm.service.stopWordsRead;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -28,6 +25,7 @@ public class IndexGeneration {
     Map<String, docInf> docInfMap = new HashMap<String, docInf>();
     StringBuilder fileContent = new StringBuilder();
     String id = new String(); // file的idtag的值
+    Map<String, Integer>wordCountMap = new HashMap<String, Integer>(); //word在多少文档中出现过
     int indexResultFileCount = 0;
     public void StopWords(){
         stopWordsList  = stopwordsread.readStopWords();
@@ -190,7 +188,38 @@ public class IndexGeneration {
             e.printStackTrace();
         }
     }
-    public void generateIndex(String dataPath, String docTag, String idTag, String processTag, String indexResultPath, String indexDocInf){
+    public void integration(String indexResultPath, String indexIntegration){
+        try{
+            File file = new File(indexResultPath);
+            File[] fileList = file.listFiles();
+            for(int i = 0 ; i < fileList.length; i++){
+                BufferedReader bufr = new BufferedReader(new FileReader(fileList[i]));
+                String s = "";
+                while((s=bufr.readLine()) != null){
+                    String[] ss = s.split(" ");
+                    if(!wordCountMap.containsKey(ss[0])){
+                        wordCountMap.put(ss[0], 1);
+                    }else{
+                        wordCountMap.put(ss[0], wordCountMap.get(ss[0])+1);
+                    }
+                }
+            }
+            OutputStreamWriter pw = new OutputStreamWriter(new FileOutputStream(indexIntegration), "GBK");
+            Set<String> set = wordCountMap.keySet();
+            System.out.println("*********************" +wordCountMap.size());
+            Iterator<String> it = set.iterator();
+            StringBuilder sb = new StringBuilder();
+            while(it.hasNext()){
+                String word = (String) it.next();
+                sb.append(word + " " + String.valueOf(wordCountMap.get(word)) + "\r\n");
+            }
+            pw.write(sb.toString());
+            pw.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    public void generateIndex(String dataPath, String docTag, String idTag, String processTag, String indexResultPath, String indexDocInf, String indexIntegration){
         readDocPath(dataPath);
         processTag_process(processTag);
         int cont = 0;
@@ -202,6 +231,10 @@ public class IndexGeneration {
             file = new File(indexDocInf);
             if(!file.exists()){
                 file.mkdir();
+            }
+            file = new File(indexIntegration);
+            if(!file.exists()){
+                file.createNewFile();
             }
             for(int i = 0; i < docPathList.size(); i++){
                 if(docPathList.get(i).toString().endsWith(".DS_Store")){
@@ -217,9 +250,9 @@ public class IndexGeneration {
             if(cont > 0){
                 writeTofile(indexResultPath, indexDocInf);
             }
+            integration(indexResultPath, indexIntegration);
         }catch (Exception e){
             e.printStackTrace();
         }
     }
-
 }

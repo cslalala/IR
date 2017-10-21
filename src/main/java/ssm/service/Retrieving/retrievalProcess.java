@@ -5,6 +5,8 @@ import ssm.service.Data;
 import ssm.service.Indexing.Entity.docInf;
 import ssm.service.Indexing.Entity.word_doc;
 import ssm.service.Indexing.PorterStemming;
+import ssm.service.Retrieving.Entity.docWeightEntity;
+import ssm.service.Retrieving.Entity.weightEntity;
 import ssm.service.stopWordsRead;
 
 import java.io.File;
@@ -16,7 +18,7 @@ import java.util.*;
 public class retrievalProcess {
     public Map<String, word_doc> wordInfMap = new HashMap<String, word_doc>();
     public Map<String, docInf> docInfMap = new HashMap<String, docInf>();
-    public Map<String, Map<String, docInf>> ansMap = new HashMap<String, Map<String, docInf>>();
+    public Map<String, Map<String, weightEntity>> ansMap = new HashMap<String, Map<String, weightEntity>>();//String为queryID, value为对应的docID和分数,分数有两部分组成,
     public Map<String, String>queryMap = new HashMap<String, String>();
     public Map<String, Integer>wordCount = new HashMap<String, Integer>();
     List<String> stopWordsList = new ArrayList<String>();
@@ -60,18 +62,21 @@ public class retrievalProcess {
             for(int i = 0; i < queryWords.length; i++){
                 if(wordInfMap.containsKey(queryWords[i])){
                     word_doc wd = wordInfMap.get(queryWords[i]);
-                    Set<String> set2 = wd.word_docMap.keySet();
+                    Set<String> set2 = wd.word_docMap.keySet(); // //String 为docID, list里面为位置
                     Iterator<String> it2 = set2.iterator();
-                    while(it2.hasNext()){
+                    /*while(it2.hasNext()){
                         String docID = it2.next();
                         docInf docinf = docInfMap.get(docID);
-                        docinf.tf += wd.word_docMap.get(docID).size();
+                        we.weightMap.put(queryWords[i], wd.word_docMap.get(docID).size()/docinf.getNumberCont()*1.0);
+                        docWeightEntity docweight = new docWeightEntity();
+                        docweight.docWeightMap.put(docID, we);
+                        ansMap.put(queryID, docweight.docWeightMap);
                         if(wordCount.containsKey(queryWords[i])){
                             wordCount.put(queryWords[i], wordCount.get(queryWords[i])+1);
                         }else{
                             wordCount.put(queryWords[i], 1);
                         }
-                    }
+                    }*/
                 }
             }
         }
@@ -99,5 +104,6 @@ public class retrievalProcess {
         }catch (Exception e){
             e.printStackTrace();
         }
+        return "";
     }
 }

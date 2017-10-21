@@ -13,13 +13,23 @@ public class indexInf {
     String indexProcessTag; //需要建索引的标签
     String indexResultPath; //索引结果保存的地址
     String indexDocInfPath;//索引结果中的文档信息
+    String indexIntegrationPath; //多个索引整合的结果
 
-    public indexInf(String indexID, String dataID, String indexProcessTag, String indexResultPath, String indexDocInfPath) {
+    public indexInf(String indexID, String dataID, String indexProcessTag, String indexResultPath, String indexDocInfPath, String indexInterationPath) {
         this.indexID = indexID;
         this.dataID = dataID;
         this.indexProcessTag = indexProcessTag;
         this.indexResultPath = indexResultPath;
         this.indexDocInfPath = indexDocInfPath;
+        this.indexIntegrationPath = indexInterationPath;
+    }
+
+    public String getIndexIntegrationPath() {
+        return indexIntegrationPath;
+    }
+
+    public void setIndexIntegrationPath(String indexIntegrationPath) {
+        this.indexIntegrationPath = indexIntegrationPath;
     }
 
     public String getIndexID() {

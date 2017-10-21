@@ -12,5 +12,5 @@ public interface I_Index {
     /*i_index.addIndexDataInfEntity(dataID, dataName, dataZipPath, dataSetPath, docTag, idTag);*/
     void addIndexDataInfEntity(indexDataInf indexdatainf);
     void addIndexInfEntity(indexInf indexinf);
-    void process(String dataSetPath, String docTag, String idTag, String processTag, String indexResultPath, String indexDocInfPath);
+    void process(String dataSetPath, String docTag, String idTag, String processTag, String indexResultPath, String indexDocInfPath, String indexIntegrationPath);
 }
