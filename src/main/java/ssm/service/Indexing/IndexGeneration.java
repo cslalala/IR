@@ -26,6 +26,7 @@ public class IndexGeneration {
     StringBuilder fileContent = new StringBuilder();
     String id = new String(); // file的idtag的值
     Map<String, Integer>wordCountMap = new HashMap<String, Integer>(); //word在多少文档中出现过
+    int allFileCount = 0;
     int indexResultFileCount = 0;
     public void StopWords(){
         stopWordsList  = stopwordsread.readStopWords();
@@ -211,7 +212,7 @@ public class IndexGeneration {
             StringBuilder sb = new StringBuilder();
             while(it.hasNext()){
                 String word = (String) it.next();
-                sb.append(word + " " + String.valueOf(wordCountMap.get(word)) + "\r\n");
+                sb.append(word + " " + String.valueOf(wordCountMap.get(word)) + " " + String.valueOf(allFileCount) + "\r\n");
             }
             pw.write(sb.toString());
             pw.close();
@@ -240,6 +241,7 @@ public class IndexGeneration {
                 if(docPathList.get(i).toString().endsWith(".DS_Store")){
                     continue;
                 }
+                allFileCount += 1;
                 processFile(docPathList.get(i), docTag, idTag, processTag);
                 cont ++;
                 if(cont == 3000){

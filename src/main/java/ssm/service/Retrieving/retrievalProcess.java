@@ -1,15 +1,18 @@
 package ssm.service.Retrieving;
 
+import javafx.beans.binding.DoubleExpression;
+import org.apache.ibatis.annotations.Param;
 import ssm.dao.entity.indexInf;
 import ssm.service.Data;
 import ssm.service.Indexing.Entity.docInf;
 import ssm.service.Indexing.Entity.word_doc;
 import ssm.service.Indexing.PorterStemming;
-import ssm.service.Retrieving.Entity.docWeightEntity;
 import ssm.service.Retrieving.Entity.weightEntity;
 import ssm.service.stopWordsRead;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.util.*;
 
 /**
@@ -18,15 +21,15 @@ import java.util.*;
 public class retrievalProcess {
     public Map<String, word_doc> wordInfMap = new HashMap<String, word_doc>();
     public Map<String, docInf> docInfMap = new HashMap<String, docInf>();
-    public Map<String, Map<String, weightEntity>> ansMap = new HashMap<String, Map<String, weightEntity>>();//String为queryID, value为对应的docID和分数,分数有两部分组成,
+    public Map<String, weightEntity> ansMap = new HashMap<String, weightEntity>();//String为queryID, value为对应的docID和分数,
+    public Map<String, Integer>wordCountMap = new HashMap<String, Integer>();
     public Map<String, String>queryMap = new HashMap<String, String>();
-    public Map<String, Integer>wordCount = new HashMap<String, Integer>();
     List<String> stopWordsList = new ArrayList<String>();
     stopWordsRead stopwordsread = new stopWordsRead();
+    int allFileCount;
     public void StopWords(){
         stopWordsList  = stopwordsread.readStopWords();
     }
-
     //对query的处理
     public void query_Process(){
         Set<String> set = queryMap.keySet();
@@ -64,24 +67,43 @@ public class retrievalProcess {
                     word_doc wd = wordInfMap.get(queryWords[i]);
                     Set<String> set2 = wd.word_docMap.keySet(); // //String 为docID, list里面为位置
                     Iterator<String> it2 = set2.iterator();
-                    /*while(it2.hasNext()){
+                    while(it2.hasNext()){
                         String docID = it2.next();
                         docInf docinf = docInfMap.get(docID);
-                        we.weightMap.put(queryWords[i], wd.word_docMap.get(docID).size()/docinf.getNumberCont()*1.0);
-                        docWeightEntity docweight = new docWeightEntity();
-                        docweight.docWeightMap.put(docID, we);
-                        ansMap.put(queryID, docweight.docWeightMap);
-                        if(wordCount.containsKey(queryWords[i])){
-                            wordCount.put(queryWords[i], wordCount.get(queryWords[i])+1);
+                        if(ansMap.containsKey(queryID)) {
+                            weightEntity we = ansMap.get(queryID);
+                            if(we.weightMap.containsKey(docID)){
+                                double tt = we.weightMap.get(docID);
+                                tt += (wd.word_docMap.get(docID).size()/docinf.getNumberCont()*1.0)*Math.log(allFileCount/wordCountMap.get(queryWords[i])*1.0);
+                                we.weightMap.put(docID, tt);
+                                ansMap.put(queryID, we);
+                            }else{
+                                double tt = (wd.word_docMap.get(docID).size()/docinf.getNumberCont()*1.0)*Math.log(allFileCount/wordCountMap.get(queryWords[i])*1.0);
+                                we.weightMap.put(docID, tt);
+                                ansMap.put(queryID, we);
+                            }
                         }else{
-                            wordCount.put(queryWords[i], 1);
+
                         }
-                    }*/
+                    }
                 }
             }
         }
     }
 
+    public void readWordCount(String path){
+        try {
+            BufferedReader bufr = new BufferedReader(new FileReader(new File(path)));
+            String s = "";
+            while((s=bufr.readLine()) != null){
+                String[] ss = s.split(" ");
+                wordCountMap.put(ss[0], Integer.parseInt(ss[1]));
+                allFileCount = Integer.parseInt(ss[2]);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
     public String process( indexInf indexinf, Map<String, String>qM,String weightModel, int returnCount, String resultPath){
         queryMap = qM;
         //读取index的内容
@@ -97,6 +119,7 @@ public class retrievalProcess {
                 docInfMap = docinfread.readDocInf(file_docList[i]);
                 StopWords();
                 query_Process();
+                readWordCount(indexinf.getIndexIntegrationPath());
                 if(weightModel.equals("TF-IDF")){
                    TF_IDF();
                 }
