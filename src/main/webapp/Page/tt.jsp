@@ -292,7 +292,7 @@
                         <div class="col-xs-8" style="margin-left: 0px; padding-right:0px;">
                             <input class="form-control" id="querydocumentpathShow" placeholder="query document path">
                             <input class="form-control hidden" type="file"
-                                   name="querydocumentpath" id="querydocumentpath">
+                                   name="uploadFile" id="querydocumentpath">
                         </div>
                         <div class="col-xs-2 col-xs-2-change">
                             <button class="btn btn-default" id="querydocumentpathget" type="button"
@@ -364,7 +364,7 @@
                         <div class="col-xs-8" style="margin-left: 0px; padding-right:0px;">
                             <input class="form-control" id="evaluationdocumentpathshow" placeholder="evaluation document path">
                             <input class="form-control hidden" type="file"
-                                   name="datadoucumentpath" id="evaluationdocumentpath">
+                                   name="uploadFile" id="evaluationdocumentpath">
                         </div>
                         <div class="col-xs-2 col-xs-2-change">
                             <button class="btn btn-default" id="evaluationdocumentpathget" type="button"
