@@ -15,6 +15,6 @@
 
     <insert id="addIndexInf" parameterType="ssm.dao.entity.indexInf">
         INSERT  into indexInf
-        VALUES (#{indexID}, #{dataID}, #{indexProcessTag}, #{indexResultPath}, #{indexDocInfPath}, #{indexIntegration})
+        VALUES (#{indexID}, #{dataID}, #{indexProcessTag}, #{indexResultPath}, #{indexDocInfPath}, #{indexIntegrationPath})
     </insert>
 </mapper>

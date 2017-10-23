@@ -75,6 +75,7 @@ public class IndexGeneration {
     //对抽取的数据建索引
     public void indexing(String path){
         String content = fileContent.toString();
+        String temp = content.substring(0, 400);
         content = content.replaceAll(Data.regEx, " ").replace("\n", " ").replace("\\", " ").replace("\"", " ");
         String docWord[] = content.split(" ");
         int word_cont = 0; //记录文档中有多少的单词
@@ -115,7 +116,7 @@ public class IndexGeneration {
         //
         docInf docinf = new docInf();
         docinf.numberCont = word_cont;
-        docinf.savePath = path;
+        docinf.setSummary(temp);
         docInfMap.put(id, docinf);
     }
     public void processFile(String path, String docTag, String idTag, String processTag){
@@ -179,7 +180,7 @@ public class IndexGeneration {
             while(it3.hasNext()){
                 String docid = (String)it3.next();
                 docInf docinf = docInfMap.get(docid);
-                sb2.append(docid + " " + docinf.numberCont + " " + docinf.savePath + "\r\n");
+                sb2.append(docid + " " + docinf.numberCont + " " + docinf.savePath + " " + docinf.getSummary() + "\r\n");
             }
             pw2.write(sb2.toString());
             pw2.close();

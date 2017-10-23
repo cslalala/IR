@@ -6,6 +6,15 @@ package ssm.service.Indexing.Entity;
 public class docInf {
     public int numberCont;
     public String savePath;
+    public String summary;
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
 
     public int getNumberCont() {
         return numberCont;

@@ -288,11 +288,11 @@
             <div class="modal-body" style="margin-left:30px;">
                 <form enctype="multipart/form-data" action="/ 这里是web.xml配置接受servlet的地址" method="post">
                     <div class="form-group" style="padding-left:20px;">
-                        <label for="querydocumenpath" style="margin-left: 15px;">Query Document Path</label>
+                        <label for="querydocumentpath" style="margin-left: 15px;">Query Document Path</label>
                         <div class="col-xs-8" style="margin-left: 0px; padding-right:0px;">
-                            <input class="form-control" id="querydocumenpathShow" placeholder="query document path">
+                            <input class="form-control" id="querydocumentpathShow" placeholder="query document path">
                             <input class="form-control hidden" type="file"
-                                   name="querydocumenpath" id="querydocumenpath">
+                                   name="querydocumentpath" id="querydocumentpath">
                         </div>
                         <div class="col-xs-2 col-xs-2-change">
                             <button class="btn btn-default" id="querydocumentpathget" type="button"
@@ -583,7 +583,7 @@
         url:"/Upload",
         dataType: 'text',
         add:function(e, data){
-            data.formData = {tt: 1}//tt的作用是在传数据到后台经过判断之后设置路径
+           // data.formData = {tt: 1}//tt的作用是在传数据到后台经过判断之后设置路径
             $("#datadoucumentpathShow").val(data['files'][0]['name'])
             data.submit();
             $("#datadoucumentpathget").html('<i class="fa fa-spinner fa-pulse"></i>');
@@ -730,12 +730,12 @@
         }
     }
 
-    $('#querydocumenpath').fileupload({
+    $('#querydocumentpath').fileupload({
         url: "/Upload",
         dataType: 'text',
         add: function (e, data) {
-            data.formData = {tt: 2};
-            $("#querydocumenpathShow").val(data['files'][0]['name'])
+            console.log($("#querydocumentpathShow").val(data['files'][0]['name']))
+            $("#querydocumentpathShow").val(data['files'][0]['name'])
             data.submit();
             $("#querydocumentpathget").html('<i class="fa fa-spinner fa-pulse"></i>');
         },
@@ -778,7 +778,7 @@
     //模擬用戶點擊按鈕
     $("#querydocumentpathget").click(function () {
         //模拟点击
-        $('#querydocumenpath').click();
+        $('#querydocumentpath').click();
     });
     //    $('#queryresultpathget').click(function () {
     //        $('#queryresultpath').click();

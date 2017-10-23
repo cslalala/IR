@@ -10,9 +10,7 @@ import ssm.service.Indexing.PorterStemming;
 import ssm.service.Retrieving.Entity.weightEntity;
 import ssm.service.stopWordsRead;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -55,6 +53,21 @@ public class retrievalProcess {
             queryMap.put(queryID, temp.toString());
         }
     }
+
+    public void readWordCount(String path){
+        try {
+            BufferedReader bufr = new BufferedReader(new FileReader(new File(path)));
+            String s = "";
+            while((s=bufr.readLine()) != null){
+                String[] ss = s.split(" ");
+                wordCountMap.put(ss[0], Integer.parseInt(ss[1]));
+                allFileCount = Integer.parseInt(ss[2]);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public void TF_IDF(){
         Set<String> set = queryMap.keySet();
         Iterator<String> it = set.iterator();
@@ -83,7 +96,10 @@ public class retrievalProcess {
                                 ansMap.put(queryID, we);
                             }
                         }else{
-
+                            weightEntity we = new weightEntity();
+                            double tt = (wd.word_docMap.get(docID).size()/docinf.getNumberCont()*1.0)*Math.log(allFileCount/wordCountMap.get(queryWords[i])*1.0);
+                            we.weightMap.put(docID, tt);
+                            ansMap.put(queryID,we);
                         }
                     }
                 }
@@ -91,26 +107,14 @@ public class retrievalProcess {
         }
     }
 
-    public void readWordCount(String path){
-        try {
-            BufferedReader bufr = new BufferedReader(new FileReader(new File(path)));
-            String s = "";
-            while((s=bufr.readLine()) != null){
-                String[] ss = s.split(" ");
-                wordCountMap.put(ss[0], Integer.parseInt(ss[1]));
-                allFileCount = Integer.parseInt(ss[2]);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-    public String process( indexInf indexinf, Map<String, String>qM,String weightModel, int returnCount, String resultPath){
+    public void process( indexInf indexinf, Map<String, String>qM,String weightModel, int returnCount, String resultPath){
         queryMap = qM;
         //读取index的内容
         File file = new File(indexinf.getIndexResultPath());
         File fileList[] = file.listFiles();
         File file_doc = new File(indexinf.getIndexDocInfPath());
         File file_docList[] = file_doc.listFiles();
+        StringBuilder ans = new StringBuilder();
         try{
             for(int i = 0; i < fileList.length; i++){
                 indexResultRead indexreultread  = new indexResultRead();
@@ -124,9 +128,43 @@ public class retrievalProcess {
                    TF_IDF();
                 }
             }
-        }catch (Exception e){
+            Set<String> set = ansMap.keySet();
+            Iterator<String> it = set.iterator();
+            while(it.hasNext()){
+                String queryID = it.next();
+                weightEntity we = ansMap.get(queryID);
+                we.weightMap = sortMap(we.weightMap);
+                Set<String> set2 = we.weightMap.keySet();
+                Iterator<String> it2 = set2.iterator();
+                int cont = 0;
+                while(it2.hasNext()){
+                    String docID = it2.next();
+                    ans.append(queryID + " " + docID + " " + cont + " " + we.weightMap.get(docID) + " " + docInfMap.get(docID).getSavePath() + " " + "TF_IDF" + " " + docInfMap.get(docID).getSummary() + "\r\n");
+                    cont++;
+                    if(cont == returnCount){
+                        break;
+                    }
+                }
+            }
+            OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(resultPath), "GBK");
+            out.write(ans.toString());
+            out.close();
+        }catch (Exception e) {
             e.printStackTrace();
         }
-        return "";
+    }
+
+    public Map sortMap(Map oldMap){
+        ArrayList<Map.Entry<String, Double>> list = new ArrayList<Map.Entry<String, Double>>(oldMap.entrySet());
+        Collections.sort(list, new Comparator<Map.Entry<String, Double>>() {
+            public int compare(Map.Entry<String, Double> arg0, Map.Entry<String, Double> arg1) {
+                return arg1.getValue().compareTo(arg0.getValue());
+            }
+        });
+        Map newMap = new LinkedHashMap();
+        for (int i = 0; i < list.size(); i++) {
+            newMap.put(list.get(i).getKey(), list.get(i).getValue());
+        }
+        return newMap;
     }
 }

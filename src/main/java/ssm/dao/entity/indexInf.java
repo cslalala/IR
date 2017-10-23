@@ -15,13 +15,13 @@ public class indexInf {
     String indexDocInfPath;//索引结果中的文档信息
     String indexIntegrationPath; //多个索引整合的结果
 
-    public indexInf(String indexID, String dataID, String indexProcessTag, String indexResultPath, String indexDocInfPath, String indexInterationPath) {
+    public indexInf(String indexID, String dataID, String indexProcessTag, String indexResultPath, String indexDocInfPath, String indexIntegrationPath) {
         this.indexID = indexID;
         this.dataID = dataID;
         this.indexProcessTag = indexProcessTag;
         this.indexResultPath = indexResultPath;
         this.indexDocInfPath = indexDocInfPath;
-        this.indexIntegrationPath = indexInterationPath;
+        this.indexIntegrationPath = indexIntegrationPath;
     }
 
     public String getIndexIntegrationPath() {
