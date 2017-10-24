@@ -12,6 +12,7 @@ import ssm.service.UserLogin;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -184,5 +185,36 @@ public class UserController extends BaseController {
             e.printStackTrace();
         }
         return "";
+    }
+
+     /*模式三, 检索*/
+    @ResponseBody
+    @RequestMapping("/getFile")
+    public void getFile(String filepath,HttpServletResponse response){
+
+        response.setContentType("text/html");
+        BufferedReader bufr =null;
+        PrintWriter writer = null;
+        try {
+             bufr = new BufferedReader(new FileReader(new File(filepath)));
+             writer = response.getWriter();
+            String s = "";
+            while((s=bufr.readLine()) != null){
+                writer.append(s);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if(writer!=null) {
+                writer.close();
+            }
+            try {
+                if(bufr!=null){
+                    bufr.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

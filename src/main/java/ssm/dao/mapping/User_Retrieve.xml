@@ -23,13 +23,15 @@
         VALUES (#{retrieveResultID}, #{indexID},#{queryID},#{queryProcessTag},#{queryModel},#{resultLength},#{resultPath})
     </insert>
 
-    <select id="findindexInf" parameterType="ssm.dao.entity.indexInf">
+    <select id="findindexInf" parameterType="ssm.dao.entity.indexInf"
+            resultType="ssm.dao.entity.indexInf">
         SELECT
         indexID,
         dataID,
-        indexProcess,
+        indexProcessTag,
         indexResultPath,
-        indexDocInfPath
+        indexDocInfPath,
+        indexIntegrationPath
         FROM indexInf WHERE indexID = #{indexID}
     </select>
 </mapper>

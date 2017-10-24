@@ -48,9 +48,11 @@ public class Retrieval implements I_Retrieve{
         //解析xml文档
         xmlAnalysis xmlanalysis = new xmlAnalysis();
         Map<String, String> queryMap = xmlanalysis.analysisXML(queryDataPath, docTag, idTag, processTag);
+        System.out.println("******************queryMapSize: " + queryMap.size());
 
         //获得index的地址
         indexInf indexinf = user_retrieveDao.findindexInf(indexDataID);
+        System.out.println("***************indexinf: " + indexinf.getIndexResultPath() + " " + indexinf.getIndexDocInfPath() + " " + indexinf.getIndexIntegrationPath());
         retrievalProcess rp = new retrievalProcess();
         rp.process(indexinf, queryMap, weightModel, returnCount, resultPath);
     }

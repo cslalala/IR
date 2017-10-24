@@ -15,7 +15,7 @@ public class xmlAnalysis {
 
     List<String> processTagList = new ArrayList<String>();
     StringBuilder fileContent = new StringBuilder();
-    String id;
+    String id = "";
     Map<String, String> ansMap = new HashMap<String, String>();
 
     public void processTag_process(String processTag){
@@ -31,9 +31,12 @@ public class xmlAnalysis {
             while(it.hasNext()){
                 Element arrName = (Element) it.next();
                 if(arrName.getName().toString().trim().equals(docTag)){
-                    ansMap.put(id, fileContent.toString());
-                    id = "";
-                    fileContent.setLength(0);
+                    if(id!=""){
+                        System.out.println("############");
+                        ansMap.put(id, fileContent.toString());
+                        id = "";
+                        fileContent.setLength(0);
+                    }
                     listNodes(arrName, docTag, idTag, 0);
                 }else if(processTagList.contains(arrName.getName())){
                     listNodes(arrName, docTag, idTag, 1);
@@ -52,10 +55,12 @@ public class xmlAnalysis {
                 fileContent.append(node.getTextTrim() + " ");
             }
         }
+        if(id != ""){
+            ansMap.put(id, fileContent.toString());
+        }
     }
-
-    public void processFile(String path, String docTag, String idTag){
-        try{
+    public void processQueryFile(String path, String docTag, String idTag) {
+        try {
             fileContent.setLength(0);
             SAXReader saxReader = new SAXReader();
             //saxReader.setValidation(false);
@@ -63,19 +68,14 @@ public class xmlAnalysis {
             //saxReader.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
             Document document = saxReader.read(file);
             Element root = document.getRootElement();
-            if(root.getName().toString().trim().equals(docTag)){
-                listNodes(root, docTag, idTag, 0);//flag的作用是，如果flag为1的话，说明当前标签以下的所有标签内容都需要，否则就不用
-                // System.out.println(fileContent.toString());
-            }else{
-                System.out.println(path + "docTag is wrong");
-            }
-        }catch (Exception e){
+            listNodes(root, docTag, idTag, 0);//flag的作用是，如果flag为1的话，说明当前标签以下的所有标
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public Map<String, String> analysisXML(String path, String docTag, String idTag, String processTag){
         processTag_process(processTag);
-        processFile(path, docTag, idTag);
+        processQueryFile(path, docTag, idTag);
         return ansMap;
     }
 }

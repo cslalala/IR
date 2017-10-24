@@ -24,6 +24,7 @@ public class retrievalProcess {
     public Map<String, String>queryMap = new HashMap<String, String>();
     List<String> stopWordsList = new ArrayList<String>();
     stopWordsRead stopwordsread = new stopWordsRead();
+    List<String> docList = new ArrayList<String>();
     int allFileCount;
     public void StopWords(){
         stopWordsList  = stopwordsread.readStopWords();
@@ -48,8 +49,9 @@ public class retrievalProcess {
                     ps.add(word.charAt(t));
                 }
                 word = ps.stem();
-                temp.append(word);
+                temp.append(word + " ");
             }
+           //System.out.println("**********" + queryID + " " + temp.toString());
             queryMap.put(queryID, temp.toString());
         }
     }
@@ -107,6 +109,17 @@ public class retrievalProcess {
         }
     }
 
+    public void readDocList(){
+        int cont = 0;
+        Set<String> set = docInfMap.keySet();
+        Iterator<String> it = set.iterator();
+        while(it.hasNext()){
+            String docID = it.next();
+            docList.add(docID);
+            if(cont == 3000)
+                break;
+        }
+    }
     public void process( indexInf indexinf, Map<String, String>qM,String weightModel, int returnCount, String resultPath){
         queryMap = qM;
         //读取index的内容
@@ -124,21 +137,56 @@ public class retrievalProcess {
                 StopWords();
                 query_Process();
                 readWordCount(indexinf.getIndexIntegrationPath());
+                readDocList();
                 if(weightModel.equals("TF-IDF")){
                    TF_IDF();
                 }
             }
+            Set<String> set3 = queryMap.keySet();
+            Iterator<String> it3 = set3.iterator();
+            while (it3.hasNext()){
+                String queryID = it3.next();
+                if(!ansMap.containsKey(queryID)){
+                    weightEntity we = new weightEntity();
+                    for(int i = 0 ; i < returnCount; i++) {
+                        we.weightMap.put(docList.get(i), 0*1.0);
+                    }
+                    ansMap.put(queryID, we);
+                }else{
+                    weightEntity we = ansMap.get(queryID);
+                    if(we.weightMap.size() < returnCount){
+                        int cont = returnCount - we.weightMap.size();
+                        for(int i = 0; i < docList.size(); i++){
+                            if(!we.weightMap.containsKey(docList.get(i))){
+                                we.weightMap.put(docList.get(i), 0*1.0);
+                                cont--;
+                            }
+                            if(cont < 1){
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            System.out.println("**********************FUCK");
+            Set<String> test = ansMap.keySet();
+            Iterator<String> test_it = test.iterator();
+            while(test_it.hasNext()){
+                String test_queryID = test_it.next();
+                System.out.println("**************" + ansMap.get(test_queryID).weightMap.size());
+            }
             Set<String> set = ansMap.keySet();
             Iterator<String> it = set.iterator();
+            int cont = 0;
             while(it.hasNext()){
                 String queryID = it.next();
                 weightEntity we = ansMap.get(queryID);
                 we.weightMap = sortMap(we.weightMap);
                 Set<String> set2 = we.weightMap.keySet();
                 Iterator<String> it2 = set2.iterator();
-                int cont = 0;
                 while(it2.hasNext()){
                     String docID = it2.next();
+                    System.out.println(docInfMap.get(docID).getSummary());
                     ans.append(queryID + " " + docID + " " + cont + " " + we.weightMap.get(docID) + " " + docInfMap.get(docID).getSavePath() + " " + "TF_IDF" + " " + docInfMap.get(docID).getSummary() + "\r\n");
                     cont++;
                     if(cont == returnCount){

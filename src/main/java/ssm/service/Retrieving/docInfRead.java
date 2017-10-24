@@ -18,11 +18,16 @@ public class docInfRead {
         try{
             BufferedReader bufr = new BufferedReader(new FileReader(file));
             String s = "";
+            StringBuilder temp = new StringBuilder();
             while((s=bufr.readLine()) != null){
                 String ss[] = s.split(" ");
                 docInf docinf = new docInf();
                 docinf.setNumberCont(Integer.parseInt(ss[1]));
                 docinf.setSavePath(ss[2]);
+                for(int i = 3; i < ss.length; i++){
+                    temp.append(ss[i] + " ");
+                }
+                docinf.setSummary(temp.toString());
                 docInfMap.put(ss[0], docinf);
             }
         }catch (Exception e){

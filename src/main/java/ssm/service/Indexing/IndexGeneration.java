@@ -10,6 +10,7 @@ import ssm.service.Indexing.Entity.word_doc;
 import ssm.service.stopWordsRead;
 
 import java.io.*;
+import java.net.URLEncoder;
 import java.util.*;
 
 /**
@@ -117,9 +118,10 @@ public class IndexGeneration {
         docInf docinf = new docInf();
         docinf.numberCont = word_cont;
         docinf.setSummary(temp);
+        docinf.savePath = URLEncoder.encode(path);
         docInfMap.put(id, docinf);
     }
-    public void processFile(String path, String docTag, String idTag, String processTag){
+    public void processFile(String path, String docTag, String idTag){
         try{
             fileContent.setLength(0);
             SAXReader saxReader = new SAXReader();
@@ -243,7 +245,7 @@ public class IndexGeneration {
                     continue;
                 }
                 allFileCount += 1;
-                processFile(docPathList.get(i), docTag, idTag, processTag);
+                processFile(docPathList.get(i), docTag, idTag);
                 cont ++;
                 if(cont == 3000){
                     writeTofile(indexResultPath, indexDocInf);
