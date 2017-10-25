@@ -818,7 +818,7 @@
             var service = new Service("/modeTh_retrieval");
             var WeightModel = $("#WeightModel").val();
             //这里是入参数  所有的参数在在这里构造
-            var selects = $("#WeightModel").val();
+            //var selects = $("#WeightModel").val();
 //        selects = selects.join(",");
             /*String username, String queryDataPath, String weightModel, String docTag, String idTag, String processTag, int retuernCount*/
             var para = {indexDataID:$("#indexDataID").text(),  queryDataPath: $("#queryDataPath").text(),  weightModel: WeightModel, docTag:$("#queryDocTag").val()

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ssm.dao.entity.*;
 import ssm.entity.UploadParam;
+import ssm.service.I_Evaluate;
 import ssm.service.I_Index;
 import ssm.service.I_Retrieve;
 import ssm.service.UserLogin;
@@ -29,6 +30,8 @@ public class UserController extends BaseController {
     private I_Index i_index;
     @Resource
     private I_Retrieve i_retrieve;
+    @Resource
+    private I_Evaluate i_evaluate;
     public void setUserLogin(UserLogin userLogin) {
         this.userLogin = userLogin;
     }
@@ -187,7 +190,7 @@ public class UserController extends BaseController {
         return "";
     }
 
-     /*模式三, 检索*/
+     /*模式三, 点击title,跳转链接*/
     @ResponseBody
     @RequestMapping("/getFile")
     public void getFile(String filepath,HttpServletResponse response){
@@ -217,4 +220,12 @@ public class UserController extends BaseController {
             }
         }
     }
+
+    /*模式三, 评测*/
+    @ResponseBody
+    @RequestMapping("/evaluate")
+    public String evaluate(String retrieveResultPath, String evaluationFilePath){
+
+    }
+
 }
